@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PolypusTech — Studio OS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3;--card:#fff;--border:#ede9e3;--sage:#649aa2;--sage-d:#4a7a82;
+  --sage-l:#e6f2f4;--charcoal:#2c2c2a;--muted:#8a8680;--warm:#b8a898;
+  --red:#c07070;--amber:#b89a60;--purple:#8a7ba8;--green:#6b8f71;
+  --r:14px;--sh:0 2px 16px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal);min-height:100vh;display:flex;font-size:14px}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* SIDEBAR */
+.sb{width:68px;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:2px 0 8px rgba(0,0,0,.04)}
+.sb-logo{width:36px;height:36px;border-radius:10px;background:var(--sage);display:flex;align-items:center;justify-content:center;margin-bottom:14px;cursor:pointer;overflow:hidden}
+.sb-logo img{width:100%;height:100%;object-fit:cover}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0;width:100%;border:none;background:none;cursor:pointer;color:var(--warm);transition:color .2s;font-family:inherit}
+.nb:hover,.nb.active{color:var(--sage)}
+.ni{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.nb.active .ni,.nb:hover .ni{background:var(--sage-l)}
+.nl{font-size:8px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.sb-ft{margin-top:auto;font-size:9px;color:var(--warm);text-align:center;padding:0 4px}
+.sb-ft strong{display:block;color:var(--sage);font-size:10px}
+
+/* MAIN */
+.main{margin-left:68px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* HEADER */
+.hdr{background:var(--card);border-bottom:1px solid var(--border);padding:0 22px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.hdr h1{font-size:15px;font-weight:600}
+.hdr p{font-size:11px;color:var(--muted)}
+.srch{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:7px 12px;width:210px}
+.srch input{border:none;background:none;outline:none;font-size:13px;color:var(--charcoal);width:100%;font-family:inherit}
+.srch input::placeholder{color:var(--muted)}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.uc{display:flex;align-items:center;gap:7px;background:var(--sage-l);border:1px solid rgba(100,154,162,.25);border-radius:10px;padding:5px 11px;cursor:pointer}
+.uc-av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.uc span{font-size:12px;font-weight:600;color:var(--sage-d)}
+.ib{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* CONTENT */
+.cnt{padding:20px 22px;flex:1}
+.pg{display:none}.pg.active{display:block}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+.ct{font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+/* BUTTONS */
+.btn{border:none;border-radius:10px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:600;font-family:inherit;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-p{background:var(--sage);color:#fff}
+.btn-o{background:var(--card);color:var(--muted);border:1px solid var(--border);border-radius:9px;padding:6px 13px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-o:hover{border-color:var(--sage);color:var(--sage)}
+.btn-o.on{background:var(--sage-l);color:var(--sage-d);border-color:var(--sage);font-weight:600}
+.btn-d{background:var(--card);color:var(--red);border:1px solid rgba(192,112,112,.3);border-radius:8px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit}
+.tag{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600}
+
+/* STAT */
+.sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;box-shadow:var(--sh);text-align:center}
+.sv{font-size:20px;font-weight:700;margin-bottom:3px}
+.sl{font-size:11px;color:var(--muted)}
+
+/* FORMS */
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.fi,.fs,.fta{border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-size:14px;font-family:inherit;outline:none;background:var(--bg);color:var(--charcoal);width:100%;transition:border-color .15s}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--sage)}
+.fta{resize:vertical;min-height:72px}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.gold-note{border:1px solid var(--amber);background:rgba(184,154,96,.07);border-radius:10px;padding:12px;margin-bottom:12px}
+.gn-label{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:200;align-items:center;justify-content:center}
+.ov.open{display:flex}
+.mdl{background:var(--card);border-radius:18px;padding:24px;width:580px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18)}
+.mdl-t{font-size:16px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.mdl-x{border:none;background:none;cursor:pointer;font-size:20px;color:var(--muted)}
+.mdl-ft{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 11px;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.07em;border-bottom:2px solid var(--border)}
+td{padding:10px 11px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf8}
+
+/* KANBAN */
+.kb{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;min-height:58vh}
+.kc{flex-shrink:0;width:252px;display:flex;flex-direction:column}
+.kh{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--card);border:1px solid var(--border);border-bottom:none;border-radius:var(--r) var(--r) 0 0}
+.khl{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600}
+.kd{width:8px;height:8px;border-radius:50%}
+.kn{font-size:11px;color:var(--muted);background:var(--bg);border-radius:10px;padding:1px 7px}
+.kb-body{background:#f0efe8;border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r) var(--r);padding:8px;min-height:180px;transition:background .15s}
+.kb-body.over{background:var(--sage-l)}
+.kcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px;margin-bottom:7px;cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:box-shadow .15s;user-select:none;position:relative}
+.kcard:hover{box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.kcard.dragging{opacity:.45;cursor:grabbing}
+.kcard-t{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:5px;line-height:1.35}
+.kcard-m{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px}
+.kadd{border:1px dashed var(--border);border-radius:9px;padding:7px 12px;text-align:center;font-size:12px;color:var(--muted);cursor:pointer;transition:all .15s;margin-top:4px}
+.kadd:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-l)}
+.kdel{position:absolute;top:6px;right:6px;border:none;background:none;cursor:pointer;font-size:12px;color:transparent;transition:color .15s}
+.kcard:hover .kdel{color:var(--red)}
+.kcard-assign{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0}
+
+/* EVENT CARDS */
+.ev-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--sh)}
+.ev-date{flex-shrink:0;width:50px;height:50px;background:var(--sage-l);border:1px solid rgba(100,154,162,.3);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ev-day{font-size:18px;font-weight:700;color:var(--sage-d);line-height:1}
+.ev-mon{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--sage);letter-spacing:.04em}
+.ev-body{flex:1;min-width:0}
+.ev-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.ev-meta{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.ev-meta span{display:flex;align-items:center;gap:3px}
+.ev-note{background:rgba(184,154,96,.08);border:1px solid rgba(184,154,96,.3);border-radius:8px;padding:7px 10px;font-size:12px;color:var(--amber);margin-top:6px;font-style:italic}
+.ev-attendees{display:flex;gap:4px;margin-top:6px}
+.ev-att-chip{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:var(--sage-l);color:var(--sage-d)}
+.ev-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+
+/* OFFICE CANVAS */
+#officeCanvas{display:block;border-radius:12px;width:100%;background:#0a0a0a}
+.office-log{border-top:1px solid #1a2a1a;padding:8px 16px;background:#050f05;height:60px;overflow-y:auto;font-family:monospace;font-size:11px;color:#00aa20;border-radius:0 0 var(--r) var(--r)}
+
+/* CSV UPLOAD */
+.csv-drop{border:2px dashed var(--border);border-radius:var(--r);padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.csv-drop:hover,.csv-drop.over{border-color:var(--sage);background:var(--sage-l)}
+.csv-drop svg{margin-bottom:8px;color:var(--muted)}
+.csv-drop p{font-size:14px;color:var(--muted)}
+.csv-drop strong{color:var(--sage)}
+
+/* PROGRESS */
+.pb{background:var(--border);border-radius:4px;height:5px;overflow:hidden;margin-top:6px}
+.pb-fill{height:100%;border-radius:4px;transition:width .5s}
+
+/* MEETING CARD */
+.mt-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--sage);border-radius:var(--r);padding:14px;margin-bottom:10px;box-shadow:var(--sh)}
+.mt-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.mt-title{font-size:14px;font-weight:600}
+.mt-time{font-size:12px;color:var(--muted)}
+.mt-meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.mt-note{background:rgba(184,154,96,.07);border:1px solid rgba(184,154,96,.25);border-radius:8px;padding:8px 10px;font-size:12px;color:#7a6520;font-style:italic}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{animation:fadeIn .25s ease both}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sb">
+  <div class="sb-logo" onclick="goTo('home')">
+    <img src="android-chrome-192x192.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="P">
+    <span style="display:none;font-family:'DM Serif Display',serif;font-size:16px;color:#fff">P</span>
+  </div>
+  <button class="nb active" onclick="goTo('home')" id="nb-home"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="nl">Home</span></button>
+  <button class="nb" onclick="goTo('tasks')" id="nb-tasks"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="nl">Tasks</span></button>
+  <button class="nb" onclick="goTo('clients')" id="nb-clients"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="nl">Clients</span></button>
+  <button class="nb" onclick="goTo('leads')" id="nb-leads"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span class="nl">Data</span></button>
+  <button class="nb" onclick="goTo('events')" id="nb-events"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="nl">Events</span></button>
+  <button class="nb" onclick="goTo('meetings')" id="nb-meetings"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="nl">Meetings</span></button>
+  <button class="nb" onclick="goTo('finance')" id="nb-finance"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="nl">Finance</span></button>
+  <div class="sb-ft"><strong id="sb-clients">0</strong>clients</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+<div class="hdr">
+  <div><h1 id="pg-title">Dashboard</h1><p id="pg-date">Loading...</p></div>
+  <div class="srch"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8a8680" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search..."></div>
+  <div class="hdr-r">
+    <button class="ib" title="Notifications"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a8680" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+    <div class="uc"><div class="uc-av" style="background:#649aa2">V</div><span>Victor</span></div>
+    <div class="uc" style="margin-left:2px"><div class="uc-av" style="background:#6b8f71">G</div><span>Gen</span></div>
+  </div>
+</div>
+
+<div class="cnt">
+
+<!-- ═══ HOME ═══════════════════════════════════════════════════ -->
+<div class="pg active" id="pg-home">
+
+  <!-- Greeting -->
+  <div class="card" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(100,154,162,.12),rgba(107,143,113,.08));border-color:rgba(100,154,162,.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px" id="greeting">Good morning 👋</h2>
+        <p style="color:var(--muted);font-size:14px">Welcome to PolypusTech Studio OS — your company command center.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--sage)" id="stat-clients">0</div><div class="sl">Clients</div></div>
+        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--green)" id="stat-tasks">0</div><div class="sl">Tasks</div></div>
+        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--amber)" id="stat-events">0</div><div class="sl">Events</div></div>
+        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--purple)" id="stat-leads">0</div><div class="sl">Leads</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAZER OFFICE -->
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px;border-color:#1a2a1a">
+    <div style="padding:12px 18px;border-bottom:1px solid #1a2a1a;background:#050f05;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-weight:700;font-size:14px;color:#00ff41">PolypusTech HQ — Live Office</div><div style="font-size:11px;color:#00aa20" id="office-status">VIC and GEN are in the office</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span style="background:#0a1a0a;border:1px solid #00ff4133;color:#00ff41;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;font-family:monospace">⚡ RAZER</span>
+        <span style="background:#0a1a0a;border:1px solid #00ff4133;color:#00aa20;padding:3px 10px;border-radius:20px;font-size:11px;font-family:monospace" id="office-time">--:--</span>
+      </div>
+    </div>
+    <canvas id="officeCanvas" width="1060" height="420"></canvas>
+    <div class="office-log" id="office-log">
+      <div>System boot... PolypusTech HQ online.</div>
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="g3" style="margin-bottom:16px">
+    <div class="card">
+      <div class="ct">Active Projects <span class="tag" style="background:var(--sage-l);color:var(--sage-d)">In progress</span></div>
+      <div id="home-projects"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No tasks yet. Go to Tasks to add some!</div></div>
+    </div>
+    <div class="card">
+      <div class="ct">Upcoming Events <button class="btn-o" style="font-size:11px;padding:4px 10px" onclick="goTo('events')">See all</button></div>
+      <div id="home-events"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No events yet.</div></div>
+    </div>
+    <div class="card">
+      <div class="ct">Recent Meetings <button class="btn-o" style="font-size:11px;padding:4px 10px" onclick="goTo('meetings')">See all</button></div>
+      <div id="home-meetings"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No meetings yet.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TASKS (KANBAN) ════════════════════════════════════════ -->
+<div class="pg" id="pg-tasks">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div><h2 style="font-size:16px;font-weight:700">Task Board</h2><p style="color:var(--muted);font-size:12px">Drag and drop to move tasks between columns</p></div>
+    <button class="btn btn-p" onclick="openModal('add-task-modal')">+ Add Task</button>
+  </div>
+  <div class="kb" id="kanban-board"></div>
+</div>
+
+<!-- ═══ CLIENTS ════════════════════════════════════════════════ -->
+<div class="pg" id="pg-clients">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div><h2 style="font-size:16px;font-weight:700">Clients</h2><p style="color:var(--muted);font-size:12px">Manage your client relationships</p></div>
+    <button class="btn btn-p" onclick="openModal('add-client-modal')">+ Add Client</button>
+  </div>
+  <div class="g4" style="margin-bottom:16px">
+    <div class="sc"><div class="sv" style="color:var(--sage)" id="c-total">0</div><div class="sl">Total Clients</div></div>
+    <div class="sc"><div class="sv" style="color:var(--green)" id="c-active">0</div><div class="sl">Active</div></div>
+    <div class="sc"><div class="sv" style="color:var(--amber)" id="c-revenue">CHF 0</div><div class="sl">Total Revenue</div></div>
+    <div class="sc"><div class="sv" style="color:var(--purple)" id="c-pipeline">0</div><div class="sl">In Pipeline</div></div>
+  </div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Client</th><th>Industry</th><th>Contact</th><th>Value (CHF)</th><th>Status</th><th>Since</th><th>Actions</th></tr></thead>
+      <tbody id="clients-table"><tr><td colspan="7" style="text-align:center;color:var(--muted);font-style:italic;padding:24px">No clients yet. Add your first client!</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ LEADS / DATA ═══════════════════════════════════════════ -->
+<div class="pg" id="pg-leads">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div><h2 style="font-size:16px;font-weight:700">Data & Leads</h2><p style="color:var(--muted);font-size:12px">Upload scraped data or add leads manually</p></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-o" onclick="openModal('add-lead-modal')">+ Add Manually</button>
+      <button class="btn btn-p" onclick="document.getElementById('csv-file').click()">⬆ Upload CSV</button>
+      <input type="file" id="csv-file" accept=".csv" style="display:none" onchange="handleCSV(this)">
+    </div>
+  </div>
+  <div class="csv-drop card" id="csv-drop" style="margin-bottom:16px;padding:24px" ondrop="dropCSV(event)" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8a8680" stroke-width="1.5" style="margin:0 auto 8px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    <p>Drop your CSV file here or <strong>click Upload</strong></p>
+    <p style="font-size:11px;margin-top:4px">Supports: Name, Type, Area, Phone, Email, Rating, Status columns</p>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+    <button class="btn-o on" onclick="filterLeads('all',this)">All (<span id="lf-all">0</span>)</button>
+    <button class="btn-o" onclick="filterLeads('hot',this)">🔥 Hot (<span id="lf-hot">0</span>)</button>
+    <button class="btn-o" onclick="filterLeads('warm',this)">🟡 Warm (<span id="lf-warm">0</span>)</button>
+    <button class="btn-o" onclick="filterLeads('cold',this)">❄️ Cold (<span id="lf-cold">0</span>)</button>
+    <button class="btn-o" onclick="filterLeads('contacted',this)">✓ Contacted (<span id="lf-contacted">0</span>)</button>
+  </div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Name</th><th>Type</th><th>Area</th><th>Phone</th><th>Email</th><th>Rating</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="leads-table"><tr><td colspan="8" style="text-align:center;color:var(--muted);font-style:italic;padding:24px">No leads yet. Upload a CSV or add manually.</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ EVENTS ═════════════════════════════════════════════════ -->
+<div class="pg" id="pg-events">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div><h2 style="font-size:16px;font-weight:700">Events</h2><p style="color:var(--muted);font-size:12px">Zurich networking events, conferences and meetups</p></div>
+    <button class="btn btn-p" onclick="openModal('add-event-modal')">+ Add Event</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+    <button class="btn-o on" onclick="filterEvents('all',this)">All</button>
+    <button class="btn-o" onclick="filterEvents('upcoming',this)">Upcoming</button>
+    <button class="btn-o" onclick="filterEvents('tech',this)">Tech</button>
+    <button class="btn-o" onclick="filterEvents('networking',this)">Networking</button>
+    <button class="btn-o" onclick="filterEvents('gov',this)">Government</button>
+  </div>
+  <div id="events-list"><div style="color:var(--muted);font-size:14px;font-style:italic;text-align:center;padding:40px">No events yet. Add your first event!</div></div>
+</div>
+
+<!-- ═══ MEETINGS ════════════════════════════════════════════════ -->
+<div class="pg" id="pg-meetings">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div><h2 style="font-size:16px;font-weight:700">Client Meetings</h2><p style="color:var(--muted);font-size:12px">Track all client and prospect meetings</p></div>
+    <button class="btn btn-p" onclick="openModal('add-meeting-modal')">+ Log Meeting</button>
+  </div>
+  <div id="meetings-list"><div style="color:var(--muted);font-size:14px;font-style:italic;text-align:center;padding:40px">No meetings logged yet.</div></div>
+</div>
+
+<!-- ═══ FINANCE ═════════════════════════════════════════════════ -->
+<div class="pg" id="pg-finance">
+  <div style="margin-bottom:16px"><h2 style="font-size:16px;font-weight:700">Finance</h2><p style="color:var(--muted);font-size:12px">Track revenue, expenses and targets</p></div>
+  <div class="g4" style="margin-bottom:16px">
+    <div class="sc"><div class="sv" style="color:var(--sage)" id="f-revenue">CHF 0</div><div class="sl">Total Revenue</div></div>
+    <div class="sc"><div class="sv" style="color:var(--red)" id="f-expenses">CHF 0</div><div class="sl">Expenses</div></div>
+    <div class="sc"><div class="sv" style="color:var(--green)" id="f-profit">CHF 0</div><div class="sl">Net Profit</div></div>
+    <div class="sc"><div class="sv" style="color:var(--purple)">CHF 15k</div><div class="sl">April Target</div></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct">Log Transaction</div>
+      <div class="fg"><label class="fl">Description</label><input class="fi" id="f-desc" placeholder="e.g. Website project — Maison Doux"></div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Amount (CHF)</label><input class="fi" type="number" id="f-amount" placeholder="0"></div>
+        <div class="fg"><label class="fl">Type</label><select class="fs" id="f-type"><option value="income">Income</option><option value="expense">Expense</option></select></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Category</label><select class="fs" id="f-cat"><option>Client Payment</option><option>Software/Tools</option><option>Marketing</option><option>Events</option><option>Equipment</option><option>Other</option></select></div>
+        <div class="fg"><label class="fl">Date</label><input class="fi" type="date" id="f-date"></div>
+      </div>
+      <button class="btn btn-p" onclick="addTransaction()">Log Transaction</button>
+    </div>
+    <div class="card">
+      <div class="ct">Transactions</div>
+      <table>
+        <thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead>
+        <tbody id="finance-table"><tr><td colspan="4" style="text-align:center;color:var(--muted);font-style:italic;padding:20px">No transactions yet.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- end cnt -->
+</div><!-- end main -->
+
+<!-- ═══ MODALS ══════════════════════════════════════════════════ -->
+
+<!-- ADD TASK -->
+<div class="ov" id="add-task-modal">
+<div class="mdl">
+  <div class="mdl-t">Add Task <button class="mdl-x" onclick="closeModal('add-task-modal')">×</button></div>
+  <div class="fg"><label class="fl">Task Title</label><input class="fi" id="t-title" placeholder="e.g. Build landing page for Helio Studio"></div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Column</label><select class="fs" id="t-col"><option value="backlog">Backlog</option><option value="todo">To Do</option><option value="inprogress">In Progress</option><option value="review">Review</option><option value="done">Done</option></select></div>
+    <div class="fg"><label class="fl">Priority</label><select class="fs" id="t-priority"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="urgent">Urgent</option></select></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Assigned To</label><select class="fs" id="t-assign"><option value="VIC">Victor (VIC)</option><option value="GEN">Partner (GEN)</option><option value="BOTH">Both</option></select></div>
+    <div class="fg"><label class="fl">Due Date</label><input class="fi" type="date" id="t-due"></div>
+  </div>
+  <div class="fg"><label class="fl">Description</label><textarea class="fta" id="t-desc" placeholder="Task details..."></textarea></div>
+  <div class="fg"><label class="fl">Tag / Label</label><input class="fi" id="t-tag" placeholder="e.g. Design, Dev, Sales, Admin"></div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-task-modal')">Cancel</button><button class="btn btn-p" onclick="addTask()">Add Task</button></div>
+</div>
+</div>
+
+<!-- ADD CLIENT -->
+<div class="ov" id="add-client-modal">
+<div class="mdl">
+  <div class="mdl-t">Add Client <button class="mdl-x" onclick="closeModal('add-client-modal')">×</button></div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Company Name</label><input class="fi" id="cl-name" placeholder="e.g. Maison Doux"></div>
+    <div class="fg"><label class="fl">Industry</label><input class="fi" id="cl-industry" placeholder="e.g. Luxury Retail"></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Contact Person</label><input class="fi" id="cl-contact" placeholder="e.g. Sophie Müller"></div>
+    <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="cl-email" placeholder="contact@company.ch"></div>
+  </div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Phone</label><input class="fi" id="cl-phone" placeholder="+41 ..."></div>
+    <div class="fg"><label class="fl">Contract Value (CHF)</label><input class="fi" type="number" id="cl-value" placeholder="0"></div>
+    <div class="fg"><label class="fl">Status</label><select class="fs" id="cl-status"><option value="active">Active</option><option value="pipeline">In Pipeline</option><option value="prospect">Prospect</option><option value="paused">Paused</option><option value="closed">Closed</option></select></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Website</label><input class="fi" id="cl-web" placeholder="https://..."></div>
+    <div class="fg"><label class="fl">Location</label><input class="fi" id="cl-loc" placeholder="e.g. Zürich, CH"></div>
+  </div>
+  <div class="fg"><label class="fl">Notes</label><textarea class="fta" id="cl-notes" placeholder="Important notes about this client..."></textarea></div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-client-modal')">Cancel</button><button class="btn btn-p" onclick="addClient()">Add Client</button></div>
+</div>
+</div>
+
+<!-- ADD LEAD -->
+<div class="ov" id="add-lead-modal">
+<div class="mdl">
+  <div class="mdl-t">Add Lead Manually <button class="mdl-x" onclick="closeModal('add-lead-modal')">×</button></div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Business Name</label><input class="fi" id="ld-name" placeholder="e.g. Coiffeur Yanu"></div>
+    <div class="fg"><label class="fl">Type</label><input class="fi" id="ld-type" placeholder="e.g. Barber, Restaurant"></div>
+  </div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Area</label><input class="fi" id="ld-area" placeholder="e.g. Niederdorf"></div>
+    <div class="fg"><label class="fl">Phone</label><input class="fi" id="ld-phone" placeholder="044 ..."></div>
+    <div class="fg"><label class="fl">Email</label><input class="fi" id="ld-email" placeholder="(optional)"></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Rating (1-5)</label><input class="fi" type="number" id="ld-rating" min="1" max="5" step="0.1" placeholder="4.8"></div>
+    <div class="fg"><label class="fl">Status</label><select class="fs" id="ld-status"><option value="hot">🔥 Hot</option><option value="warm">🟡 Warm</option><option value="cold">❄️ Cold</option></select></div>
+  </div>
+  <div class="fg"><label class="fl">Notes</label><textarea class="fta" id="ld-notes" placeholder="Why this lead? What do they need?"></textarea></div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-lead-modal')">Cancel</button><button class="btn btn-p" onclick="addLeadManual()">Add Lead</button></div>
+</div>
+</div>
+
+<!-- ADD EVENT -->
+<div class="ov" id="add-event-modal">
+<div class="mdl">
+  <div class="mdl-t">Add Event <button class="mdl-x" onclick="closeModal('add-event-modal')">×</button></div>
+  <div class="fg"><label class="fl">Event Name</label><input class="fi" id="ev-name" placeholder="e.g. Zurich AI Meetup — April Edition"></div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Date</label><input class="fi" type="date" id="ev-date"></div>
+    <div class="fg"><label class="fl">Time</label><input class="fi" type="time" id="ev-time"></div>
+    <div class="fg"><label class="fl">Type</label><select class="fs" id="ev-type"><option>Tech</option><option>Networking</option><option>Conference</option><option>Government</option><option>Workshop</option><option>Startup</option><option>Other</option></select></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Location / Venue</label><input class="fi" id="ev-location" placeholder="e.g. Technopark Zürich, Technoparkstr. 1"></div>
+    <div class="fg"><label class="fl">Event URL</label><input class="fi" id="ev-url" placeholder="https://meetup.com/..."></div>
+  </div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Ticket Price (CHF)</label><input class="fi" type="number" id="ev-price" placeholder="0 = free"></div>
+    <div class="fg"><label class="fl">Tickets Bought</label><input class="fi" type="number" id="ev-tickets" placeholder="1" value="1"></div>
+    <div class="fg"><label class="fl">Who Attends?</label><select class="fs" id="ev-who"><option value="VIC">Victor only</option><option value="GEN">Gen only</option><option value="BOTH">Both of us</option></select></div>
+  </div>
+  <div class="gold-note">
+    <div class="gn-label">⭐ Gold Note — Extra Details</div>
+    <textarea class="fta" id="ev-gold" placeholder="Why this event? Who to meet? What to pitch? Goals? Dress code? Preparation needed?..." style="background:transparent;border-color:rgba(184,154,96,.4)"></textarea>
+  </div>
+  <div class="fg"><label class="fl">Expected Contacts / Goal</label><input class="fi" id="ev-goal" placeholder="e.g. Meet 5 Swiss tech founders, find 1 partnership lead"></div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-event-modal')">Cancel</button><button class="btn btn-p" onclick="addEvent()">Save Event</button></div>
+</div>
+</div>
+
+<!-- ADD MEETING -->
+<div class="ov" id="add-meeting-modal">
+<div class="mdl">
+  <div class="mdl-t">Log Client Meeting <button class="mdl-x" onclick="closeModal('add-meeting-modal')">×</button></div>
+  <div class="fg"><label class="fl">Meeting Title / Purpose</label><input class="fi" id="mt-title" placeholder="e.g. Discovery call — Maison Doux website project"></div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Date</label><input class="fi" type="date" id="mt-date"></div>
+    <div class="fg"><label class="fl">Time</label><input class="fi" type="time" id="mt-time"></div>
+    <div class="fg"><label class="fl">Duration</label><select class="fs" id="mt-duration"><option>15 min</option><option>30 min</option><option>45 min</option><option selected>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>Half day</option></select></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Client / Company</label><input class="fi" id="mt-client" placeholder="e.g. Maison Doux"></div>
+    <div class="fg"><label class="fl">Contact Person</label><input class="fi" id="mt-contact" placeholder="e.g. Sophie Müller"></div>
+  </div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Format</label><select class="fs" id="mt-format"><option>In Person</option><option>Video Call</option><option>Phone Call</option><option>Email</option></select></div>
+    <div class="fg"><label class="fl">Who Attended</label><select class="fs" id="mt-who"><option value="VIC">Victor</option><option value="GEN">Gen</option><option value="BOTH">Both</option></select></div>
+    <div class="fg"><label class="fl">Outcome</label><select class="fs" id="mt-outcome"><option value="positive">Positive ✓</option><option value="followup">Needs Follow-up</option><option value="proposal">Send Proposal</option><option value="closed">Deal Closed 🎉</option><option value="lost">Not Interested</option></select></div>
+  </div>
+  <div class="fg"><label class="fl">Meeting Summary</label><textarea class="fta" id="mt-summary" placeholder="What was discussed? Key points from the meeting?"></textarea></div>
+  <div class="gold-note">
+    <div class="gn-label">⭐ Gold Note — Action Items & Private Notes</div>
+    <textarea class="fta" id="mt-gold" placeholder="Action items, follow-up tasks, private notes, things to remember about this person/company..." style="background:transparent;border-color:rgba(184,154,96,.4)"></textarea>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Next Step</label><input class="fi" id="mt-next" placeholder="e.g. Send proposal by Friday"></div>
+    <div class="fg"><label class="fl">Potential Value (CHF)</label><input class="fi" type="number" id="mt-value" placeholder="0"></div>
+  </div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-meeting-modal')">Cancel</button><button class="btn btn-p" onclick="addMeeting()">Save Meeting</button></div>
+</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+const S = {
+  tasks: { backlog:[], todo:[], inprogress:[], review:[], done:[] },
+  clients: [], leads: [], events: [], meetings: [],
+  finance: { transactions:[], revenue:0, expenses:0 }
+};
+
+// Try load from localStorage
+try {
+  const saved = localStorage.getItem('polypustech_os');
+  if (saved) Object.assign(S, JSON.parse(saved));
+} catch(e){}
+
+function save() {
+  try { localStorage.setItem('polypustech_os', JSON.stringify(S)); } catch(e){}
+  updateStats();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+const PAGE_TITLES = { home:'Dashboard', tasks:'Task Board', clients:'Clients', leads:'Data & Leads', events:'Events', meetings:'Client Meetings', finance:'Finance' };
+
+function goTo(id) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  document.getElementById('nb-'+id).classList.add('active');
+  document.getElementById('pg-title').textContent = PAGE_TITLES[id] || id;
+  if (id==='tasks') renderKanban();
+  if (id==='clients') renderClients();
+  if (id==='leads') renderLeads();
+  if (id==='events') renderEvents();
+  if (id==='meetings') renderMeetings();
+  if (id==='finance') renderFinance();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TIME
+// ═══════════════════════════════════════════════════════════════
+function updateTime() {
+  const now = new Date();
+  const h = now.getHours();
+  const g = h<12?'Good morning, team':h<17?'Good afternoon, team':'Good evening, team';
+  const el = document.getElementById('greeting');
+  if (el) el.textContent = g + ' 👋';
+  const ds = now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const ts = now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('pg-date').textContent = ds+' · '+ts;
+  const ot = document.getElementById('office-time');
+  if (ot) ot.textContent = ts;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════════════
+function updateStats() {
+  const totalTasks = Object.values(S.tasks).flat().length;
+  const totalClients = S.clients.length;
+  const activeClients = S.clients.filter(c=>c.status==='active').length;
+  const totalRevenue = S.clients.reduce((a,c)=>a+parseFloat(c.value||0),0);
+  const pipelineClients = S.clients.filter(c=>c.status==='pipeline'||c.status==='prospect').length;
+
+  document.getElementById('stat-clients').textContent = totalClients;
+  document.getElementById('stat-tasks').textContent = totalTasks;
+  document.getElementById('stat-events').textContent = S.events.length;
+  document.getElementById('stat-leads').textContent = S.leads.length;
+  document.getElementById('sb-clients').textContent = totalClients;
+  document.getElementById('c-total').textContent = totalClients;
+  document.getElementById('c-active').textContent = activeClients;
+  document.getElementById('c-revenue').textContent = 'CHF '+totalRevenue.toLocaleString();
+  document.getElementById('c-pipeline').textContent = pipelineClients;
+
+  const finRev = S.finance.transactions.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0);
+  const finExp = S.finance.transactions.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0);
+  document.getElementById('f-revenue').textContent = 'CHF '+finRev.toLocaleString();
+  document.getElementById('f-expenses').textContent = 'CHF '+finExp.toLocaleString();
+  document.getElementById('f-profit').textContent = 'CHF '+(finRev-finExp).toLocaleString();
+
+  // Home snippets
+  const allTasks = Object.values(S.tasks).flat().filter(t=>t.col!=='done').slice(0,3);
+  const hp = document.getElementById('home-projects');
+  if (hp) hp.innerHTML = allTasks.length ? allTasks.map(t=>`
+    <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+      <div style="width:7px;height:7px;border-radius:50%;background:${priorityColor(t.priority)};flex-shrink:0"></div>
+      <div style="flex:1;font-size:13px;font-weight:500">${t.title}</div>
+      <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:${priorityColor(t.priority)}18;color:${priorityColor(t.priority)}">${t.assign||'VIC'}</span>
+    </div>`).join('') : '<div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">All done! 🎉</div>';
+
+  const upEvents = S.events.filter(e=>new Date(e.date)>=new Date()).sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,3);
+  const he = document.getElementById('home-events');
+  if (he) he.innerHTML = upEvents.length ? upEvents.map(e=>`
+    <div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
+      <div style="font-weight:600">${e.name}</div>
+      <div style="color:var(--muted);font-size:11px">${formatDate(e.date)} · ${e.who==='BOTH'?'Both attending':e.who+' attending'}</div>
+    </div>`).join('') : '<div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No upcoming events.</div>';
+
+  const recentMeetings = [...S.meetings].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,3);
+  const hm = document.getElementById('home-meetings');
+  if (hm) hm.innerHTML = recentMeetings.length ? recentMeetings.map(m=>`
+    <div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
+      <div style="font-weight:600">${m.title}</div>
+      <div style="color:var(--muted);font-size:11px">${m.client} · ${formatDate(m.date)}</div>
+    </div>`).join('') : '<div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No meetings yet.</div>';
+}
+
+function priorityColor(p) {
+  return p==='urgent'?'#c07070':p==='high'?'#b89a60':p==='medium'?'#649aa2':'#8a8680';
+}
+function formatDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.ov').forEach(o => o.addEventListener('click', e => { if(e.target===o) o.classList.remove('open'); }));
+
+// ═══════════════════════════════════════════════════════════════
+// KANBAN
+// ═══════════════════════════════════════════════════════════════
+const COLS = [
+  { id:'backlog', label:'Backlog', color:'#8a8680' },
+  { id:'todo', label:'To Do', color:'#649aa2' },
+  { id:'inprogress', label:'In Progress', color:'#b89a60' },
+  { id:'review', label:'Review', color:'#8a7ba8' },
+  { id:'done', label:'Done', color:'#6b8f71' },
+];
+
+let dragCard = null, dragFrom = null;
+
+function renderKanban() {
+  const board = document.getElementById('kanban-board');
+  board.innerHTML = COLS.map(col => {
+    const cards = (S.tasks[col.id]||[]);
+    return `
+    <div class="kc">
+      <div class="kh">
+        <div class="khl"><div class="kd" style="background:${col.color}"></div>${col.label}<span class="kn">${cards.length}</span></div>
+      </div>
+      <div class="kb-body" id="col-${col.id}" ondragover="dragOver(event,'${col.id}')" ondrop="dropCard(event,'${col.id}')" ondragleave="dragLeave(event)">
+        ${cards.map((c,i) => `
+        <div class="kcard" draggable="true" ondragstart="dragStart(event,'${col.id}',${i})" id="kc-${col.id}-${i}">
+          <button class="kdel" onclick="deleteTask('${col.id}',${i})">✕</button>
+          <div class="kcard-t">${c.title}</div>
+          ${c.tag ? `<span class="tag" style="background:#64646420;color:var(--muted)">${c.tag}</span>` : ''}
+          <div class="kcard-m">
+            <div style="width:6px;height:6px;border-radius:50%;background:${priorityColor(c.priority)};display:inline-block"></div>
+            <span>${c.priority||'low'}</span>
+            ${c.assign ? `<div class="kcard-assign" style="background:${c.assign==='VIC'?'#649aa2':c.assign==='GEN'?'#6b8f71':'#8a7ba8'}">${c.assign}</div>` : ''}
+            ${c.due ? `<span>📅 ${formatDate(c.due)}</span>` : ''}
+          </div>
+          ${c.desc ? `<div style="font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4">${c.desc.slice(0,80)}${c.desc.length>80?'...':''}</div>` : ''}
+        </div>`).join('')}
+        <div class="kadd" onclick="quickAddTask('${col.id}')">+ Add card</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function dragStart(e, col, idx) {
+  dragCard = { col, idx };
+  setTimeout(() => { const el = document.getElementById(`kc-${col}-${idx}`); if(el) el.classList.add('dragging'); }, 0);
+}
+function dragOver(e, col) { e.preventDefault(); document.getElementById('col-'+col).classList.add('over'); }
+function dragLeave(e) { document.querySelectorAll('.kb-body').forEach(b=>b.classList.remove('over')); }
+function dropCard(e, toCol) {
+  e.preventDefault();
+  document.querySelectorAll('.kb-body').forEach(b=>b.classList.remove('over'));
+  if (!dragCard || dragCard.col===toCol) { dragCard=null; return; }
+  const card = S.tasks[dragCard.col].splice(dragCard.idx, 1)[0];
+  card.col = toCol;
+  S.tasks[toCol].push(card);
+  dragCard = null;
+  save(); renderKanban();
+}
+
+function addTask() {
+  const title = document.getElementById('t-title').value.trim();
+  if (!title) return;
+  const col = document.getElementById('t-col').value;
+  S.tasks[col].push({
+    title, col,
+    priority: document.getElementById('t-priority').value,
+    assign: document.getElementById('t-assign').value,
+    due: document.getElementById('t-due').value,
+    desc: document.getElementById('t-desc').value,
+    tag: document.getElementById('t-tag').value,
+    created: new Date().toISOString()
+  });
+  ['t-title','t-desc','t-tag','t-due'].forEach(id => document.getElementById(id).value='');
+  closeModal('add-task-modal');
+  save(); renderKanban();
+}
+
+function deleteTask(col, idx) {
+  if (confirm('Delete this task?')) { S.tasks[col].splice(idx,1); save(); renderKanban(); }
+}
+
+function quickAddTask(col) {
+  const title = prompt('Task title:');
+  if (!title) return;
+  S.tasks[col].push({ title, col, priority:'medium', assign:'VIC', created: new Date().toISOString() });
+  save(); renderKanban();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CLIENTS
+// ═══════════════════════════════════════════════════════════════
+function addClient() {
+  const name = document.getElementById('cl-name').value.trim();
+  if (!name) return;
+  S.clients.push({
+    id: Date.now(), name,
+    industry: document.getElementById('cl-industry').value,
+    contact: document.getElementById('cl-contact').value,
+    email: document.getElementById('cl-email').value,
+    phone: document.getElementById('cl-phone').value,
+    value: document.getElementById('cl-value').value || 0,
+    status: document.getElementById('cl-status').value,
+    website: document.getElementById('cl-web').value,
+    location: document.getElementById('cl-loc').value,
+    notes: document.getElementById('cl-notes').value,
+    since: new Date().toISOString()
+  });
+  ['cl-name','cl-industry','cl-contact','cl-email','cl-phone','cl-value','cl-web','cl-loc','cl-notes'].forEach(id=>document.getElementById(id).value='');
+  closeModal('add-client-modal');
+  save(); renderClients();
+}
+
+function renderClients() {
+  const tbody = document.getElementById('clients-table');
+  if (!S.clients.length) { tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);font-style:italic;padding:24px">No clients yet.</td></tr>'; return; }
+  const statusColor = { active:'var(--green)', pipeline:'var(--amber)', prospect:'var(--purple)', paused:'var(--muted)', closed:'var(--red)' };
+  tbody.innerHTML = S.clients.map((c,i) => `
+    <tr>
+      <td><div style="font-weight:600">${c.name}</div><div style="font-size:11px;color:var(--muted)">${c.location||''}</div></td>
+      <td style="color:var(--muted)">${c.industry||'—'}</td>
+      <td><div style="font-size:13px">${c.contact||'—'}</div><div style="font-size:11px;color:var(--sage)">${c.email||''}</div></td>
+      <td style="font-weight:600;color:var(--sage)">CHF ${parseFloat(c.value||0).toLocaleString()}</td>
+      <td><span class="tag" style="background:${statusColor[c.status]||'var(--muted)'}18;color:${statusColor[c.status]||'var(--muted)'}">${c.status}</span></td>
+      <td style="color:var(--muted);font-size:12px">${formatDate(c.since)}</td>
+      <td><button class="btn-d" onclick="deleteClient(${i})">Delete</button></td>
+    </tr>`).join('');
+}
+
+function deleteClient(i) {
+  if (confirm('Remove this client?')) { S.clients.splice(i,1); save(); renderClients(); }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LEADS
+// ═══════════════════════════════════════════════════════════════
+let leadFilter = 'all';
+
+function addLeadManual() {
+  const name = document.getElementById('ld-name').value.trim();
+  if (!name) return;
+  S.leads.push({
+    id: Date.now(), name,
+    type: document.getElementById('ld-type').value,
+    area: document.getElementById('ld-area').value,
+    phone: document.getElementById('ld-phone').value,
+    email: document.getElementById('ld-email').value,
+    rating: document.getElementById('ld-rating').value,
+    status: document.getElementById('ld-status').value,
+    notes: document.getElementById('ld-notes').value,
+    contacted: false,
+    added: new Date().toISOString()
+  });
+  ['ld-name','ld-type','ld-area','ld-phone','ld-email','ld-rating','ld-notes'].forEach(id=>document.getElementById(id).value='');
+  closeModal('add-lead-modal');
+  save(); renderLeads();
+}
+
+function handleCSV(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const lines = e.target.result.split('\n').filter(l=>l.trim());
+    const headers = lines[0].toLowerCase().split(',').map(h=>h.trim().replace(/"/g,''));
+    const getCol = (row, ...names) => {
+      for (const n of names) {
+        const i = headers.findIndex(h=>h.includes(n));
+        if (i>=0 && row[i]) return row[i].replace(/"/g,'').trim();
+      }
+      return '';
+    };
+    let added = 0;
+    lines.slice(1).forEach(line => {
+      const row = line.split(',');
+      const name = getCol(row,'name','business','company','title');
+      if (!name) return;
+      S.leads.push({
+        id: Date.now()+Math.random(),
+        name, 
+        type: getCol(row,'type','category','industry'),
+        area: getCol(row,'area','location','city','district'),
+        phone: getCol(row,'phone','tel','mobile'),
+        email: getCol(row,'email','mail'),
+        rating: getCol(row,'rating','stars','score'),
+        status: getCol(row,'status') || 'warm',
+        contacted: false,
+        added: new Date().toISOString()
+      });
+      added++;
+    });
+    addOfficeLog(`CSV uploaded: ${added} leads imported successfully!`);
+    save(); renderLeads();
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function dropCSV(e) {
+  e.preventDefault();
+  document.getElementById('csv-drop').classList.remove('over');
+  const file = e.dataTransfer.files[0];
+  if (!file || !file.name.endsWith('.csv')) return;
+  const fakeInput = { files:[file] };
+  handleCSV(fakeInput);
+}
+
+function filterLeads(f, btn) {
+  leadFilter = f;
+  document.querySelectorAll('#pg-leads .btn-o').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderLeads();
+}
+
+function renderLeads() {
+  const hot = S.leads.filter(l=>l.status==='hot').length;
+  const warm = S.leads.filter(l=>l.status==='warm').length;
+  const cold = S.leads.filter(l=>l.status==='cold').length;
+  const contacted = S.leads.filter(l=>l.contacted).length;
+  document.getElementById('lf-all').textContent = S.leads.length;
+  document.getElementById('lf-hot').textContent = hot;
+  document.getElementById('lf-warm').textContent = warm;
+  document.getElementById('lf-cold').textContent = cold;
+  document.getElementById('lf-contacted').textContent = contacted;
+
+  let filtered = S.leads;
+  if (leadFilter==='hot') filtered = S.leads.filter(l=>l.status==='hot');
+  else if (leadFilter==='warm') filtered = S.leads.filter(l=>l.status==='warm');
+  else if (leadFilter==='cold') filtered = S.leads.filter(l=>l.status==='cold');
+  else if (leadFilter==='contacted') filtered = S.leads.filter(l=>l.contacted);
+
+  const tbody = document.getElementById('leads-table');
+  if (!filtered.length) { tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--muted);font-style:italic;padding:24px">No leads found.</td></tr>'; return; }
+  const sc = { hot:'var(--red)', warm:'var(--amber)', cold:'var(--muted)' };
+  tbody.innerHTML = filtered.map((l,i) => {
+    const ri = S.leads.indexOf(l);
+    return `<tr>
+      <td style="font-weight:600">${l.name}</td>
+      <td style="color:var(--muted)">${l.type||'—'}</td>
+      <td style="color:var(--muted)">${l.area||'—'}</td>
+      <td style="color:var(--sage)">${l.phone||'—'}</td>
+      <td style="color:var(--muted);font-size:12px">${l.email||'—'}</td>
+      <td>${l.rating?'⭐ '+l.rating:'—'}</td>
+      <td><span class="tag" style="background:${sc[l.status]||'var(--muted)'}18;color:${sc[l.status]||'var(--muted)'}">${l.status}</span></td>
+      <td style="display:flex;gap:6px;align-items:center">
+        <button onclick="toggleContacted(${ri})" style="padding:4px 10px;border-radius:8px;border:1px solid ${l.contacted?'var(--green)':'var(--border)'};background:${l.contacted?'rgba(107,143,113,.1)':'var(--card)'};color:${l.contacted?'var(--green)':'var(--muted)'};cursor:pointer;font-size:11px;font-weight:600;font-family:inherit">${l.contacted?'✓ Done':'Contact'}</button>
+        <button class="btn-d" style="padding:3px 8px;font-size:11px" onclick="deleteLead(${ri})">✕</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleContacted(i) { S.leads[i].contacted=!S.leads[i].contacted; save(); renderLeads(); }
+function deleteLead(i) { S.leads.splice(i,1); save(); renderLeads(); }
+
+// ═══════════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════════
+let evFilter = 'all';
+function filterEvents(f, btn) {
+  evFilter = f;
+  document.querySelectorAll('#pg-events .btn-o').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderEvents();
+}
+
+function addEvent() {
+  const name = document.getElementById('ev-name').value.trim();
+  if (!name) return;
+  S.events.push({
+    id: Date.now(), name,
+    date: document.getElementById('ev-date').value,
+    time: document.getElementById('ev-time').value,
+    type: document.getElementById('ev-type').value,
+    location: document.getElementById('ev-location').value,
+    url: document.getElementById('ev-url').value,
+    price: document.getElementById('ev-price').value || 0,
+    tickets: document.getElementById('ev-tickets').value || 1,
+    who: document.getElementById('ev-who').value,
+    goldNote: document.getElementById('ev-gold').value,
+    goal: document.getElementById('ev-goal').value,
+    created: new Date().toISOString()
+  });
+  ['ev-name','ev-date','ev-time','ev-location','ev-url','ev-price','ev-gold','ev-goal'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ev-tickets').value='1';
+  closeModal('add-event-modal');
+  save(); renderEvents();
+}
+
+function renderEvents() {
+  const list = document.getElementById('events-list');
+  let filtered = [...S.events].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if (evFilter==='upcoming') filtered=filtered.filter(e=>new Date(e.date)>=new Date());
+  else if (evFilter!=='all') filtered=filtered.filter(e=>e.type.toLowerCase()===evFilter.toLowerCase());
+
+  if (!filtered.length) { list.innerHTML='<div style="color:var(--muted);font-size:14px;font-style:italic;text-align:center;padding:40px">No events found.</div>'; return; }
+
+  const whoColor = { VIC:'var(--sage)', GEN:'var(--green)', BOTH:'var(--purple)' };
+  const typeColor = { Tech:'var(--sage)', Networking:'var(--purple)', Conference:'var(--amber)', Government:'var(--green)', Workshop:'var(--red)', Startup:'var(--amber)' };
+
+  list.innerHTML = filtered.map((e,i) => {
+    const d = e.date ? new Date(e.date) : null;
+    const day = d ? d.getDate() : '--';
+    const mon = d ? d.toLocaleString('en',{month:'short'}).toUpperCase() : '';
+    const past = d && d < new Date();
+    const ri = S.events.indexOf(e);
+    return `
+    <div class="ev-card" style="${past?'opacity:.6':''}">
+      <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
+      <div class="ev-body">
+        <div class="ev-title">${e.name}${past?' <span style="font-size:10px;color:var(--muted)">(past)</span>':''}</div>
+        <div class="ev-meta">
+          ${e.time?`<span>🕐 ${e.time}</span>`:''}
+          ${e.location?`<span>📍 ${e.location}</span>`:''}
+          <span class="tag" style="background:${typeColor[e.type]||'var(--muted)'}18;color:${typeColor[e.type]||'var(--muted)'}">${e.type}</span>
+          <span class="tag" style="background:${whoColor[e.who]}18;color:${whoColor[e.who]}">${e.who==='BOTH'?'Both attending':e.who+' attending'}</span>
+          ${e.price>0?`<span>🎫 CHF ${e.price} × ${e.tickets} = CHF ${e.price*e.tickets}</span>`:`<span>🎫 Free</span>`}
+        </div>
+        ${e.goal?`<div style="font-size:12px;color:var(--muted)">🎯 ${e.goal}</div>`:''}
+        ${e.goldNote?`<div class="ev-note">⭐ ${e.goldNote}</div>`:''}
+        ${e.url?`<a href="${e.url}" target="_blank" style="font-size:12px;color:var(--sage);text-decoration:none;display:inline-flex;align-items:center;gap:3px;margin-top:6px">🔗 Event link →</a>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+        <button class="btn-d" onclick="deleteEvent(${ri})">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function deleteEvent(i) { if(confirm('Delete event?')){ S.events.splice(i,1); save(); renderEvents(); } }
+
+// ═══════════════════════════════════════════════════════════════
+// MEETINGS
+// ═══════════════════════════════════════════════════════════════
+function addMeeting() {
+  const title = document.getElementById('mt-title').value.trim();
+  if (!title) return;
+  S.meetings.push({
+    id: Date.now(), title,
+    date: document.getElementById('mt-date').value,
+    time: document.getElementById('mt-time').value,
+    duration: document.getElementById('mt-duration').value,
+    client: document.getElementById('mt-client').value,
+    contact: document.getElementById('mt-contact').value,
+    format: document.getElementById('mt-format').value,
+    who: document.getElementById('mt-who').value,
+    outcome: document.getElementById('mt-outcome').value,
+    summary: document.getElementById('mt-summary').value,
+    goldNote: document.getElementById('mt-gold').value,
+    nextStep: document.getElementById('mt-next').value,
+    value: document.getElementById('mt-value').value || 0,
+    created: new Date().toISOString()
+  });
+  ['mt-title','mt-date','mt-time','mt-client','mt-contact','mt-summary','mt-gold','mt-next','mt-value'].forEach(id=>document.getElementById(id).value='');
+  closeModal('add-meeting-modal');
+  save(); renderMeetings();
+}
+
+function renderMeetings() {
+  const list = document.getElementById('meetings-list');
+  if (!S.meetings.length) { list.innerHTML='<div style="color:var(--muted);font-size:14px;font-style:italic;text-align:center;padding:40px">No meetings logged yet.</div>'; return; }
+  const sorted = [...S.meetings].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const oc = { positive:'var(--green)', followup:'var(--amber)', proposal:'var(--purple)', closed:'var(--sage)', lost:'var(--red)' };
+  const whoColor = { VIC:'var(--sage)', GEN:'var(--green)', BOTH:'var(--purple)' };
+  list.innerHTML = sorted.map((m,i) => {
+    const ri = S.meetings.indexOf(m);
+    return `
+    <div class="mt-card">
+      <div class="mt-header">
+        <div>
+          <div class="mt-title">${m.title}</div>
+          <div class="mt-time">${formatDate(m.date)}${m.time?' · '+m.time:''} · ${m.duration||''}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="tag" style="background:${oc[m.outcome]||'var(--muted)'}18;color:${oc[m.outcome]||'var(--muted)'}">${m.outcome}</span>
+          <button class="btn-d" onclick="deleteMeeting(${ri})">✕</button>
+        </div>
+      </div>
+      <div class="mt-meta">
+        <span>👤 ${m.client||'—'}${m.contact?' · '+m.contact:''}</span>
+        <span>📞 ${m.format||'—'}</span>
+        <span class="tag" style="background:${whoColor[m.who]}18;color:${whoColor[m.who]};margin-left:4px">${m.who}</span>
+        ${m.value>0?`<span>💰 CHF ${parseFloat(m.value).toLocaleString()} potential</span>`:''}
+      </div>
+      ${m.summary?`<div style="font-size:13px;color:var(--charcoal);line-height:1.55;margin-bottom:8px">${m.summary}</div>`:''}
+      ${m.goldNote?`<div class="mt-note">⭐ ${m.goldNote}</div>`:''}
+      ${m.nextStep?`<div style="font-size:12px;color:var(--sage);margin-top:8px;font-weight:600">→ Next: ${m.nextStep}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function deleteMeeting(i) { if(confirm('Delete meeting?')){ S.meetings.splice(i,1); save(); renderMeetings(); } }
+
+// ═══════════════════════════════════════════════════════════════
+// FINANCE
+// ═══════════════════════════════════════════════════════════════
+function addTransaction() {
+  const desc = document.getElementById('f-desc').value.trim();
+  const amount = parseFloat(document.getElementById('f-amount').value)||0;
+  if (!desc||!amount) return;
+  S.finance.transactions.push({
+    desc, amount,
+    type: document.getElementById('f-type').value,
+    cat: document.getElementById('f-cat').value,
+    date: document.getElementById('f-date').value || new Date().toISOString().split('T')[0],
+    id: Date.now()
+  });
+  document.getElementById('f-desc').value='';
+  document.getElementById('f-amount').value='';
+  save(); renderFinance();
+}
+
+function renderFinance() {
+  const tbody = document.getElementById('finance-table');
+  if (!S.finance.transactions.length) { tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);font-style:italic;padding:20px">No transactions yet.</td></tr>'; return; }
+  const sorted = [...S.finance.transactions].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  tbody.innerHTML = sorted.map((t,i) => `
+    <tr>
+      <td style="color:var(--muted);font-size:12px">${formatDate(t.date)}</td>
+      <td style="font-weight:500">${t.desc}</td>
+      <td><span class="tag" style="background:#64646418;color:var(--muted)">${t.cat}</span></td>
+      <td style="font-weight:700;color:${t.type==='income'?'var(--green)':'var(--red)'}">${t.type==='income'?'+':'-'}CHF ${t.amount.toLocaleString()}</td>
+    </tr>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RAZER OFFICE CANVAS
+// ═══════════════════════════════════════════════════════════════
+const canvas = document.getElementById('officeCanvas');
+const ctx = canvas.getContext('2d');
+const CW = 1060, CH = 420;
+let frame = 0;
+let officeLog = [];
+let logMsgs = [
+  'VIC is reviewing the client proposal...',
+  'GEN is working on the new website design...',
+  'VIC is on a call with a prospect...',
+  'GEN is updating the Trello board...',
+  'VIC is analyzing Meta ads data...',
+  'GEN is preparing the event presentation...',
+  'VIC is coding the new feature...',
+  'GEN is brewing coffee ☕',
+  'VIC is reviewing contracts...',
+  'GEN is doing competitor research...',
+  'VIC joined the meeting...',
+  'GEN is on a call...',
+];
+
+function addOfficeLog(msg) {
+  const t = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  officeLog.unshift(`[${t}] ${msg}`);
+  if (officeLog.length > 20) officeLog.pop();
+  const el = document.getElementById('office-log');
+  if (el) el.innerHTML = officeLog.map((l,i)=>`<div style="${i===0?'color:#00ff41':'color:#00aa20'}">${l}</div>`).join('');
+}
+
+// Characters
+const CHARS = [
+  { name:'VIC', color:'#649aa2', label:'V', x:340, y:200, tx:340, ty:200, hx:340, hy:200, state:'idle', timer:80, blink:0, task:'' },
+  { name:'GEN', color:'#6b8f71', label:'G', x:680, y:200, tx:680, ty:200, hx:680, hy:200, state:'idle', timer:120, blink:40, task:'' },
+];
+
+// Random walk targets within room bounds
+function randomPos() {
+  const zones = [
+    { x:200, y:140, w:220, h:130 }, // left side
+    { x:620, y:140, w:220, h:130 }, // right side
+    { x:380, y:160, w:300, h:100 }, // center living area
+    { x:100, y:280, w:160, h:100 }, // kitchen area
+    { x:820, y:120, w:120, h:100 }, // bathroom area
+  ];
+  const z = zones[Math.floor(Math.random()*zones.length)];
+  return { x: z.x + Math.random()*z.w, y: z.y + Math.random()*z.h };
+}
+
+function drawRazerLogo(ctx, cx, cy, size, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(cx, cy);
+  // Razer snake simplified
+  ctx.strokeStyle = '#00ff41';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = '#00ff41';
+  ctx.shadowBlur = 8;
+  // Triangle shape
+  ctx.beginPath();
+  ctx.moveTo(0, -size);
+  ctx.lineTo(size*0.866, size*0.5);
+  ctx.lineTo(-size*0.866, size*0.5);
+  ctx.closePath();
+  ctx.stroke();
+  // Inner triangle
+  ctx.beginPath();
+  ctx.moveTo(0, -size*0.5);
+  ctx.lineTo(size*0.433, size*0.25);
+  ctx.lineTo(-size*0.433, size*0.25);
+  ctx.closePath();
+  ctx.fillStyle = '#00ff4122';
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawOcto(ctx, x, y, color, blink, busy, scale=1) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  // Tentacles
+  for (let t=0; t<8; t++) {
+    const a = (t/8)*Math.PI*2;
+    const w = Math.sin(frame*0.07+t)*3;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.globalAlpha = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a)*7, Math.sin(a)*7+3);
+    const ex = Math.cos(a)*16+w;
+    const ey = Math.sin(a)*16+8;
+    ctx.quadraticCurveTo(Math.cos(a)*11+w*0.4, Math.sin(a)*11+5, ex, ey);
+    ctx.stroke();
+    ctx.globalAlpha = 0.3;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(ex*0.82, ey*0.82, 1.2, 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  // Body glow
+  ctx.fillStyle = color;
+  ctx.globalAlpha = 0.12;
+  ctx.beginPath();
+  ctx.arc(0, -2, 15, 0, Math.PI*2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  // Body
+  const g = ctx.createRadialGradient(-2,-4,1,0,-2,10);
+  g.addColorStop(0, color);
+  g.addColorStop(1, color+'cc');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.ellipse(0,-2,10,11,0,0,Math.PI*2);
+  ctx.fill();
+  // Shine
+  ctx.fillStyle = '#ffffff33';
+  ctx.beginPath();
+  ctx.ellipse(-3,-6,4,2.5,-0.5,0,Math.PI*2);
+  ctx.fill();
+  // Eyes
+  if (blink%100 < 5) {
+    ctx.fillStyle='#fff5';
+    ctx.fillRect(-4,-5,3,1.5); ctx.fillRect(1,-5,3,1.5);
+  } else {
+    ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.arc(-2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#1a1a1a';
+    ctx.beginPath(); ctx.arc(-2,-4.5,1,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(3,-4.5,1,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.arc(-1.5,-5,0.45,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(3.5,-5,0.45,0,Math.PI*2); ctx.fill();
+  }
+  // Name badge
+  ctx.fillStyle = color;
+  ctx.font = 'bold 8px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 4;
+  ctx.fillText(busy ? '...' : '', 0, -26);
+  ctx.shadowBlur = 0;
+  // Busy ring
+  if (busy) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = 0.5;
+    ctx.setLineDash([3,4]);
+    ctx.beginPath();
+    ctx.arc(0,-2,16,frame*0.08, frame*0.08+Math.PI*1.5);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+  }
+  ctx.restore();
+}
+
+function renderOffice() {
+  // === FLOOR — RAZER DARK GAMING ===
+  // Dark floor with Razer grid pattern
+  ctx.fillStyle = '#050f05';
+  ctx.fillRect(0,0,CW,CH);
+
+  // Razer hex grid pattern
+  ctx.strokeStyle = '#00ff4112';
+  ctx.lineWidth = 0.5;
+  const hs = 28;
+  for (let gx = 0; gx < CW; gx += hs*1.5) {
+    for (let gy = 0; gy < CH; gy += hs) {
+      const ox = (Math.floor(gy/hs)%2===0) ? 0 : hs*0.75;
+      ctx.beginPath();
+      ctx.moveTo(gx+ox+hs*0.5, gy);
+      ctx.lineTo(gx+ox+hs, gy+hs*0.5);
+      ctx.lineTo(gx+ox+hs*0.5, gy+hs);
+      ctx.lineTo(gx+ox, gy+hs*0.5);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+
+  // Razer logo watermark on floor
+  for (let rx = 120; rx < CW-100; rx += 320) {
+    for (let ry = 80; ry < CH-60; ry += 200) {
+      drawRazerLogo(ctx, rx, ry, 28, 0.08+Math.sin(frame*0.02+rx*0.01)*0.03);
+    }
+  }
+
+  // Central big Razer logo
+  drawRazerLogo(ctx, CW/2, CH/2-20, 55, 0.06+Math.sin(frame*0.015)*0.02);
+
+  // Razer text
+  ctx.fillStyle = '#00ff4120';
+  ctx.font = 'bold 80px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '8px';
+  ctx.fillText('RAZER', CW/2, CH/2+45);
+  ctx.textAlign = 'left';
+
+  // === WALLS ===
+  // Back wall
+  ctx.fillStyle = '#0a1a0a';
+  ctx.fillRect(0, 0, CW, 110);
+  // Wall border glow
+  ctx.strokeStyle = '#00ff4130';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = '#00ff41';
+  ctx.shadowBlur = 8;
+  ctx.beginPath();
+  ctx.moveTo(0,110); ctx.lineTo(CW,110);
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Left wall
+  ctx.fillStyle = '#0a160a';
+  ctx.fillRect(0,0,90,CH);
+  ctx.strokeStyle = '#00ff4120';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(90,0); ctx.lineTo(90,CH);
+  ctx.stroke();
+
+  // Right wall
+  ctx.fillStyle = '#0a160a';
+  ctx.fillRect(CW-90,0,90,CH);
+  ctx.beginPath();
+  ctx.moveTo(CW-90,0); ctx.lineTo(CW-90,CH);
+  ctx.stroke();
+
+  // === VIC's DESK (left side against wall) ===
+  // Desk surface
+  ctx.fillStyle = '#1a1a1a';
+  ctx.strokeStyle = '#00ff4140';
+  ctx.lineWidth = 1.5;
+  ctx.shadowColor = '#00ff41';
+  ctx.shadowBlur = 6;
+  roundRect(ctx, 95, 120, 210, 90, 6);
+  ctx.fill();
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Monitor stand
+  ctx.fillStyle = '#111';
+  ctx.fillRect(175, 104, 50, 20);
+  // Monitor screen
+  ctx.fillStyle = '#0d0d0d';
+  ctx.strokeStyle = '#00ff4150';
+  ctx.lineWidth = 2;
+  roundRect(ctx, 140, 60, 120, 50, 4);
+  ctx.fill(); ctx.stroke();
+  // Screen content - Razer green glow
+  ctx.fillStyle = '#00ff4115';
+  ctx.fillRect(145, 65, 110, 40);
+  // Code lines on screen
+  ctx.fillStyle = '#00ff4150';
+  ctx.font = '6px monospace';
+  ['const agent = new Claude()', 'await scrapeLeads(zurich)', 'analysis.run()', '// PolypusTech OS'].forEach((l,i)=>{
+    ctx.fillText(l, 150, 73+i*9);
+  });
+
+  // Keyboard
+  ctx.fillStyle = '#111';
+  ctx.strokeStyle = '#00ff4130';
+  ctx.lineWidth = 1;
+  roundRect(ctx, 105, 188, 130, 18, 3);
+  ctx.fill(); ctx.stroke();
+  // Razer keyboard keys glow
+  for (let k=0; k<13; k++) {
+    ctx.fillStyle = `hsl(${120+k*5},100%,${40+Math.sin(frame*0.1+k)*10}%)`;
+    ctx.globalAlpha = 0.4;
+    ctx.fillRect(108+k*9, 190, 7, 14);
+    ctx.globalAlpha = 1;
+  }
+  // Mouse
+  ctx.fillStyle = '#1a1a1a';
+  ctx.strokeStyle = '#00ff4130';
+  roundRect(ctx, 248, 188, 28, 18, 6);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#00ff4140';
+  ctx.fillRect(262, 189, 1, 16);
+
+  // VIC nameplate
+  ctx.fillStyle = '#00ff41';
+  ctx.font = 'bold 9px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = '#00ff41';
+  ctx.shadowBlur = 4;
+  ctx.fillText('VIC', 200, 218);
+  ctx.shadowBlur = 0;
+
+  // === GEN's DESK (right side against wall) ===
+  ctx.fillStyle = '#1a1a1a';
+  ctx.strokeStyle = '#39ff1440';
+  ctx.lineWidth = 1.5;
+  ctx.shadowColor = '#39ff14';
+  ctx.shadowBlur = 6;
+  roundRect(ctx, CW-305, 120, 210, 90, 6);
+  ctx.fill(); ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // GEN Monitor
+  ctx.fillStyle = '#111';
+  ctx.fillRect(CW-195, 104, 50, 20);
+  ctx.fillStyle = '#0d0d0d';
+  ctx.strokeStyle = '#39ff1450';
+  ctx.lineWidth = 2;
+  roundRect(ctx, CW-230, 60, 120, 50, 4);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#39ff1415';
+  ctx.fillRect(CW-225, 65, 110, 40);
+  ctx.fillStyle = '#39ff1450';
+  ctx.font = '6px monospace';
+  ['Figma — Design v3.2', 'client: Maison Doux', 'export: final_v3.fig', '// GEN workspace'].forEach((l,i)=>{
+    ctx.fillText(l, CW-220, 73+i*9);
+  });
+  // GEN Keyboard
+  ctx.fillStyle = '#111';
+  ctx.strokeStyle = '#39ff1430';
+  roundRect(ctx, CW-295, 188, 130, 18, 3);
+  ctx.fill(); ctx.stroke();
+  for (let k=0; k<13; k++) {
+    ctx.fillStyle = `hsl(${100+k*3},100%,${40+Math.sin(frame*0.08+k)*10}%)`;
+    ctx.globalAlpha = 0.4;
+    ctx.fillRect(CW-292+k*9, 190, 7, 14);
+    ctx.globalAlpha = 1;
+  }
+  // GEN nameplate
+  ctx.fillStyle = '#39ff14';
+  ctx.font = 'bold 9px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = '#39ff14';
+  ctx.shadowBlur = 4;
+  ctx.fillText('GEN', CW-200, 218);
+  ctx.shadowBlur = 0;
+  ctx.textAlign = 'left';
+
+  // === COUCH (center) ===
+  // Couch body
+  ctx.fillStyle = '#1a1a2a';
+  ctx.strokeStyle = '#00ff4120';
+  ctx.lineWidth = 1.5;
+  roundRect(ctx, 380, 240, 300, 80, 12);
+  ctx.fill(); ctx.stroke();
+  // Cushions
+  [395,450,510,570].forEach(cx=>{
+    ctx.fillStyle = '#222233';
+    ctx.strokeStyle = '#00ff4115';
+    roundRect(ctx, cx, 250, 50, 55, 8);
+    ctx.fill(); ctx.stroke();
+  });
+  // Couch back
+  ctx.fillStyle = '#16162a';
+  ctx.strokeStyle = '#00ff4120';
+  roundRect(ctx, 380, 225, 300, 22, 8);
+  ctx.fill(); ctx.stroke();
+  // Couch arms
+  ctx.fillStyle = '#1a1a2a';
+  ctx.strokeStyle = '#00ff4120';
+  roundRect(ctx, 375, 235, 18, 88, 6); ctx.fill(); ctx.stroke();
+  roundRect(ctx, 667, 235, 18, 88, 6); ctx.fill(); ctx.stroke();
+  // Couch pillows
+  ctx.fillStyle = '#649aa233';
+  ctx.strokeStyle = '#649aa250';
+  roundRect(ctx, 398, 235, 40, 30, 6); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#6b8f7133';
+  ctx.strokeStyle = '#6b8f7150';
+  roundRect(ctx, 620, 235, 40, 30, 6); ctx.fill(); ctx.stroke();
+
+  // Coffee table
+  ctx.fillStyle = '#111100';
+  ctx.strokeStyle = '#b89a6040';
+  ctx.lineWidth = 1;
+  roundRect(ctx, 440, 330, 180, 50, 8);
+  ctx.fill(); ctx.stroke();
+  // Items on table
+  ctx.fillStyle = '#2a1a0a';
+  roundRect(ctx, 455, 337, 35, 36, 4); ctx.fill(); // book
+  ctx.fillStyle = '#8a8680';
+  ctx.beginPath(); ctx.arc(530, 355, 8, 0, Math.PI*2); ctx.fill(); // mug
+  ctx.fillStyle = '#3a200a';
+  ctx.beginPath(); ctx.arc(530, 355, 5, 0, Math.PI*2); ctx.fill(); // coffee
+  // Laptop on table
+  ctx.fillStyle = '#1a1a1a';
+  ctx.strokeStyle = '#00ff4130';
+  roundRect(ctx, 555, 335, 50, 35, 3); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#00ff4110';
+  ctx.fillRect(558, 338, 44, 28);
+
+  // === KITCHEN AREA (left bottom) ===
+  // Kitchen counter
+  ctx.fillStyle = '#0f1a0f';
+  ctx.strokeStyle = '#00ff4125';
+  ctx.lineWidth = 1.5;
+  roundRect(ctx, 90, 310, 240, 70, 8);
+  ctx.fill(); ctx.stroke();
+  // Counter top
+  ctx.fillStyle = '#1a2a1a';
+  roundRect(ctx, 92, 310, 238, 18, 6);
+  ctx.fill();
+  // Sink
+  ctx.fillStyle = '#0a0a0a';
+  ctx.strokeStyle = '#00ff4120';
+  roundRect(ctx, 210, 313, 60, 12, 3);
+  ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#649aa2';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(240, 314, 3, 0, Math.PI*2); ctx.stroke();
+
+  // FRIDGE (next to kitchen)
+  ctx.fillStyle = '#0d1a0d';
+  ctx.strokeStyle = '#00ff4140';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = '#00ff41';
+  ctx.shadowBlur = 5;
+  roundRect(ctx, 340, 295, 55, 95, 6);
+  ctx.fill(); ctx.stroke();
+  ctx.shadowBlur = 0;
+  // Fridge handle
+  ctx.strokeStyle = '#00ff4160';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(360, 305); ctx.lineTo(360, 320);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(360, 340); ctx.lineTo(360, 358);
+  ctx.stroke();
+  // Fridge divider
+  ctx.strokeStyle = '#00ff4125';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(342, 332); ctx.lineTo(393, 332);
+  ctx.stroke();
+  // Fridge glow light
+  ctx.fillStyle = '#00ff4108';
+  ctx.fillRect(344, 298, 48, 32);
+  ctx.fillStyle = '#00ff41';
+  ctx.font = 'bold 7px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('❄', 367, 316);
+  ctx.textAlign = 'left';
+  // Fridge label
+  ctx.fillStyle = '#00ff4140';
+  ctx.font = '7px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('FRIDGE', 367, 378);
+  ctx.textAlign = 'left';
+
+  // Kitchen appliances
+  // Coffee machine
+  ctx.fillStyle = '#111';
+  ctx.strokeStyle = '#c0707050';
+  roundRect(ctx, 100, 316, 40, 40, 4); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#c0707040';
+  roundRect(ctx, 105, 320, 30, 16, 3); ctx.fill();
+  ctx.fillStyle = '#c07070';
+  ctx.font = 'bold 7px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('☕', 120, 348);
+
+  // Stove
+  ctx.fillStyle = '#0a0a0a';
+  ctx.strokeStyle = '#b89a6030';
+  roundRect(ctx, 155, 316, 45, 40, 4); ctx.fill(); ctx.stroke();
+  [10,10,30,30].forEach((ox,i)=>{
+    ctx.strokeStyle = '#ff440030';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(160+(i%2)*22, 322+(Math.floor(i/2))*16, 6, 0, Math.PI*2);
+    ctx.stroke();
+  });
+  ctx.textAlign = 'left';
+
+  // Kitchen label
+  ctx.fillStyle = '#00ff4130';
+  ctx.font = '8px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('KITCHEN', 210, 392);
+  ctx.textAlign = 'left';
+
+  // === BATHROOM (right side behind kitchen) ===
+  // Bathroom door
+  ctx.fillStyle = '#0a150a';
+  ctx.strokeStyle = '#00ff4130';
+  ctx.lineWidth = 1.5;
+  roundRect(ctx, CW-88, 250, 60, 100, 4);
+  ctx.fill(); ctx.stroke();
+  // Door handle
+  ctx.strokeStyle = '#00ff4160';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(CW-45, 300, 5, 0, Math.PI*2);
+  ctx.stroke();
+  // Door label
+  ctx.fillStyle = '#00ff4140';
+  ctx.font = '7px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('WC', CW-58, 380);
+  // Bathroom sign
+  ctx.font = '14px sans-serif';
+  ctx.fillText('🚽', CW-70, 300);
+  ctx.textAlign = 'left';
+
+  // === PLANTS ===
+  [[100,230],[CW-88,230],[530,100],[CW/2-20,100]].forEach(([px,py])=>{
+    ctx.fillStyle = '#1a0a0a';
+    ctx.fillRect(px, py+10, 10, 16);
+    ctx.fillStyle = '#0a2a0a';
+    ctx.beginPath();
+    ctx.arc(px+5, py, 16, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#0a1a0a';
+    ctx.beginPath();
+    ctx.arc(px-6, py+4, 10, 0, Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(px+16, py+4, 10, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // === RAZER ACCENT LIGHTING strips ===
+  // Floor strips
+  ctx.shadowColor = '#00ff41';
+  ctx.shadowBlur = 12;
+  ctx.strokeStyle = `rgba(0,255,65,${0.2+Math.sin(frame*0.03)*0.08})`;
+  ctx.lineWidth = 2;
+  // Bottom strip
+  ctx.beginPath(); ctx.moveTo(90,CH-8); ctx.lineTo(CW-90,CH-8); ctx.stroke();
+  // Top strip
+  ctx.beginPath(); ctx.moveTo(90,112); ctx.lineTo(CW-90,112); ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // === CHARACTERS ===
+  CHARS.forEach(c=>{
+    const bob = Math.sin(frame*0.04+c.blink*0.1)*0.8;
+    drawOcto(ctx, c.x, c.y+bob, c.color, c.blink, c.state==='task');
+    // Name label
+    ctx.fillStyle = c.color;
+    ctx.font = 'bold 9px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = c.color;
+    ctx.shadowBlur = 5;
+    ctx.fillText(c.name, c.x, c.y-26);
+    if (c.task) {
+      ctx.font = '8px sans-serif';
+      ctx.fillStyle = c.color+'cc';
+      ctx.fillText(c.task.slice(0,22), c.x, c.y-36);
+    }
+    ctx.shadowBlur = 0;
+    ctx.textAlign = 'left';
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+function tickChars() {
+  CHARS.forEach(c => {
+    c.blink++;
+    c.timer--;
+    // Move toward target
+    const dx=c.tx-c.x, dy=c.ty-c.y;
+    const d = Math.sqrt(dx*dx+dy*dy);
+    if (d>1.5) { c.x+=dx*0.06; c.y+=dy*0.06; }
+    else { c.x=c.tx; c.y=c.ty; }
+
+    if (c.timer<=0) {
+      const roll=Math.random();
+      if (c.state==='idle') {
+        if (roll<0.25) {
+          // Walk somewhere
+          const pos = randomPos();
+          c.tx=pos.x; c.ty=pos.y;
+          c.state='walk'; c.timer=70+Math.random()*60;
+        } else if (roll<0.55) {
+          // Do a task
+          c.state='task';
+          c.task=logMsgs[Math.floor(Math.random()*logMsgs.length)];
+          c.timer=90+Math.random()*60;
+          addOfficeLog(c.name+': '+c.task);
+        } else {
+          c.timer=60+Math.random()*60;
+        }
+      } else if (c.state==='walk') {
+        c.state='idle'; c.tx=c.hx; c.ty=c.hy;
+        c.timer=80+Math.random()*80;
+      } else if (c.state==='task') {
+        c.state='idle'; c.task='';
+        c.timer=60+Math.random()*60;
+      }
+    }
+  });
+}
+
+function officeLoop() {
+  frame++;
+  tickChars();
+  renderOffice();
+  requestAnimationFrame(officeLoop);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+updateTime();
+setInterval(updateTime, 1000);
+updateStats();
+renderKanban();
+
+// Set today date defaults
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('t-due').value = today;
+document.getElementById('ev-date').value = today;
+document.getElementById('mt-date').value = today;
+document.getElementById('f-date').value = today;
+
+// Start office
+addOfficeLog('PolypusTech HQ booted. VIC and GEN online.');
+setTimeout(()=>addOfficeLog('Razer gaming setup initialized. All systems green.'),2000);
+officeLoop();
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done! Size: $(wc -l < /mnt/user-data/outputs/PolypusTech_Dashboard.html) lines, $(wc -c < /mnt/user-data/outputs/PolypusTech_Dashboard.html) bytes"
