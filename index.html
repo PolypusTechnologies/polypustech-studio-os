@@ -174,6 +174,9 @@ tr:hover td{background:#fafaf8}
   <button class="nb" onclick="goTo('events')" id="nb-events"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="nl">Events</span></button>
   <button class="nb" onclick="goTo('meetings')" id="nb-meetings"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="nl">Meetings</span></button>
   <button class="nb" onclick="goTo('finance')" id="nb-finance"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="nl">Finance</span></button>
+  <button class="nb" onclick="goTo('expenses')" id="nb-expenses"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="nl">Bills</span></button>
+  <button class="nb" onclick="goTo('extreme')" id="nb-extreme"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><span class="nl">EXTREME</span></button>
+  <button class="nb" onclick="goTo('games')" id="nb-games"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4"/><circle cx="16" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/></svg></div><span class="nl">Games</span></button>
   <div class="sb-ft"><strong id="sb-clients">0</strong>clients</div>
 </div>
 
@@ -219,7 +222,7 @@ tr:hover td{background:#fafaf8}
         <span style="background:#0a1a0a;border:1px solid #00ff4133;color:#00aa20;padding:3px 10px;border-radius:20px;font-size:11px;font-family:monospace" id="office-time">--:--</span>
       </div>
     </div>
-    <canvas id="officeCanvas" width="1060" height="420"></canvas>
+    <canvas id="officeCanvas" width="1060" height="280"></canvas>
     <div class="office-log" id="office-log">
       <div>System boot... PolypusTech HQ online.</div>
     </div>
@@ -359,6 +362,213 @@ tr:hover td{background:#fafaf8}
   </div>
 </div>
 
+<!-- ═══ EXPENSES ════════════════════════════════════════════════ -->
+<div class="pg" id="pg-expenses">
+  <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
+    <div><h2 style="font-size:16px;font-weight:700">Monthly Bills & Expenses</h2><p style="color:var(--muted);font-size:12px">Track recurring costs and get alerts before they hit</p></div>
+    <button class="btn btn-p" onclick="openModal('add-expense-modal')">+ Add Expense</button>
+  </div>
+  <div class="g4" style="margin-bottom:16px">
+    <div class="sc"><div class="sv" style="color:var(--red)" id="exp-monthly">CHF 0</div><div class="sl">Monthly Total</div></div>
+    <div class="sc"><div class="sv" style="color:var(--amber)" id="exp-due">0</div><div class="sl">Due This Week</div></div>
+    <div class="sc"><div class="sv" style="color:var(--green)" id="exp-paid">0</div><div class="sl">Paid This Month</div></div>
+    <div class="sc"><div class="sv" style="color:var(--purple)" id="exp-annual">CHF 0</div><div class="sl">Annual Cost</div></div>
+  </div>
+  <!-- ALERT BANNER -->
+  <div id="exp-alerts"></div>
+  <!-- UPCOMING -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="ct" style="margin-bottom:12px">📅 Upcoming This Month</div>
+    <div id="exp-upcoming"></div>
+  </div>
+  <!-- ALL EXPENSES -->
+  <div class="card">
+    <div class="ct">All Recurring Expenses</div>
+    <table>
+      <thead><tr><th>Name</th><th>Category</th><th>Amount</th><th>Frequency</th><th>Due Day</th><th>Who Pays</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="expenses-table"><tr><td colspan="8" style="text-align:center;color:var(--muted);font-style:italic;padding:24px">No expenses yet. Add your first recurring cost!</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ EXTREME MODE ════════════════════════════════════════════ -->
+<div class="pg" id="pg-extreme">
+  <div style="background:linear-gradient(135deg,#1a0000,#0a0a1a);border:1px solid #c0707060;border-radius:var(--r);padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:22px;font-weight:700;color:#ff4444;text-shadow:0 0 20px #ff4444;font-family:monospace">⚡ EXTREME MODE</div>
+      <div style="color:#ff666680;font-size:13px;margin-top:4px">No excuses. No delays. Execute or die trying.</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div style="text-align:center;background:#1a0000;border:1px solid #ff444430;border-radius:10px;padding:10px 16px">
+        <div style="font-size:20px;font-weight:700;color:#ff4444;font-family:monospace" id="ex-overdue">0</div>
+        <div style="font-size:10px;color:#ff444480">OVERDUE</div>
+      </div>
+      <div style="text-align:center;background:#1a0a00;border:1px solid #ff884430;border-radius:10px;padding:10px 16px">
+        <div style="font-size:20px;font-weight:700;color:#ff8844;font-family:monospace" id="ex-today">0</div>
+        <div style="font-size:10px;color:#ff884480">DUE TODAY</div>
+      </div>
+      <div style="text-align:center;background:#001a00;border:1px solid #44ff4430;border-radius:10px;padding:10px 16px">
+        <div style="font-size:20px;font-weight:700;color:#44ff44;font-family:monospace" id="ex-done">0</div>
+        <div style="font-size:10px;color:#44ff4480">CRUSHED</div>
+      </div>
+      <button class="btn" style="background:#ff4444;color:#fff;font-family:monospace;font-weight:700" onclick="openModal('add-extreme-modal')">+ ADD MISSION</button>
+    </div>
+  </div>
+  <div id="extreme-list"><div style="color:var(--muted);text-align:center;padding:40px;font-style:italic">No missions yet. You better add some.</div></div>
+</div>
+
+<!-- ═══ GAMES ═══════════════════════════════════════════════════ -->
+<div class="pg" id="pg-games">
+  <div style="margin-bottom:16px">
+    <h2 style="font-size:16px;font-weight:700">🎮 Games Room — VIC vs GEN</h2>
+    <p style="color:var(--muted);font-size:12px">Take a break. Compete. Winner does the next coffee run.</p>
+  </div>
+
+  <!-- Game selector -->
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn-o on" onclick="selectGame('tron',this)" id="game-btn-tron">⚡ FL Tron 2</button>
+    <button class="btn-o" onclick="selectGame('pong',this)" id="game-btn-pong">🏓 Pong</button>
+    <button class="btn-o" onclick="selectGame('snake',this)" id="game-btn-snake">🐍 Snake Battle</button>
+    <button class="btn-o" onclick="selectGame('external',this)" id="game-btn-external">🌐 More Games</button>
+  </div>
+
+  <!-- TRON GAME -->
+  <div id="game-tron">
+    <div class="card" style="background:#050f05;border-color:#00ff4130;padding:12px;margin-bottom:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="color:#00ff41;font-family:monospace;font-weight:700;font-size:15px">⚡ FL TRON 2 — VIC vs GEN</div>
+        <div style="display:flex;gap:16px;font-family:monospace;font-size:13px">
+          <span style="color:#649aa2">VIC: <strong id="tron-score-vic">0</strong></span>
+          <span style="color:#00ff41">GEN: <strong id="tron-score-gen">0</strong></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <canvas id="tronCanvas" width="700" height="440" style="border:2px solid #00ff4130;border-radius:8px;background:#050f05;display:block"></canvas>
+        <div style="flex:1;color:#00ff4180;font-family:monospace;font-size:11px;line-height:1.8">
+          <div style="color:#00ff41;font-weight:700;margin-bottom:8px">CONTROLS</div>
+          <div style="background:#0a1a0a;border:1px solid #00ff4120;border-radius:8px;padding:10px;margin-bottom:10px">
+            <div style="color:#649aa2;font-weight:700;margin-bottom:6px">🔵 VIC (Blue)</div>
+            <div>↑ W — Up</div>
+            <div>↓ S — Down</div>
+            <div>← A — Left</div>
+            <div>→ D — Right</div>
+          </div>
+          <div style="background:#0a1a0a;border:1px solid #00ff4120;border-radius:8px;padding:10px;margin-bottom:10px">
+            <div style="color:#00ff41;font-weight:700;margin-bottom:6px">🟢 GEN (Green)</div>
+            <div>↑ Arrow Up</div>
+            <div>↓ Arrow Down</div>
+            <div>← Arrow Left</div>
+            <div>→ Arrow Right</div>
+          </div>
+          <button onclick="startTron()" style="width:100%;background:#00ff41;color:#050f05;border:none;border-radius:8px;padding:10px;font-weight:700;font-family:monospace;cursor:pointer;font-size:13px">▶ START / RESTART</button>
+          <div style="margin-top:10px;color:#00ff4160;font-size:10px;text-align:center" id="tron-status">Press START to begin</div>
+          <div style="margin-top:16px;color:#00ff4180;font-weight:700">RULES</div>
+          <div style="font-size:10px;margin-top:4px;color:#00ff4160">Don't hit walls or trails. Last one moving wins. First to 5 wins the round.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PONG GAME -->
+  <div id="game-pong" style="display:none">
+    <div class="card" style="background:#050505;border-color:#64646430;padding:12px;margin-bottom:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="color:#fff;font-family:monospace;font-weight:700;font-size:15px">🏓 PONG — VIC vs GEN</div>
+        <div style="display:flex;gap:20px;font-family:monospace;font-size:18px;font-weight:700">
+          <span style="color:#649aa2" id="pong-score-vic">0</span>
+          <span style="color:#fff">—</span>
+          <span style="color:#6b8f71" id="pong-score-gen">0</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <canvas id="pongCanvas" width="700" height="440" style="border:2px solid #ffffff20;border-radius:8px;background:#050505;display:block"></canvas>
+        <div style="flex:1;font-family:monospace;font-size:11px;line-height:1.8;color:#888">
+          <div style="color:#fff;font-weight:700;margin-bottom:8px">CONTROLS</div>
+          <div style="background:#111;border:1px solid #333;border-radius:8px;padding:10px;margin-bottom:10px">
+            <div style="color:#649aa2;font-weight:700;margin-bottom:6px">🔵 VIC (Left)</div>
+            <div>W — Up</div><div>S — Down</div>
+          </div>
+          <div style="background:#111;border:1px solid #333;border-radius:8px;padding:10px;margin-bottom:10px">
+            <div style="color:#6b8f71;font-weight:700;margin-bottom:6px">🟢 GEN (Right)</div>
+            <div>↑ — Up</div><div>↓ — Down</div>
+          </div>
+          <button onclick="startPong()" style="width:100%;background:#fff;color:#050505;border:none;border-radius:8px;padding:10px;font-weight:700;font-family:monospace;cursor:pointer">▶ START / RESTART</button>
+          <div style="margin-top:10px;color:#555;font-size:10px;text-align:center" id="pong-status">Press START to begin</div>
+          <div style="margin-top:16px;color:#888;font-weight:700">RULES</div>
+          <div style="font-size:10px;margin-top:4px;color:#555">First to 7 points wins. Ball speeds up every rally.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SNAKE BATTLE -->
+  <div id="game-snake" style="display:none">
+    <div class="card" style="background:#05050f;border-color:#8a7ba830;padding:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="color:#a88aff;font-family:monospace;font-weight:700;font-size:15px">🐍 SNAKE BATTLE — VIC vs GEN</div>
+        <div style="display:flex;gap:16px;font-family:monospace;font-size:13px">
+          <span style="color:#649aa2">VIC: <strong id="snake-score-vic">0</strong></span>
+          <span style="color:#a88aff">GEN: <strong id="snake-score-gen">0</strong></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <canvas id="snakeCanvas" width="700" height="440" style="border:2px solid #a88aff30;border-radius:8px;background:#05050f;display:block"></canvas>
+        <div style="flex:1;font-family:monospace;font-size:11px;line-height:1.8;color:#8a7ba8">
+          <div style="color:#a88aff;font-weight:700;margin-bottom:8px">CONTROLS</div>
+          <div style="background:#0a0a1a;border:1px solid #a88aff20;border-radius:8px;padding:10px;margin-bottom:10px">
+            <div style="color:#649aa2;font-weight:700;margin-bottom:6px">🔵 VIC</div>
+            <div>W A S D</div>
+          </div>
+          <div style="background:#0a0a1a;border:1px solid #a88aff20;border-radius:8px;padding:10px;margin-bottom:10px">
+            <div style="color:#a88aff;font-weight:700;margin-bottom:6px">🟣 GEN</div>
+            <div>Arrow Keys</div>
+          </div>
+          <button onclick="startSnake()" style="width:100%;background:#a88aff;color:#050505;border:none;border-radius:8px;padding:10px;font-weight:700;font-family:monospace;cursor:pointer">▶ START / RESTART</button>
+          <div style="margin-top:10px;color:#8a7ba8;font-size:10px;text-align:center" id="snake-status">Press START to begin</div>
+          <div style="margin-top:16px;color:#a88aff80;font-weight:700">RULES</div>
+          <div style="font-size:10px;margin-top:4px;color:#8a7ba8">Eat apples to grow. Don't hit walls, yourself, or the other snake. Most apples when someone dies wins.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXTERNAL GAMES -->
+  <div id="game-external" style="display:none">
+    <div class="g3">
+      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#00ff4130" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/fl-tron','_blank')">
+        <div style="font-size:36px;margin-bottom:8px">⚡</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">FL Tron 2</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player light cycles. Classic Tron battle.</div>
+        <button class="btn" style="background:#00ff41;color:#050f05;font-size:12px;padding:6px 14px">Play Now ↗</button>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#ff664430" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/fireboy-and-watergirl-1','_blank')">
+        <div style="font-size:36px;margin-bottom:8px">🔥</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Fireboy & Watergirl</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player co-op platform adventure.</div>
+        <button class="btn" style="background:#ff6644;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#b89a6030" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/tank-trouble','_blank')">
+        <div style="font-size:36px;margin-bottom:8px">🎯</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Tank Trouble</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2-3 player tank battle arena.</div>
+        <button class="btn" style="background:#b89a60;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#8a7ba830" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/stickman-fighter-infinity','_blank')">
+        <div style="font-size:36px;margin-bottom:8px">🥊</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Stickman Fighter</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player stickman fighting game.</div>
+        <button class="btn" style="background:#8a7ba8;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#649aa230" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/chess','_blank')">
+        <div style="font-size:36px;margin-bottom:8px">♟</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Chess</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Classic chess. Timeless competition.</div>
+        <button class="btn" style="background:#649aa2;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#6b8f7130" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/8-ball-pool','_blank')">
+        <div style="font-size:36px;margin-bottom:8px">🎱</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">8 Ball Pool</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player billiards. Precision wins.</div>
+        <button class="btn" style="background:#6b8f71;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- end cnt -->
 </div><!-- end main -->
 
@@ -491,14 +701,54 @@ tr:hover td{background:#fafaf8}
 </div>
 </div>
 
+<!-- ADD EXPENSE MODAL -->
+<div class="ov" id="add-expense-modal">
+<div class="mdl">
+  <div class="mdl-t">Add Recurring Expense <button class="mdl-x" onclick="closeModal('add-expense-modal')">×</button></div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Expense Name</label><input class="fi" id="ex-name" placeholder="e.g. Vercel Pro"></div>
+    <div class="fg"><label class="fl">Category</label><select class="fs" id="ex-cat"><option>Software/SaaS</option><option>Hosting</option><option>Marketing</option><option>APIs</option><option>Equipment</option><option>Office</option><option>Legal</option><option>Other</option></select></div>
+  </div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Amount (CHF)</label><input class="fi" type="number" id="ex-amount" placeholder="0"></div>
+    <div class="fg"><label class="fl">Frequency</label><select class="fs" id="ex-freq"><option>Monthly</option><option>Quarterly</option><option>Annual</option><option>One-time</option></select></div>
+    <div class="fg"><label class="fl">Due Day</label><input class="fi" type="number" id="ex-day" placeholder="1-31" min="1" max="31"></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Who Pays?</label><select class="fs" id="ex-who"><option value="VIC">Victor</option><option value="GEN">Gen</option><option value="BOTH">Split 50/50</option><option value="COMPANY">Company</option></select></div>
+    <div class="fg"><label class="fl">Next Due Date</label><input class="fi" type="date" id="ex-due"></div>
+  </div>
+  <div class="gold-note">
+    <div class="gn-label">⭐ Note</div>
+    <input class="fi" id="ex-note" placeholder="e.g. Can cancel if no clients by May" style="background:transparent;border-color:rgba(184,154,96,.4)">
+  </div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-expense-modal')">Cancel</button><button class="btn btn-p" onclick="addExpense()">Add Expense</button></div>
+</div>
+</div>
+
+<!-- ADD EXTREME TASK MODAL -->
+<div class="ov" id="add-extreme-modal">
+<div class="mdl" style="background:#0a0a0a;border:1px solid #ff444430">
+  <div class="mdl-t" style="color:#ff4444">⚡ ADD MISSION <button class="mdl-x" onclick="closeModal('add-extreme-modal')" style="color:#ff4444">×</button></div>
+  <div class="fg"><label class="fl" style="color:#ff4444">Mission Title</label><input class="fi" id="xt-title" placeholder="e.g. Close 3 clients this week — NO EXCUSES" style="background:#1a0000;border-color:#ff444440;color:#ff8888"></div>
+  <div class="fr3">
+    <div class="fg"><label class="fl" style="color:#ff4444">Deadline</label><input class="fi" type="date" id="xt-due" style="background:#1a0000;border-color:#ff444440;color:#ff8888"></div>
+    <div class="fg"><label class="fl" style="color:#ff4444">Priority</label><select class="fs" id="xt-priority" style="background:#1a0000;border-color:#ff444440;color:#ff8888"><option value="critical">🔴 CRITICAL</option><option value="high">🟠 HIGH</option><option value="medium">🟡 MEDIUM</option></select></div>
+    <div class="fg"><label class="fl" style="color:#ff4444">Assigned To</label><select class="fs" id="xt-who" style="background:#1a0000;border-color:#ff444440;color:#ff8888"><option value="VIC">Victor</option><option value="GEN">Gen</option><option value="BOTH">Both</option></select></div>
+  </div>
+  <div class="fg"><label class="fl" style="color:#ff4444">Why This Matters (motivation)</label><textarea class="fta" id="xt-why" placeholder="If you don't do this by the deadline... what happens? Be brutal." style="background:#1a0000;border-color:#ff444440;color:#ff8888"></textarea></div>
+  <div class="fg"><label class="fl" style="color:#ff4444">Consequence if missed</label><input class="fi" id="xt-consequence" placeholder="e.g. We lose CHF 5,000 potential revenue" style="background:#1a0000;border-color:#ff444440;color:#ff8888"></div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-extreme-modal')">Cancel</button><button class="btn" style="background:#ff4444;color:#fff" onclick="addExtremeMission()">⚡ ADD MISSION</button></div>
+</div>
+</div>
+
 <script>
-// ═══════════════════════════════════════════════════════════════
-// STATE
 // ═══════════════════════════════════════════════════════════════
 const S = {
   tasks: { backlog:[], todo:[], inprogress:[], review:[], done:[] },
   clients: [], leads: [], events: [], meetings: [],
-  finance: { transactions:[], revenue:0, expenses:0 }
+  finance: { transactions:[], revenue:0, expenses:0 },
+  expenses: [], extremeTasks: []
 };
 
 // Try load from localStorage
@@ -1044,7 +1294,7 @@ function renderFinance() {
 // ═══════════════════════════════════════════════════════════════
 const canvas = document.getElementById('officeCanvas');
 const ctx = canvas.getContext('2d');
-const CW = 1060, CH = 420;
+const CW = 1060, CH = 280;
 let frame = 0;
 let officeLog = [];
 let logMsgs = [
@@ -1667,8 +1917,472 @@ document.getElementById('f-date').value = today;
 addOfficeLog('PolypusTech HQ booted. VIC and GEN online.');
 setTimeout(()=>addOfficeLog('Razer gaming setup initialized. All systems green.'),2000);
 officeLoop();
+// ═══ EXPENSES EXTREME GAMES — loaded after main script ═══
+
+const PAGE_TITLES2 = { expenses:'Bills & Expenses', extreme:'⚡ EXTREME MODE', games:'🎮 Games Room' };
+Object.assign(PAGE_TITLES, PAGE_TITLES2);
+
+const _origGoTo = goTo;
+function goTo(id) {
+  _origGoTo(id);
+  if (id==='expenses') renderExpenses();
+  if (id==='extreme') renderExtreme();
+  if (id==='games') selectGame('tron', document.getElementById('game-btn-tron'));
+}
+
+function addExpense() {
+  const name = document.getElementById('ex-name').value.trim();
+  if (!name) return;
+  S.expenses.push({
+    id: Date.now(), name,
+    cat: document.getElementById('ex-cat').value,
+    amount: parseFloat(document.getElementById('ex-amount').value)||0,
+    freq: document.getElementById('ex-freq').value,
+    day: document.getElementById('ex-day').value,
+    who: document.getElementById('ex-who').value,
+    due: document.getElementById('ex-due').value,
+    note: document.getElementById('ex-note').value,
+    paid: false,
+    created: new Date().toISOString()
+  });
+  ['ex-name','ex-amount','ex-day','ex-due','ex-note'].forEach(id=>document.getElementById(id).value='');
+  closeModal('add-expense-modal');
+  save(); renderExpenses();
+}
+
+function renderExpenses() {
+  const now = new Date();
+  const thisMonth = now.getMonth();
+  const monthly = S.expenses.filter(e=>e.freq==='Monthly').reduce((a,e)=>a+e.amount,0);
+  const annual = S.expenses.reduce((a,e)=>{
+    if(e.freq==='Monthly') return a+e.amount*12;
+    if(e.freq==='Quarterly') return a+e.amount*4;
+    if(e.freq==='Annual') return a+e.amount;
+    return a+e.amount;
+  },0);
+  const upcoming = S.expenses.filter(e=>{
+    if(!e.due) return false;
+    const d = new Date(e.due);
+    const diff = (d-now)/(1000*60*60*24);
+    return diff>=0 && diff<=7;
+  });
+  const paid = S.expenses.filter(e=>e.paid).length;
+
+  document.getElementById('exp-monthly').textContent = 'CHF '+monthly.toLocaleString();
+  document.getElementById('exp-due').textContent = upcoming.length;
+  document.getElementById('exp-paid').textContent = paid;
+  document.getElementById('exp-annual').textContent = 'CHF '+annual.toLocaleString();
+
+  // Alerts
+  const alerts = document.getElementById('exp-alerts');
+  const overdue = S.expenses.filter(e=>{
+    if(!e.due||e.paid) return false;
+    return new Date(e.due) < now;
+  });
+  let alertHTML = '';
+  if (overdue.length) alertHTML += `<div style="background:#1a0000;border:1px solid #ff444450;border-radius:10px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🚨</span><div><div style="font-weight:700;color:#ff4444">OVERDUE: ${overdue.length} expense${overdue.length>1?'s':''} past due!</div><div style="font-size:12px;color:#ff444480">${overdue.map(e=>e.name+' (CHF '+e.amount+')').join(', ')}</div></div></div>`;
+  if (upcoming.length && !overdue.length) alertHTML += `<div style="background:#1a1000;border:1px solid #ff884450;border-radius:10px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px"><span style="font-size:20px">⚠️</span><div><div style="font-weight:700;color:#ff8844">${upcoming.length} expense${upcoming.length>1?'s':''} due within 7 days</div><div style="font-size:12px;color:#ff884480">${upcoming.map(e=>e.name+' — CHF '+e.amount+' — due '+formatDate(e.due)).join(' | ')}</div></div></div>`;
+  alerts.innerHTML = alertHTML;
+
+  // Upcoming section
+  const upEl = document.getElementById('exp-upcoming');
+  const sorted = [...S.expenses].filter(e=>!e.paid).sort((a,b)=>{
+    if(!a.due) return 1; if(!b.due) return -1;
+    return new Date(a.due)-new Date(b.due);
+  }).slice(0,6);
+  upEl.innerHTML = sorted.length ? sorted.map((e,i)=>{
+    const daysLeft = e.due ? Math.ceil((new Date(e.due)-now)/(1000*60*60*24)) : null;
+    const urgency = daysLeft !== null ? (daysLeft<0?'#ff4444':daysLeft<=3?'#ff8844':daysLeft<=7?'#b89a60':'var(--muted)') : 'var(--muted)';
+    const whoColors = {VIC:'#649aa2',GEN:'#6b8f71',BOTH:'#8a7ba8',COMPANY:'var(--muted)'};
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="width:46px;height:46px;background:${urgency}15;border:1px solid ${urgency}40;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
+        <div style="font-size:14px;font-weight:700;color:${urgency}">${daysLeft!==null?(daysLeft<0?'OVR':daysLeft):'-'}</div>
+        <div style="font-size:8px;color:${urgency}80">${daysLeft!==null?(daysLeft<0?'LATE':'DAYS'):''}</div>
+      </div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:13px">${e.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${e.cat} · ${e.freq}${e.due?' · Due '+formatDate(e.due):''}</div>
+        ${e.note?`<div style="font-size:11px;color:var(--amber);font-style:italic;margin-top:2px">⭐ ${e.note}</div>`:''}
+      </div>
+      <span class="tag" style="background:${whoColors[e.who]||'var(--muted)'}18;color:${whoColors[e.who]||'var(--muted)'}">${e.who}</span>
+      <div style="font-weight:700;color:var(--red)">CHF ${e.amount}</div>
+      <button onclick="markPaid(${i})" style="padding:4px 12px;border-radius:8px;border:1px solid var(--green);background:rgba(107,143,113,.1);color:var(--green);cursor:pointer;font-size:11px;font-weight:600;font-family:inherit">✓ Paid</button>
+    </div>`;
+  }).join('') : '<div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No upcoming expenses.</div>';
+
+  // Table
+  const tbody = document.getElementById('expenses-table');
+  if (!S.expenses.length) { tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--muted);font-style:italic;padding:24px">No expenses yet.</td></tr>'; return; }
+  const whoColors = {VIC:'var(--sage)',GEN:'var(--green)',BOTH:'var(--purple)',COMPANY:'var(--muted)'};
+  tbody.innerHTML = S.expenses.map((e,i)=>`
+    <tr style="${e.paid?'opacity:.5':''}">
+      <td style="font-weight:600">${e.name}</td>
+      <td style="color:var(--muted)">${e.cat}</td>
+      <td style="font-weight:700;color:var(--red)">CHF ${e.amount}</td>
+      <td style="color:var(--muted)">${e.freq}</td>
+      <td style="color:var(--muted)">${e.day||'—'}</td>
+      <td><span class="tag" style="background:${whoColors[e.who]}18;color:${whoColors[e.who]}">${e.who}</span></td>
+      <td><span class="tag" style="background:${e.paid?'var(--green)':'var(--amber)'}18;color:${e.paid?'var(--green)':'var(--amber)'}">${e.paid?'Paid':'Pending'}</span></td>
+      <td style="display:flex;gap:5px">
+        <button onclick="markPaidById(${i})" style="padding:3px 9px;border-radius:7px;border:1px solid var(--green);background:${e.paid?'rgba(107,143,113,.15)':'var(--card)'};color:var(--green);cursor:pointer;font-size:11px;font-family:inherit">${e.paid?'✓':'Pay'}</button>
+        <button class="btn-d" onclick="deleteExpense(${i})">✕</button>
+      </td>
+    </tr>`).join('');
+}
+
+function markPaid(idx) {
+  const sorted = [...S.expenses].filter(e=>!e.paid).sort((a,b)=>{
+    if(!a.due) return 1; if(!b.due) return -1;
+    return new Date(a.due)-new Date(b.due);
+  });
+  const target = sorted[idx];
+  const ri = S.expenses.indexOf(target);
+  if (ri>=0) { S.expenses[ri].paid=true; save(); renderExpenses(); }
+}
+function markPaidById(i) { S.expenses[i].paid=!S.expenses[i].paid; save(); renderExpenses(); }
+function deleteExpense(i) { if(confirm('Delete expense?')){ S.expenses.splice(i,1); save(); renderExpenses(); } }
+
+// ═══ EXTREME MODE ══════════════════════════════════════════════
+function addExtremeMission() {
+  const title = document.getElementById('xt-title').value.trim();
+  if (!title) return;
+  S.extremeTasks.push({
+    id: Date.now(), title,
+    due: document.getElementById('xt-due').value,
+    priority: document.getElementById('xt-priority').value,
+    who: document.getElementById('xt-who').value,
+    why: document.getElementById('xt-why').value,
+    consequence: document.getElementById('xt-consequence').value,
+    done: false,
+    created: new Date().toISOString()
+  });
+  ['xt-title','xt-due','xt-why','xt-consequence'].forEach(id=>document.getElementById(id).value='');
+  closeModal('add-extreme-modal');
+  save(); renderExtreme();
+}
+
+function renderExtreme() {
+  const now = new Date();
+  const today = new Date().toDateString();
+  const overdue = S.extremeTasks.filter(t=>!t.done&&t.due&&new Date(t.due)<now).length;
+  const dueToday = S.extremeTasks.filter(t=>!t.done&&t.due&&new Date(t.due).toDateString()===today).length;
+  const done = S.extremeTasks.filter(t=>t.done).length;
+  document.getElementById('ex-overdue').textContent = overdue;
+  document.getElementById('ex-today').textContent = dueToday;
+  document.getElementById('ex-done').textContent = done;
+
+  const list = document.getElementById('extreme-list');
+  const active = S.extremeTasks.filter(t=>!t.done).sort((a,b)=>{
+    const po = {critical:0,high:1,medium:2};
+    return (po[a.priority]||1)-(po[b.priority]||1);
+  });
+  const doneList = S.extremeTasks.filter(t=>t.done);
+  const pc = {critical:'#ff4444',high:'#ff8844',medium:'#ffcc44'};
+  const wc = {VIC:'#649aa2',GEN:'#6b8f71',BOTH:'#8a7ba8'};
+
+  const renderMission = (t,i,isDone) => {
+    const ri = S.extremeTasks.indexOf(t);
+    const daysLeft = t.due ? Math.ceil((new Date(t.due)-now)/(1000*60*60*24)) : null;
+    const isOverdue = daysLeft!==null && daysLeft<0 && !isDone;
+    const isTodayDue = daysLeft===0 && !isDone;
+    return `<div style="background:${isDone?'#0a0a0a':'#0f0000'};border:1px solid ${isDone?'#333':isOverdue?'#ff4444':isTodayDue?'#ff8844':pc[t.priority]||'#ff444440'}40;border-left:3px solid ${isDone?'var(--green)':pc[t.priority]||'#ff4444'};border-radius:10px;padding:14px 16px;margin-bottom:10px;${isOverdue?'animation:pulse 1.5s infinite':''};opacity:${isDone?.5:1}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            ${isOverdue?`<span style="background:#ff444420;color:#ff4444;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;font-family:monospace">🚨 OVERDUE ${Math.abs(daysLeft)}d</span>`:''}
+            ${isTodayDue?`<span style="background:#ff884420;color:#ff8844;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;font-family:monospace">⚡ DUE TODAY</span>`:''}
+            <span style="background:${pc[t.priority]||'#ff4444'}20;color:${pc[t.priority]||'#ff4444'};border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;font-family:monospace">${(t.priority||'').toUpperCase()}</span>
+            <span style="background:${wc[t.who]||'#649aa2'}20;color:${wc[t.who]||'#649aa2'};border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700">${t.who}</span>
+          </div>
+          <div style="font-weight:700;font-size:14px;color:${isDone?'#555':isOverdue?'#ff6666':'#ffcccc'};${isDone?'text-decoration:line-through':''};margin-bottom:6px">${t.title}</div>
+          ${t.due?`<div style="font-size:12px;color:${isOverdue?'#ff4444':'#ff884480'};font-family:monospace">Deadline: ${formatDate(t.due)}${daysLeft!==null&&!isDone?` (${daysLeft<0?Math.abs(daysLeft)+' days LATE':daysLeft===0?'TODAY':daysLeft+' days left'})`:''}</div>`:''}
+          ${t.why?`<div style="font-size:12px;color:#ff888860;margin-top:5px;font-style:italic">💡 ${t.why}</div>`:''}
+          ${t.consequence?`<div style="font-size:11px;color:#ff444460;margin-top:4px">⚠️ ${t.consequence}</div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">
+          <button onclick="completeExtreme(${ri})" style="padding:5px 12px;border-radius:8px;border:1px solid ${isDone?'#444':'#44ff44'};background:${isDone?'#111':'#003300'};color:${isDone?'#555':'#44ff44'};cursor:pointer;font-size:11px;font-weight:700;font-family:monospace">${isDone?'UNDO':'✓ DONE'}</button>
+          <button onclick="deleteExtreme(${ri})" style="padding:4px 12px;border-radius:8px;border:1px solid #ff444430;background:transparent;color:#ff4444;cursor:pointer;font-size:11px;font-family:monospace">DELETE</button>
+        </div>
+      </div>
+    </div>`;
+  };
+
+  list.innerHTML = (active.length ? active.map((t,i)=>renderMission(t,i,false)).join('') : '<div style="color:#44ff44;font-family:monospace;text-align:center;padding:20px;font-size:14px">🎯 ALL MISSIONS COMPLETE. ADD MORE.</div>')
+    + (doneList.length ? `<div style="color:#444;font-family:monospace;font-size:11px;margin:16px 0 8px">— COMPLETED (${doneList.length}) —</div>`+doneList.map((t,i)=>renderMission(t,i,true)).join('') : '');
+}
+
+function completeExtreme(i) { S.extremeTasks[i].done=!S.extremeTasks[i].done; save(); renderExtreme(); }
+function deleteExtreme(i) { if(confirm('Delete mission?')){ S.extremeTasks.splice(i,1); save(); renderExtreme(); } }
+
+// ═══ GAMES ═════════════════════════════════════════════════════
+function selectGame(id, btn) {
+  ['tron','pong','snake','external'].forEach(g=>{
+    document.getElementById('game-'+g).style.display=g===id?'block':'none';
+    document.getElementById('game-btn-'+g).classList.toggle('on',g===id);
+  });
+}
+
+// ── TRON ──
+const tronCanvas = document.getElementById('tronCanvas');
+const tctx = tronCanvas.getContext('2d');
+const TW=700,TH=440,CELL=8;
+let tronGame=null, tronRAF=null;
+let tronScores={vic:0,gen:0};
+
+function startTron(){
+  if(tronRAF) cancelAnimationFrame(tronRAF);
+  const cols=Math.floor(TW/CELL), rows=Math.floor(TH/CELL);
+  tronGame={
+    vic:{x:Math.floor(cols*0.25),y:Math.floor(rows/2),dx:1,dy:0,trail:[],alive:true,color:'#649aa2'},
+    gen:{x:Math.floor(cols*0.75),y:Math.floor(rows/2),dx:-1,dy:0,trail:[],alive:true,color:'#00ff41'},
+    speed:6, frameCount:0
+  };
+  document.getElementById('tron-status').textContent='GO! Don\'t crash!';
+  tronLoop();
+}
+
+const tronKeys={};
+document.addEventListener('keydown',e=>{
+  tronKeys[e.key]=true;
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+});
+document.addEventListener('keyup',e=>tronKeys[e.key]=false);
+
+function tronLoop(){
+  tronRAF=requestAnimationFrame(tronLoop);
+  if(!tronGame) return;
+  tronGame.frameCount++;
+  if(tronGame.frameCount%tronGame.speed!==0) { drawTron(); return; }
+
+  const g=tronGame;
+  // Input VIC (WASD)
+  if(tronKeys['w']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=-1;}
+  if(tronKeys['s']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=1;}
+  if(tronKeys['a']&&g.vic.dx===0){g.vic.dx=-1;g.vic.dy=0;}
+  if(tronKeys['d']&&g.vic.dx===0){g.vic.dx=1;g.vic.dy=0;}
+  // Input GEN (arrows)
+  if(tronKeys['ArrowUp']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=-1;}
+  if(tronKeys['ArrowDown']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=1;}
+  if(tronKeys['ArrowLeft']&&g.gen.dx===0){g.gen.dx=-1;g.gen.dy=0;}
+  if(tronKeys['ArrowRight']&&g.gen.dx===0){g.gen.dx=1;g.gen.dy=0;}
+
+  const cols=Math.floor(TW/CELL), rows=Math.floor(TH/CELL);
+  // Move
+  ['vic','gen'].forEach(p=>{
+    const pl=g[p];
+    if(!pl.alive) return;
+    pl.trail.push({x:pl.x,y:pl.y});
+    pl.x+=pl.dx; pl.y+=pl.dy;
+    // Wall collision
+    if(pl.x<0||pl.x>=cols||pl.y<0||pl.y>=rows) pl.alive=false;
+    // Self + other trail collision
+    const allTrails=[...g.vic.trail,...g.gen.trail];
+    if(allTrails.some(t=>t.x===pl.x&&t.y===pl.y)) pl.alive=false;
+  });
+
+  // Check end
+  if(!g.vic.alive||!g.gen.alive){
+    cancelAnimationFrame(tronRAF);
+    if(!g.vic.alive&&!g.gen.alive){document.getElementById('tron-status').textContent='DRAW! Press START again';}
+    else if(!g.vic.alive){tronScores.gen++;document.getElementById('tron-score-gen').textContent=tronScores.gen;document.getElementById('tron-status').textContent='GEN WINS! 🏆';}
+    else{tronScores.vic++;document.getElementById('tron-score-vic').textContent=tronScores.vic;document.getElementById('tron-status').textContent='VIC WINS! 🏆';}
+    tronGame=null;
+  }
+  drawTron();
+}
+
+function drawTron(){
+  tctx.fillStyle='#050f05';
+  tctx.fillRect(0,0,TW,TH);
+  // Grid
+  tctx.strokeStyle='#00ff4108';tctx.lineWidth=0.5;
+  for(let x=0;x<TW;x+=CELL){tctx.beginPath();tctx.moveTo(x,0);tctx.lineTo(x,TH);tctx.stroke();}
+  for(let y=0;y<TH;y+=CELL){tctx.beginPath();tctx.moveTo(0,y);tctx.lineTo(TW,y);tctx.stroke();}
+  if(!tronGame) return;
+  ['vic','gen'].forEach(p=>{
+    const pl=tronGame[p];
+    // Trail
+    pl.trail.forEach((t,i)=>{
+      tctx.fillStyle=pl.color;
+      tctx.globalAlpha=0.3+0.5*(i/pl.trail.length);
+      tctx.shadowColor=pl.color;tctx.shadowBlur=4;
+      tctx.fillRect(t.x*CELL+1,t.y*CELL+1,CELL-2,CELL-2);
+    });
+    tctx.globalAlpha=1;tctx.shadowBlur=0;
+    // Head
+    if(pl.alive){
+      tctx.fillStyle=pl.color;
+      tctx.shadowColor=pl.color;tctx.shadowBlur=12;
+      tctx.fillRect(pl.x*CELL,pl.y*CELL,CELL,CELL);
+      tctx.shadowBlur=0;
+    }
+  });
+  // Labels
+  tctx.fillStyle='#649aa2';tctx.font='bold 10px monospace';tctx.fillText('VIC',6,14);
+  tctx.fillStyle='#00ff41';tctx.fillText('GEN',TW-38,14);
+}
+drawTron();
+
+// ── PONG ──
+const pongCanvas=document.getElementById('pongCanvas');
+const pctx=pongCanvas.getContext('2d');
+let pongGame=null,pongRAF2=null;
+let pongScores={vic:0,gen:0};
+const pKeys={};
+document.addEventListener('keydown',e=>pKeys[e.key]=true);
+document.addEventListener('keyup',e=>pKeys[e.key]=false);
+
+function startPong(){
+  if(pongRAF2) cancelAnimationFrame(pongRAF2);
+  pongGame={
+    ball:{x:350,y:220,dx:4,dy:3,r:8},
+    vic:{x:18,y:170,w:12,h:80,score:0},
+    gen:{x:670,y:170,w:12,h:80,score:0},
+    speed:4
+  };
+  document.getElementById('pong-status').textContent='RALLY!';
+  pongLoop();
+}
+
+function pongLoop(){
+  pongRAF2=requestAnimationFrame(pongLoop);
+  if(!pongGame) return;
+  const g=pongGame;
+  // Paddles
+  if(pKeys['w']&&g.vic.y>0) g.vic.y-=6;
+  if(pKeys['s']&&g.vic.y<TH-g.vic.h) g.vic.y+=6;
+  if(pKeys['ArrowUp']&&g.gen.y>0) g.gen.y-=6;
+  if(pKeys['ArrowDown']&&g.gen.y<TH-g.gen.h) g.gen.y+=6;
+  // Ball
+  g.ball.x+=g.ball.dx; g.ball.y+=g.ball.dy;
+  if(g.ball.y-g.ball.r<0||g.ball.y+g.ball.r>TH) g.ball.dy*=-1;
+  // Paddle collision
+  if(g.ball.x-g.ball.r<g.vic.x+g.vic.w&&g.ball.y>g.vic.y&&g.ball.y<g.vic.y+g.vic.h&&g.ball.dx<0){
+    g.ball.dx*=-1.05;g.ball.dy+=(Math.random()-.5)*2;
+  }
+  if(g.ball.x+g.ball.r>g.gen.x&&g.ball.y>g.gen.y&&g.ball.y<g.gen.y+g.gen.h&&g.ball.dx>0){
+    g.ball.dx*=-1.05;g.ball.dy+=(Math.random()-.5)*2;
+  }
+  // Score
+  if(g.ball.x<0){pongScores.gen++;document.getElementById('pong-score-gen').textContent=pongScores.gen;resetBall(g,-1);}
+  if(g.ball.x>TW){pongScores.vic++;document.getElementById('pong-score-vic').textContent=pongScores.vic;resetBall(g,1);}
+  // Win
+  if(pongScores.vic>=7||pongScores.gen>=7){
+    cancelAnimationFrame(pongRAF2);
+    document.getElementById('pong-status').textContent=(pongScores.vic>=7?'VIC WINS!':'GEN WINS!')+' 🏆 Press START to rematch';
+    pongGame=null;pongScores={vic:0,gen:0};
+    document.getElementById('pong-score-vic').textContent=0;
+    document.getElementById('pong-score-gen').textContent=0;
+  }
+  drawPong();
+}
+
+function resetBall(g,dir){g.ball.x=350;g.ball.y=220;g.ball.dx=dir*4;g.ball.dy=(Math.random()-.5)*4;}
+
+function drawPong(){
+  pctx.fillStyle='#050505';pctx.fillRect(0,0,700,440);
+  pctx.strokeStyle='#ffffff10';pctx.lineWidth=2;pctx.setLineDash([10,10]);
+  pctx.beginPath();pctx.moveTo(350,0);pctx.lineTo(350,440);pctx.stroke();pctx.setLineDash([]);
+  if(!pongGame){pctx.fillStyle='#333';pctx.font='20px monospace';pctx.textAlign='center';pctx.fillText('Press START',350,220);pctx.textAlign='left';return;}
+  const g=pongGame;
+  pctx.fillStyle='#649aa2';pctx.shadowColor='#649aa2';pctx.shadowBlur=8;
+  pctx.fillRect(g.vic.x,g.vic.y,g.vic.w,g.vic.h);
+  pctx.fillStyle='#6b8f71';pctx.shadowColor='#6b8f71';
+  pctx.fillRect(g.gen.x,g.gen.y,g.gen.w,g.gen.h);
+  pctx.fillStyle='#fff';pctx.shadowColor='#fff';pctx.shadowBlur=12;
+  pctx.beginPath();pctx.arc(g.ball.x,g.ball.y,g.ball.r,0,Math.PI*2);pctx.fill();
+  pctx.shadowBlur=0;
+}
+drawPong();
+
+// ── SNAKE ──
+const snakeCanvas=document.getElementById('snakeCanvas');
+const sctx=snakeCanvas.getContext('2d');
+const SC=20;
+let snakeGame=null,snakeRAF=null,snakeFrame=0;
+let snakeScores={vic:0,gen:0};
+
+function startSnake(){
+  if(snakeRAF) cancelAnimationFrame(snakeRAF);
+  const cols=Math.floor(700/SC),rows=Math.floor(440/SC);
+  snakeGame={
+    vic:{body:[{x:8,y:11}],dx:1,dy:0,color:'#649aa2',score:0,alive:true},
+    gen:{body:[{x:26,y:11}],dx:-1,dy:0,color:'#a88aff',score:0,alive:true},
+    apple:{x:Math.floor(Math.random()*cols),y:Math.floor(Math.random()*rows)},
+    cols,rows,speed:8
+  };
+  document.getElementById('snake-status').textContent='EAT THE APPLES!';
+  snakeLoop();
+}
+
+function snakeLoop(){
+  snakeRAF=requestAnimationFrame(snakeLoop);
+  snakeFrame++;
+  if(!snakeGame||snakeFrame%snakeGame.speed!==0) { drawSnake(); return; }
+  const g=snakeGame;
+  // Input
+  if(tronKeys['w']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=-1;}
+  if(tronKeys['s']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=1;}
+  if(tronKeys['a']&&g.vic.dx===0){g.vic.dx=-1;g.vic.dy=0;}
+  if(tronKeys['d']&&g.vic.dx===0){g.vic.dx=1;g.vic.dy=0;}
+  if(pKeys['ArrowUp']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=-1;}
+  if(pKeys['ArrowDown']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=1;}
+  if(pKeys['ArrowLeft']&&g.gen.dx===0){g.gen.dx=-1;g.gen.dy=0;}
+  if(pKeys['ArrowRight']&&g.gen.dx===0){g.gen.dx=1;g.gen.dy=0;}
+
+  ['vic','gen'].forEach(p=>{
+    const pl=g[p]; if(!pl.alive) return;
+    const head={x:pl.body[0].x+pl.dx,y:pl.body[0].y+pl.dy};
+    if(head.x<0||head.x>=g.cols||head.y<0||head.y>=g.rows){pl.alive=false;return;}
+    const all=[...g.vic.body,...g.gen.body];
+    if(all.some(b=>b.x===head.x&&b.y===head.y)){pl.alive=false;return;}
+    pl.body.unshift(head);
+    if(head.x===g.apple.x&&head.y===g.apple.y){
+      pl.score++;
+      document.getElementById('snake-score-'+p).textContent=pl.score;
+      g.apple={x:Math.floor(Math.random()*g.cols),y:Math.floor(Math.random()*g.rows)};
+    } else { pl.body.pop(); }
+  });
+
+  if(!g.vic.alive||!g.gen.alive){
+    cancelAnimationFrame(snakeRAF);
+    const w=g.vic.score>g.gen.score?'VIC':g.gen.score>g.vic.score?'GEN':'TIE';
+    document.getElementById('snake-status').textContent=(w==='TIE'?'DRAW!':w+' WINS! 🏆')+' — Press START to replay';
+    snakeGame=null;
+  }
+  drawSnake();
+}
+
+function drawSnake(){
+  sctx.fillStyle='#05050f';sctx.fillRect(0,0,700,440);
+  sctx.strokeStyle='#a88aff08';sctx.lineWidth=0.5;
+  for(let x=0;x<700;x+=SC){sctx.beginPath();sctx.moveTo(x,0);sctx.lineTo(x,440);sctx.stroke();}
+  for(let y=0;y<440;y+=SC){sctx.beginPath();sctx.moveTo(0,y);sctx.lineTo(700,y);sctx.stroke();}
+  if(!snakeGame){sctx.fillStyle='#a88aff';sctx.font='18px monospace';sctx.textAlign='center';sctx.fillText('Press START to play',350,220);sctx.textAlign='left';return;}
+  const g=snakeGame;
+  // Apple
+  sctx.fillStyle='#ff4444';sctx.shadowColor='#ff4444';sctx.shadowBlur=8;
+  sctx.beginPath();sctx.arc(g.apple.x*SC+SC/2,g.apple.y*SC+SC/2,SC/2-2,0,Math.PI*2);sctx.fill();
+  sctx.shadowBlur=0;
+  // Snakes
+  ['vic','gen'].forEach(p=>{
+    const pl=g[p];
+    pl.body.forEach((b,i)=>{
+      sctx.fillStyle=pl.color;
+      sctx.globalAlpha=i===0?1:0.4+0.5*(1-i/pl.body.length);
+      sctx.shadowColor=pl.color;sctx.shadowBlur=i===0?8:0;
+      sctx.fillRect(b.x*SC+1,b.y*SC+1,SC-2,SC-2);
+    });
+    sctx.globalAlpha=1;sctx.shadowBlur=0;
+  });
+  sctx.fillStyle='#649aa2';sctx.font='10px monospace';sctx.fillText('VIC: '+g.vic.score,5,14);
+  sctx.fillStyle='#a88aff';sctx.textAlign='right';sctx.fillText('GEN: '+g.gen.score,695,14);sctx.textAlign='left';
+}
+drawSnake();
+
+// Render new tabs if on those pages on load
+if(S.expenses && S.expenses.length) renderExpenses();
+if(S.extremeTasks && S.extremeTasks.length) renderExtreme();
 </script>
 </body>
 </html>
-HTMLEOF
-echo "Done! Size: $(wc -l < /mnt/user-data/outputs/PolypusTech_Dashboard.html) lines, $(wc -c < /mnt/user-data/outputs/PolypusTech_Dashboard.html) bytes"
