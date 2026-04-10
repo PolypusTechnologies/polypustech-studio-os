@@ -140,7 +140,7 @@ tr:hover td{background:#fafaf8}
 .ev-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
 
 /* OFFICE CANVAS */
-#officeCanvas{display:block;border-radius:12px;width:100%;background:#0a0a0a}
+#officeCanvas{display:block;width:100%;background:#f7f6f3}
 .office-log{border-top:1px solid #1a2a1a;padding:8px 16px;background:#050f05;height:60px;overflow-y:auto;font-family:monospace;font-size:11px;color:#00aa20;border-radius:0 0 var(--r) var(--r)}
 
 /* CSV UPLOAD */
@@ -212,149 +212,127 @@ tr:hover td{background:#fafaf8}
 <!-- ═══ HOME ═══════════════════════════════════════════════════ -->
 <div class="pg active" id="pg-home">
 
-  <!-- Greeting -->
-  <div class="card" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(100,154,162,.12),rgba(107,143,113,.08));border-color:rgba(100,154,162,.25)">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px" id="greeting">Good morning 👋</h2>
-        <p style="color:var(--muted);font-size:14px">Welcome to PolypusTech Studio OS — your company command center.</p>
-      </div>
-      <div style="display:flex;gap:10px">
-        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--sage)" id="stat-clients">0</div><div class="sl">Clients</div></div>
-        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--green)" id="stat-tasks">0</div><div class="sl">Tasks</div></div>
-        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--amber)" id="stat-events">0</div><div class="sl">Events</div></div>
-        <div class="sc" style="min-width:90px"><div class="sv" style="color:var(--purple)" id="stat-leads">0</div><div class="sl">Leads</div></div>
-      </div>
+  <!-- GREETING -->
+  <div style="background:linear-gradient(135deg,rgba(100,154,162,.1),rgba(107,143,113,.07));border:1px solid rgba(100,154,162,.2);border-radius:var(--r);padding:18px 22px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:3px" id="greeting">Good morning, team 👋</h2>
+      <p style="color:var(--muted);font-size:13px">PolypusTech Studio OS — your company command center.</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <div class="sc" style="min-width:80px"><div class="sv" style="color:var(--sage)" id="stat-clients">0</div><div class="sl">Clients</div></div>
+      <div class="sc" style="min-width:80px"><div class="sv" style="color:var(--green)" id="stat-tasks">0</div><div class="sl">Tasks</div></div>
+      <div class="sc" style="min-width:80px"><div class="sv" style="color:var(--amber)" id="stat-events">0</div><div class="sl">Events</div></div>
+      <div class="sc" style="min-width:80px"><div class="sv" style="color:var(--purple)" id="stat-leads">0</div><div class="sl">Leads</div></div>
     </div>
   </div>
 
-  <!-- OFFICE FULL WIDTH + GOALS BELOW -->
-  <div style="margin-bottom:12px">
-    <div class="card" style="padding:0;overflow:hidden;border-color:#1a2a1a">
-      <div style="padding:10px 16px;border-bottom:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:space-between">
-        <div style="font-weight:700;font-size:13px;color:var(--sage)">🐙 PolypusTech HQ <span style="font-weight:400;color:var(--muted);font-size:11px" id="office-status">— All agents online</span></div>
-        <span style="color:var(--muted);font-size:11px;font-family:monospace" id="office-time">--:--</span>
+  <!-- NEWS TICKER -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:var(--sh)">
+    <div style="display:flex;align-items:center">
+      <div style="background:var(--sage);color:#fff;padding:6px 14px;font-size:11px;font-weight:700;flex-shrink:0;display:flex;align-items:center;gap:6px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#fff;animation:cryptoBlink 1s infinite;display:inline-block"></span>LIVE
       </div>
-      <canvas id="officeCanvas" width="1650" height="900" style="display:block;width:100%;aspect-ratio:1650/900;background:#f7f6f3"></canvas>
-      <div style="padding:6px 14px;background:#fafaf8;border-top:1px solid var(--border);height:42px;overflow-y:auto;font-size:11px;color:var(--muted);font-family:monospace;border-radius:0 0 14px 14px" id="office-log"><div style="color:var(--sage)">PolypusTech HQ — all agents online.</div></div>
-      <!-- AGENT TOGGLES -->
-      <div style="padding:8px 12px;border-top:1px solid var(--border);background:var(--bg);display:flex;flex-wrap:wrap;gap:5px;align-items:center">
-        <span style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-right:4px">AGENTS:</span>
+      <div style="overflow:hidden;flex:1;height:32px;display:flex;align-items:center">
+        <div id="news-ticker" style="white-space:nowrap;animation:tickerMove 60s linear infinite;font-size:12px;color:var(--charcoal);padding:0 20px">Loading news...</div>
+      </div>
+      <div style="padding:4px 12px;font-size:10px;color:var(--muted);flex-shrink:0"><span id="news-tokens">LIVE</span></div>
+    </div>
+  </div>
+
+  <!-- CRYPTO -->
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px">
+    <div class="sc" style="border-color:rgba(247,147,26,.25);padding:8px"><div style="font-size:9px;color:#f7931a;font-weight:700">BTC</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-btc">—</div><div style="font-size:9px" id="change-btc">—</div></div>
+    <div class="sc" style="border-color:rgba(98,126,234,.25);padding:8px"><div style="font-size:9px;color:#627eea;font-weight:700">ETH</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-eth">—</div><div style="font-size:9px" id="change-eth">—</div></div>
+    <div class="sc" style="border-color:rgba(153,69,255,.25);padding:8px"><div style="font-size:9px;color:#9945ff;font-weight:700">SOL</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-sol">—</div><div style="font-size:9px" id="change-sol">—</div></div>
+    <div class="sc" style="border-color:rgba(100,154,162,.25);padding:8px"><div style="font-size:9px;color:var(--sage);font-weight:700">BNB</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-bnb">—</div><div style="font-size:9px" id="change-bnb">—</div></div>
+    <div class="sc" style="border-color:rgba(39,117,202,.25);padding:8px"><div style="font-size:9px;color:#2775ca;font-weight:700">XRP</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-xrp">—</div><div style="font-size:9px" id="change-xrp">—</div></div>
+    <div class="sc" style="border-color:rgba(184,154,96,.25);padding:8px"><div style="font-size:9px;color:var(--amber);font-weight:700">CHF/USD</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-chf">—</div><div style="font-size:9px;color:var(--muted)">live</div></div>
+  </div>
+
+  <!-- OFFICE + GOALS SPLIT -->
+  <div style="display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px">
+
+    <!-- OFFICE -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-weight:700;font-size:13px;color:var(--sage)">🏢 PolypusTech HQ <span style="font-weight:400;color:var(--muted);font-size:11px" id="office-status">— All agents online</span></div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:var(--muted)" id="office-time">--:--</span>
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;animation:cryptoBlink 2s infinite"></span>
+        </div>
+      </div>
+      <!-- CSS OFFICE — no canvas, no zoom bugs -->
+      <div id="office-container" style="position:relative;width:100%;height:290px;background:#c8b89a;overflow:hidden">
+        <div id="office-inner" style="position:absolute;inset:0;transform-origin:top left"></div>
+      </div>
+      <!-- Agent toggles -->
+      <div style="padding:7px 14px;border-top:1px solid var(--border);background:#fafaf8;display:flex;flex-wrap:wrap;gap:4px;align-items:center">
+        <span style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-right:4px">Agents:</span>
         <div id="agent-toggles" style="display:flex;flex-wrap:wrap;gap:4px"></div>
       </div>
-      <!-- TOKEN TRACKER -->
-      <div style="padding:7px 14px;border-top:1px solid var(--border);background:#fafaf8;display:flex;align-items:center;gap:12px">
+      <!-- Token tracker -->
+      <div style="padding:6px 14px;border-top:1px solid var(--border);background:#fafaf8;display:flex;align-items:center;gap:10px">
         <div style="flex:1;background:var(--border);border-radius:4px;height:4px;overflow:hidden">
           <div id="tok-bar" style="height:100%;background:linear-gradient(90deg,var(--sage),var(--amber));border-radius:4px;width:0%;transition:width .5s"></div>
         </div>
-        <span style="font-size:10px;color:var(--sage);font-weight:600;white-space:nowrap">Used: <strong id="tok-used">0</strong></span>
-        <span style="font-size:10px;color:var(--muted);white-space:nowrap">Left: <strong id="tok-left">1,000,000</strong></span>
+        <span style="font-size:10px;color:var(--sage);font-weight:600">Used: <strong id="tok-used">0</strong></span>
+        <span style="font-size:10px;color:var(--muted)">Left: <strong id="tok-left">1,000,000</strong></span>
       </div>
+      <!-- Log -->
+      <div style="padding:6px 14px;background:#fafaf8;height:38px;overflow-y:auto;font-size:10px;color:var(--muted);font-family:monospace;border-top:1px solid var(--border)" id="office-log"><div style="color:var(--sage)">PolypusTech HQ — all agents online.</div></div>
     </div>
-  </div>
 
-  <!-- GOALS + SCOREBOARD BELOW OFFICE -->
-  <div style="display:grid;grid-template-columns:1fr 280px;gap:12px;margin-bottom:12px">
-    <div class="card" style="padding:14px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div style="font-weight:700;font-size:13px;color:var(--sage)">🎯 Goals — Dec 31, 2026</div>
-        <button class="btn-o" style="font-size:10px;padding:3px 9px" onclick="goTo('goals')">Full view →</button>
-      </div>
-      <div id="home-goals-preview"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:10px">No goals yet. Go to Goals tab!</div></div>
-    </div>
-    <div class="card" style="padding:14px">
-      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">⚔️ VIC vs GEN</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
-        <div style="background:rgba(100,154,162,.08);border:1px solid rgba(100,154,162,.2);border-radius:8px;padding:8px;text-align:center">
-          <div style="font-size:10px;font-weight:700;color:var(--sage);margin-bottom:3px">🔵 VIC</div>
-          <div id="sc-vic-clients" style="font-size:18px;font-weight:700;color:var(--charcoal)">0</div>
-          <div style="font-size:9px;color:var(--muted)">clients</div>
-          <div id="sc-vic-tasks" style="font-size:13px;font-weight:600;color:var(--sage);margin-top:2px">0</div>
-          <div style="font-size:9px;color:var(--muted)">tasks</div>
+    <!-- GOALS + SCOREBOARD -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-weight:700;font-size:13px;color:var(--sage)">🎯 Goals — Dec 31, 2026</div>
+          <button class="btn-o" style="font-size:10px;padding:3px 9px" onclick="goTo('goals')">Full →</button>
         </div>
-        <div style="background:rgba(0,255,65,.05);border:1px solid rgba(0,255,65,.15);border-radius:8px;padding:8px;text-align:center">
-          <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px">🟢 GEN</div>
-          <div id="sc-gen-clients" style="font-size:18px;font-weight:700;color:var(--charcoal)">0</div>
-          <div style="font-size:9px;color:var(--muted)">clients</div>
-          <div id="sc-gen-tasks" style="font-size:13px;font-weight:600;color:var(--green);margin-top:2px">0</div>
-          <div style="font-size:9px;color:var(--muted)">tasks</div>
+        <div id="home-goals-preview"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:14px">No goals yet.</div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">⚔️ VIC vs GEN</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">
+          <div style="background:var(--sage-l);border:1px solid rgba(100,154,162,.25);border-radius:9px;padding:9px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:var(--sage);margin-bottom:3px">🔵 VIC</div>
+            <div id="sc-vic-clients" style="font-size:20px;font-weight:700;color:var(--charcoal)">0</div>
+            <div style="font-size:9px;color:var(--muted)">clients</div>
+            <div id="sc-vic-tasks" style="font-size:13px;font-weight:600;color:var(--sage);margin-top:2px">0</div>
+            <div style="font-size:9px;color:var(--muted)">tasks</div>
+          </div>
+          <div style="background:rgba(107,143,113,.08);border:1px solid rgba(107,143,113,.25);border-radius:9px;padding:9px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px">🟢 GEN</div>
+            <div id="sc-gen-clients" style="font-size:20px;font-weight:700;color:var(--charcoal)">0</div>
+            <div style="font-size:9px;color:var(--muted)">clients</div>
+            <div id="sc-gen-tasks" style="font-size:13px;font-weight:600;color:var(--green);margin-top:2px">0</div>
+            <div style="font-size:9px;color:var(--muted)">tasks</div>
+          </div>
         </div>
-      </div>
-      <div style="background:var(--border);border-radius:4px;height:5px;overflow:hidden">
-        <div id="sc-bar" style="height:100%;background:linear-gradient(90deg,#649aa2,#00ff41);border-radius:4px;width:50%;transition:width .5s"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:2px;font-family:monospace"><span>VIC →</span><span>← GEN</span></div>
-    </div>
-  </div>
-
-  <!-- NEWS TICKER + CRYPTO -->
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;position:relative;box-shadow:var(--sh)">
-    
-    <div style="display:flex;align-items:center">
-      <div style="background:var(--sage);color:#fff;padding:6px 14px;font-size:11px;font-weight:700;font-family:monospace;flex-shrink:0;display:flex;align-items:center;gap:6px">
-        <span style="width:7px;height:7px;border-radius:50%;background:#fff;animation:cryptoBlink 1s infinite;display:inline-block"></span>
-        LIVE
-      </div>
-      <div style="overflow:hidden;flex:1;height:34px;display:flex;align-items:center">
-        <div id="news-ticker" style="white-space:nowrap;animation:tickerMove 60s linear infinite;font-size:12px;color:var(--charcoal);font-family:inherit;padding:0 20px">
-          Loading latest news... ⚡
+        <div style="background:var(--border);border-radius:4px;height:5px;overflow:hidden">
+          <div id="sc-bar" style="height:100%;background:linear-gradient(90deg,var(--sage),var(--green));border-radius:4px;width:50%;transition:width .5s"></div>
         </div>
-      </div>
-      <div style="padding:4px 12px;font-size:10px;color:var(--muted);font-family:monospace;flex-shrink:0">
-        <span id="news-tokens">0</span> tok
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:2px"><span>VIC →</span><span>← GEN</span></div>
       </div>
     </div>
   </div>
 
-  <!-- CRYPTO PRICES -->
-  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px" id="crypto-row">
-    <div class="card" style="padding:8px;text-align:center;border-color:rgba(247,147,26,.25)">
-      <div style="font-size:9px;color:#f7931a;font-weight:700">BTC</div>
-      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-btc">—</div>
-      <div style="font-size:9px;font-family:monospace" id="change-btc">—</div>
-    </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:rgba(98,126,234,.25)">
-      <div style="font-size:9px;color:#627eea;font-weight:700">ETH</div>
-      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-eth">—</div>
-      <div style="font-size:9px;font-family:monospace" id="change-eth">—</div>
-    </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:rgba(153,69,255,.25)">
-      <div style="font-size:9px;color:#9945ff;font-weight:700">SOL</div>
-      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-sol">—</div>
-      <div style="font-size:9px;font-family:monospace" id="change-sol">—</div>
-    </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:rgba(100,154,162,.25)">
-      <div style="font-size:9px;color:var(--sage);font-weight:700">BNB</div>
-      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-bnb">—</div>
-      <div style="font-size:9px;font-family:monospace" id="change-bnb">—</div>
-    </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:rgba(39,117,202,.25)">
-      <div style="font-size:9px;color:#2775ca;font-weight:700">XRP</div>
-      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-xrp">—</div>
-      <div style="font-size:9px;font-family:monospace" id="change-xrp">—</div>
-    </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:rgba(184,154,96,.25)">
-      <div style="font-size:9px;color:var(--amber);font-weight:700">CHF/USD</div>
-      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-chf">—</div>
-      <div style="font-size:9px;color:#2a4a2a;font-family:monospace">live</div>
-    </div>
-  </div>
-
-  <!-- Stats Row -->
-  <div class="g3" style="margin-bottom:16px">
+  <!-- BOTTOM ROW -->
+  <div class="g3">
     <div class="card">
-      <div class="ct">Active Projects <span class="tag" style="background:var(--sage-l);color:var(--sage-d)">In progress</span></div>
-      <div id="home-projects"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No tasks yet. Go to Tasks to add some!</div></div>
+      <div class="ct">Active Tasks <button class="btn-o" style="font-size:10px;padding:3px 8px" onclick="goTo('tasks')">See all</button></div>
+      <div id="home-projects"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:12px">No tasks yet.</div></div>
     </div>
     <div class="card">
-      <div class="ct">Upcoming Events <button class="btn-o" style="font-size:11px;padding:4px 10px" onclick="goTo('events')">See all</button></div>
-      <div id="home-events"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No events yet.</div></div>
+      <div class="ct">Upcoming Events <button class="btn-o" style="font-size:10px;padding:3px 8px" onclick="goTo('events')">See all</button></div>
+      <div id="home-events"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:12px">No events yet.</div></div>
     </div>
     <div class="card">
-      <div class="ct">Recent Meetings <button class="btn-o" style="font-size:11px;padding:4px 10px" onclick="goTo('meetings')">See all</button></div>
-      <div id="home-meetings"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">No meetings yet.</div></div>
+      <div class="ct">Recent Meetings <button class="btn-o" style="font-size:10px;padding:3px 8px" onclick="goTo('meetings')">See all</button></div>
+      <div id="home-meetings"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:12px">No meetings yet.</div></div>
     </div>
   </div>
+
 </div>
 
 <!-- ═══ TASKS (KANBAN) ════════════════════════════════════════ -->
@@ -1304,377 +1282,388 @@ function renderFinance() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// POLYPUSTECH HQ — 4K OFFICE (App_willow 3×3 style)
-// ═══════════════════════════════════════════════════════════════
-const canvas = document.getElementById('officeCanvas');
-const ctx    = canvas ? canvas.getContext('2d') : null;
-if (!canvas || !ctx) { console.warn('Office canvas not found'); }
-const CW = 1650, CH = 900;  // 4K resolution
-var agentEnabled = {};       // var — no TDZ
-var totalTokens = 0;         // var — no TDZ
-let frame = 0;
-let officeLog = [];
+// ═══ PIXEL ART TOP-DOWN OFFICE ════════════════════════════════
+var agentEnabled = {};
+var totalTokens  = 0;
+let officeRAF    = null;
+let officeFrame  = 0;
+let officeLog    = [];
 
 function addOfficeLog(msg) {
   const t = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   officeLog.unshift(`[${t}] ${msg}`);
   if (officeLog.length > 30) officeLog.pop();
   const el = document.getElementById('office-log');
-  if (el) el.innerHTML = officeLog.map((l,i)=>`<div style="color:${i===0?'#649aa2':'#8a8680'}">${l}</div>`).join('');
+  if (el) el.innerHTML = officeLog.map((l,i)=>
+    `<div style="color:${i===0?'#649aa2':'#8a8680'}">${l}</div>`).join('');
 }
 
-// ── ROOM GRID  3×3 ──────────────────────────────────────────
-const RW = 510, RH = 270;
-const ROOMS = [
-  { x:10,  y:10,  w:RW, h:RH, label:"Claude — AI Strategy",    color:"#e6f0f2", border:"#649aa2", agentIdx:0  },
-  { x:530, y:10,  w:RW, h:RH, label:"⚡ Meeting Room",          color:"#f0ede8", border:"#b89a60", agentIdx:-1, meeting:true },
-  { x:1050,y:10,  w:RW, h:RH, label:"Scraper — Lead Research",  color:"#faf0f0", border:"#c07070", agentIdx:1  },
-  { x:10,  y:310, w:RW, h:RH, label:"Mailer — Outreach",        color:"#f0eef8", border:"#8a7ba8", agentIdx:2  },
-  { x:530, y:310, w:RW, h:RH, label:"Builder — Web Dev",        color:"#eef5ee", border:"#6b8f71", agentIdx:3  },
-  { x:1050,y:310, w:RW, h:RH, label:"Trader — Trading Desk",    color:"#fdf8ee", border:"#b89a60", agentIdx:4  },
-  { x:10,  y:610, w:RW, h:RH, label:"Victor — CEO Office",      color:"#faeef4", border:"#c07898", agentIdx:5  },
-  { x:530, y:610, w:RW, h:RH, label:"PolypusTech HQ",           color:"#f5f5f5", border:"#8a8680", agentIdx:-2 },
-  { x:1050,y:610, w:RW, h:RH, label:"Break Room ☕",             color:"#f8f5ee", border:"#b89a60", agentIdx:-3 },
+// ── PIXEL PERSON SVG (top-down view) ─────────────────────────
+function makePersonSVG(skin, hair, shirt, id) {
+  return `<svg id="svg-${id}" width="28" height="28" viewBox="0 0 28 28"
+    style="display:block;image-rendering:pixelated;overflow:visible">
+    <!-- Shadow -->
+    <ellipse cx="14" cy="26" rx="8" ry="2.5" fill="rgba(0,0,0,0.18)"/>
+    <!-- Body/shoulders (top-down) -->
+    <ellipse cx="14" cy="20" rx="7" ry="6" fill="${shirt}"/>
+    <!-- Neck -->
+    <rect x="12" y="15" width="4" height="3" fill="${skin}"/>
+    <!-- Head -->
+    <circle cx="14" cy="12" r="7" fill="${skin}"/>
+    <!-- Hair -->
+    <ellipse cx="14" cy="6.5" rx="6.5" ry="4" fill="${hair}"/>
+    <!-- Hair sides -->
+    <rect x="7" y="8" width="3" height="5" rx="1" fill="${hair}"/>
+    <rect x="18" y="8" width="3" height="5" rx="1" fill="${hair}"/>
+    <!-- Eyes -->
+    <circle cx="11" cy="12" r="1.4" fill="#fff"/>
+    <circle cx="17" cy="12" r="1.4" fill="#fff"/>
+    <circle cx="11.5" cy="12.3" r="0.8" fill="#1a1a1a"/>
+    <circle cx="17.5" cy="12.3" r="0.8" fill="#1a1a1a"/>
+    <!-- Eye shine -->
+    <circle cx="12" cy="11.8" r="0.3" fill="#fff"/>
+    <circle cx="18" cy="11.8" r="0.3" fill="#fff"/>
+    <!-- Nose -->
+    <circle cx="14" cy="14.5" r="0.6" fill="${skin}" style="filter:brightness(.9)"/>
+  </svg>`;
+}
+
+// ── OFFICE LAYOUT (pixel art top-down) ───────────────────────
+// Container is 100% wide × 290px tall. Positions in px relative to container.
+// We'll use a virtual 640×290 grid and scale via CSS transform.
+
+const VW = 640, VH = 290; // virtual office dimensions
+
+// Rooms in virtual px
+const PIXEL_ROOMS = [
+  // Top row: 3 individual offices
+  { id:'vic',     x:0,   y:0,   w:148, h:130, color:'#7a9e7e', floor:'#e8d8b0', label:'Victor', agent:'VIC'     },
+  { id:'gen',     x:154, y:0,   w:148, h:130, color:'#6b8f9e', floor:'#e0dcc8', label:'Gen',    agent:'GEN'     },
+  { id:'meeting', x:308, y:0,   w:176, h:130, color:'#b89a60', floor:'#f0e8d0', label:'Meeting Room', agent:null, meeting:true },
+  { id:'claude',  x:490, y:0,   w:150, h:130, color:'#649aa2', floor:'#e8f0e8', label:'Claude', agent:'Claude'  },
+  // Bottom row
+  { id:'mailer',  x:0,   y:155, w:148, h:135, color:'#8a7ba8', floor:'#ede8f4', label:'Mailer',  agent:'Mailer'  },
+  { id:'builder', x:154, y:155, w:148, h:135, color:'#6b8f71', floor:'#e8f4e8', label:'Builder', agent:'Builder' },
+  { id:'trader',  x:308, y:155, w:176, h:135, color:'#b89a60', floor:'#f8f4e0', label:'Trader',  agent:'Trader'  },
+  { id:'scraper', x:490, y:155, w:150, h:135, color:'#c07070', floor:'#f4e8e8', label:'Scraper', agent:'Scraper' },
 ];
 
-// Agent definitions
-const OFFICE_AGENTS = [
-  { name:"Claude",   color:"#649aa2", icon:"AI" },
-  { name:"Scraper",  color:"#c07070", icon:"SC" },
-  { name:"Mailer",   color:"#8a7ba8", icon:"MA" },
-  { name:"Builder",  color:"#6b8f71", icon:"WB" },
-  { name:"Trader",   color:"#b89a60", icon:"TR" },
-  { name:"VictorAI", color:"#c07898", icon:"VP" },
+// People definitions
+const PIXEL_PERSONS = [
+  { id:'VIC',     name:'Victor',  skin:'#f0c098', hair:'#3a1a08', shirt:'#649aa2', roomId:'vic',     tasks:['On a client call...','Closing a deal! 🎉','Writing strategy...','Reviewing proposals...'] },
+  { id:'GEN',     name:'Gen',     skin:'#d4a878', hair:'#1a1010', shirt:'#6b8f71', roomId:'gen',     tasks:['Designing mockup...','In Figma...','Pushing live!','Brewing coffee ☕'] },
+  { id:'Claude',  name:'Claude',  skin:'#e8c090', hair:'#2c2c2a', shirt:'#649aa2', roomId:'claude',  tasks:['Planning AI strategy...','Analysing data...','Building pipeline...'] },
+  { id:'Mailer',  name:'Mailer',  skin:'#f0c098', hair:'#4a3a2a', shirt:'#8a7ba8', roomId:'mailer',  tasks:['Writing cold email...','Scheduling 300 sends...','A/B testing...'] },
+  { id:'Builder', name:'Builder', skin:'#d4a878', hair:'#555',    shirt:'#6b8f71', roomId:'builder', tasks:['Deploying to Vercel...','Building component...','Pushing to GitHub...'] },
+  { id:'Trader',  name:'Trader',  skin:'#e8c090', hair:'#2a1a08', shirt:'#b89a60', roomId:'trader',  tasks:['Analyzing EURUSD...','Checking RSI...','Calculating R:R...'] },
+  { id:'Scraper', name:'Scraper', skin:'#f0c098', hair:'#3a3a3a', shirt:'#c07070', roomId:'scraper', tasks:['Scraping 47 leads...','Found hot prospects...','Updating CRM...'] },
 ];
 
-const AGENT_HOME = [
-  { x:210,  y:145 },
-  { x:1250, y:145 },
-  { x:210,  y:445 },
-  { x:730,  y:445 },
-  { x:1250, y:445 },
-  { x:210,  y:745 },
-];
+const persons = [];
+let officeScale = 1;
 
-const TASK_LINES = [
-  ["Scraping 47 Zurich leads...","Found 12 hot prospects","Exported to Excel ✓"],
-  ["Analyzing polypustech.ch...","SEO score: 87/100","3 improvements ready"],
-  ["Writing cold email...","Swiss market personalised","Email queued ✓"],
-  ["Deploying to Vercel...","Build successful","Live at polypustech.ch ✓"],
-  ["Analyzing EURUSD H4...","RSI divergence spotted!","R:R 1:3 setup found"],
-  ["Planning weekly strategy...","B2B targets updated","Trello synced ✓"],
-];
-
-const ags = OFFICE_AGENTS.map((a,i)=>({
-  ...a,
-  x: AGENT_HOME[i].x, y: AGENT_HOME[i].y,
-  tx:AGENT_HOME[i].x, ty:AGENT_HOME[i].y,
-  hx:AGENT_HOME[i].x, hy:AGENT_HOME[i].y,
-  state:"idle", timer:60+Math.random()*80,
-  task:"", progress:0, blink:Math.floor(Math.random()*120),
-}));
-
-// ── DRAW HELPERS ──────────────────────────────────────────────
-function rr(ctx,x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
-  ctx.closePath();
+// Draw a top-down desk with monitor
+function deskHTML(x, y, w, h, color, facing) {
+  // facing: 'down' = monitor at top, 'right' = monitor at left
+  const monW = facing==='right' ? 18 : 28, monH = facing==='right' ? 22 : 14;
+  const monX = facing==='right' ? 2 : Math.round((w-monW)/2);
+  const monY = facing==='right' ? Math.round((h-monH)/2) : 2;
+  return `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;
+    background:#c8a870;border:2px solid #a07840;border-radius:3px;box-shadow:inset 0 -2px 0 #8b6020">
+    <!-- Monitor -->
+    <div style="position:absolute;left:${monX}px;top:${monY}px;width:${monW}px;height:${monH}px;
+      background:#1a2030;border:1px solid #0a1020;border-radius:1px">
+      <div style="margin:2px;background:#3a6a9a18;height:calc(100% - 4px);border-radius:1px;
+        display:flex;align-items:center;justify-content:center">
+        <div style="width:60%;height:1px;background:#649aa260;box-shadow:0 2px 0 #649aa240,0 4px 0 #649aa220"></div>
+      </div>
+    </div>
+    <!-- Keyboard -->
+    <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+      width:${Math.round(w*0.55)}px;height:5px;background:#555;border-radius:1px;
+      display:flex;gap:1px;padding:1px">
+      ${[...Array(5)].map((_,i)=>`<div style="flex:1;background:${color}44;border-radius:1px"></div>`).join('')}
+    </div>
+    <!-- Mouse -->
+    <div style="position:absolute;bottom:4px;right:5px;width:7px;height:9px;
+      background:#666;border-radius:3px 3px 4px 4px;border:1px solid #444"></div>
+  </div>`;
 }
 
-function drawDesk(ctx,x,y,color){
-  // Chair
-  ctx.fillStyle='#c8c0b4';
-  ctx.beginPath(); ctx.ellipse(x,y+44,20,12,0,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#b8b0a4'; ctx.fillRect(x-18,y+26,36,24);
-  // Desk surface
-  ctx.fillStyle='#e8e2d8'; ctx.strokeStyle=color+'40'; ctx.lineWidth=2;
-  rr(ctx,x-52,y-30,104,52,10); ctx.fill(); ctx.stroke();
-  // Monitor
-  ctx.fillStyle='#2c2c2a';
-  rr(ctx,x-28,y-60,56,34,5); ctx.fill();
-  ctx.fillStyle=color+'20';
-  rr(ctx,x-24,y-56,48,26,3); ctx.fill();
-  ctx.strokeStyle=color+'50'; ctx.lineWidth=1;
-  [0,1,2].forEach(l=>{ ctx.beginPath(); ctx.moveTo(x-18,y-48+l*8); ctx.lineTo(x+18,y-48+l*8); ctx.stroke(); });
-  // Stand
-  ctx.fillStyle='#555'; ctx.fillRect(x-4,y-26,8,14); ctx.fillRect(x-14,y-12,28,5);
-  // Keyboard
-  ctx.fillStyle='#3a3a38'; ctx.strokeStyle='#555'; ctx.lineWidth=1;
-  rr(ctx,x-34,y+4,68,18,4); ctx.fill(); ctx.stroke();
-  // Mouse
-  rr(ctx,x+42,y+4,18,22,8); ctx.fill(); ctx.stroke();
-  // Plant
-  ctx.fillStyle='#7a6030'; ctx.fillRect(x+62,y+10,8,22);
-  ctx.fillStyle='#5a8060';
-  ctx.beginPath(); ctx.arc(x+66,y+6,14,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#4a7050';
-  ctx.beginPath(); ctx.arc(x+58,y+12,9,0,Math.PI*2); ctx.fill();
+// Bookshelf along wall
+function shelfHTML(x, y, w, h, colors, vertical) {
+  const books = colors.map(bc =>
+    `<div style="flex:1;background:${bc};${vertical?'min-height':'min-width'}:3px;border-radius:1px;
+      box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)"></div>`).join('');
+  return `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;
+    background:#7a5020;border:1px solid #5a3810;border-radius:2px;
+    display:flex;flex-direction:${vertical?'column':'row'};gap:1px;padding:2px;overflow:hidden">
+    ${books}
+  </div>`;
 }
 
-function drawOcto(ctx,x,y,color,blink,busy){
-  // Tentacles
-  for(let t=0;t<8;t++){
-    const a=(t/8)*Math.PI*2, w=Math.sin(frame*0.06+t*0.8)*8;
-    const ex=Math.cos(a)*42+w, ey=Math.sin(a)*42+20;
-    ctx.strokeStyle=color; ctx.lineWidth=6; ctx.lineCap='round'; ctx.globalAlpha=0.6;
-    ctx.beginPath();
-    ctx.moveTo(Math.cos(a)*18,Math.sin(a)*18+8);
-    ctx.quadraticCurveTo(Math.cos(a)*30+w*0.4,Math.sin(a)*30+14,ex,ey);
-    ctx.stroke();
-    ctx.globalAlpha=0.3; ctx.fillStyle='#fff';
-    ctx.beginPath(); ctx.arc(ex*0.82,ey*0.82,3,0,Math.PI*2); ctx.fill();
-  }
-  ctx.globalAlpha=1;
-  // Body glow
-  ctx.fillStyle=color; ctx.globalAlpha=0.1;
-  ctx.beginPath(); ctx.arc(0,-4,38,0,Math.PI*2); ctx.fill();
-  ctx.globalAlpha=1;
-  // Body
-  const g=ctx.createRadialGradient(-5,-12,2,0,-5,26);
-  g.addColorStop(0,color); g.addColorStop(1,color+'cc');
-  ctx.fillStyle=g;
-  ctx.beginPath(); ctx.ellipse(0,-5,26,28,0,0,Math.PI*2); ctx.fill();
-  // Shine
-  ctx.fillStyle='#ffffff30';
-  ctx.beginPath(); ctx.ellipse(-8,-15,10,7,-0.5,0,Math.PI*2); ctx.fill();
-  // Eyes
-  if(blink%110<5){
-    ctx.fillStyle='#fff6'; ctx.fillRect(-10,-13,8,4); ctx.fillRect(2,-13,8,4);
-  } else {
-    ctx.fillStyle='#fff';
-    ctx.beginPath(); ctx.arc(-6,-11,6,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(7,-11,6,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#1a1a1a';
-    ctx.beginPath(); ctx.arc(-5,-11,3,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(8,-11,3,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#fff';
-    ctx.beginPath(); ctx.arc(-3,-13,1.2,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(10,-13,1.2,0,Math.PI*2); ctx.fill();
-  }
-  // Busy spinner
-  if(busy){
-    ctx.strokeStyle=color; ctx.lineWidth=3; ctx.globalAlpha=0.5; ctx.setLineDash([5,8]);
-    ctx.beginPath(); ctx.arc(0,-5,38,frame*0.08,frame*0.08+Math.PI*1.4); ctx.stroke();
-    ctx.setLineDash([]); ctx.globalAlpha=1;
-  }
+// Plant
+function plantHTML(x, y, size) {
+  const s = size || 22;
+  return `<div style="position:absolute;left:${x}px;top:${y}px;width:${s}px;height:${s}px;
+    display:flex;align-items:flex-end;justify-content:center">
+    <!-- Pot -->
+    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+      width:${Math.round(s*0.5)}px;height:${Math.round(s*0.35)}px;
+      background:#a06040;border:1px solid #804020;border-radius:0 0 3px 3px"></div>
+    <!-- Plant leaves -->
+    <div style="position:absolute;bottom:${Math.round(s*0.28)}px;left:50%;transform:translateX(-50%);
+      width:${s}px;height:${Math.round(s*0.7)}px;
+      background:radial-gradient(circle at 30% 70%, #4a8a3a, #3a7030 40%, #2a5a20 80%);
+      border-radius:50% 60% 50% 40%;box-shadow:3px -3px 0 #5a9a4a,-3px -3px 0 #3a7030"></div>
+  </div>`;
 }
 
-// ── MEETING ROOM FURNITURE ────────────────────────────────────
-function drawMeeting(room){
-  const cx=room.x+room.w/2, cy=room.y+room.h/2+20;
-  // Rug
-  ctx.fillStyle='rgba(184,154,96,0.08)';
-  ctx.beginPath(); ctx.ellipse(cx,cy,220,100,0,0,Math.PI*2); ctx.fill();
-  // Table
-  ctx.fillStyle='#e8dfc8'; ctx.strokeStyle='#c8b898'; ctx.lineWidth=3;
-  ctx.beginPath(); ctx.ellipse(cx,cy,170,68,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
-  // Table shine
-  ctx.fillStyle='#ffffff20';
-  ctx.beginPath(); ctx.ellipse(cx-20,cy-20,80,28,-0.3,0,Math.PI*2); ctx.fill();
-  // Chairs
-  [0,45,90,135,180,225,270,315].forEach(deg=>{
-    const rad=deg*Math.PI/180;
-    ctx.fillStyle='#c8b898'; ctx.strokeStyle='#b0a080'; ctx.lineWidth=2;
-    ctx.beginPath();
-    ctx.ellipse(cx+Math.cos(rad)*196,cy+Math.sin(rad)*88*0.75,22,14,rad,0,Math.PI*2);
-    ctx.fill(); ctx.stroke();
-  });
-  // Whiteboard
-  ctx.fillStyle='#f8f8f4'; ctx.strokeStyle='#ccc'; ctx.lineWidth=2;
-  ctx.fillRect(room.x+16,room.y+52,130,88); ctx.strokeRect(room.x+16,room.y+52,130,88);
-  ctx.fillStyle='#649aa2'; ctx.font='bold 14px DM Sans,sans-serif'; ctx.textAlign='center';
-  ctx.fillText('STRATEGY', room.x+81, room.y+74);
-  // Chart bars on whiteboard
-  [30,45,28,52,38,58,42].forEach((h,i)=>{
-    ctx.fillStyle=`rgba(100,154,162,${0.4+Math.sin(frame*0.04+i)*0.2})`;
-    ctx.fillRect(room.x+20+i*16,room.y+136-h,12,h);
-  });
-  // Laptop on table
-  ctx.fillStyle='#2c2c2a'; rr(ctx,cx-32,cy-14,64,40,4); ctx.fill();
-  ctx.fillStyle='#649aa2'; ctx.font='9px monospace'; ctx.textAlign='center';
-  ctx.fillText('AI OFFICE', cx, cy+4);
-  ctx.textAlign='left';
-  // Projector
-  ctx.fillStyle='#f0f0e8'; ctx.strokeStyle='#ccc'; ctx.lineWidth=1;
-  ctx.fillRect(room.x+room.w-130,room.y+44,118,80); ctx.strokeRect(room.x+room.w-130,room.y+44,118,80);
-  ['#649aa2','#6b8f71','#c07070','#8a7ba8'].forEach((clr,bi)=>{
-    const bh=20+Math.sin(frame*0.03+bi)*16;
-    ctx.fillStyle=clr+'99'; ctx.fillRect(room.x+room.w-126+bi*28,room.y+120-bh,22,bh);
-  });
-  ctx.fillStyle='#8a8680'; ctx.font='9px monospace'; ctx.textAlign='center';
-  ctx.fillText('Q2 REVENUE', room.x+room.w-71, room.y+58);
+// Meeting table (oval top-down)
+function meetingTableHTML(cx, cy, rx, ry) {
+  const chairs = [0,60,120,180,240,300].map(deg => {
+    const rad = deg * Math.PI/180;
+    const cx2 = cx + Math.cos(rad)*(rx+12);
+    const cy2 = cy + Math.sin(rad)*(ry+8);
+    return `<div style="position:absolute;left:${cx2-8}px;top:${cy2-6}px;width:16px;height:12px;
+      background:#b8a070;border:1px solid #907840;border-radius:3px"></div>`;
+  }).join('');
+  return chairs + `<div style="position:absolute;left:${cx-rx}px;top:${cy-ry}px;
+    width:${rx*2}px;height:${ry*2}px;
+    background:radial-gradient(ellipse at 35% 35%, #d4b880, #b89050 70%);
+    border:2px solid #907840;border-radius:50%;
+    box-shadow:2px 3px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.3)">
+    <!-- Laptop on table -->
+    <div style="position:absolute;top:30%;left:35%;width:30%;height:22%;
+      background:#1a2030;border-radius:2px;
+      display:flex;align-items:center;justify-content:center">
+      <div style="width:80%;height:60%;background:#649aa215"></div>
+    </div>
+  </div>`;
 }
 
-// ── BREAK ROOM ────────────────────────────────────────────────
-function drawBreakRoom(room){
-  const cx=room.x+room.w/2, cy=room.y+room.h/2;
-  // Coffee machine
-  ctx.fillStyle='#3a3530'; ctx.strokeStyle='#ccc'; ctx.lineWidth=2;
-  rr(ctx,room.x+26,room.y+62,90,140,8); ctx.fill(); ctx.stroke();
-  ctx.fillStyle='#c07070'; ctx.beginPath(); ctx.arc(room.x+71,room.y+100,24,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#fff'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
-  ctx.fillText('☕',room.x+71,room.y+104);
-  // Steam
-  if(frame%80<50){
-    ctx.strokeStyle='#ccc'; ctx.lineWidth=2; ctx.globalAlpha=0.5;
-    [0,1,2].forEach(s=>{
-      ctx.beginPath(); ctx.moveTo(room.x+58+s*12,room.y+60);
-      ctx.quadraticCurveTo(room.x+52+s*12,room.y+44,room.x+58+s*12,room.y+28);
-      ctx.stroke();
-    }); ctx.globalAlpha=1;
-  }
-  // Couch
-  ctx.fillStyle='#d4c5b0'; ctx.strokeStyle='#c4b8a0'; ctx.lineWidth=2;
-  rr(ctx,room.x+130,room.y+130,340,110,16); ctx.fill(); ctx.stroke();
-  // Cushions
-  [150,230,310,390].forEach(px=>{
-    ctx.fillStyle='#c8b898'; ctx.strokeStyle='#b8a888'; ctx.lineWidth=1;
-    rr(ctx,room.x+px-18,room.y+144,62,72,10); ctx.fill(); ctx.stroke();
-  });
-  // Couch arms
-  ctx.fillStyle='#c4b5a0';
-  rr(ctx,room.x+128,room.y+140,22,100,10); ctx.fill();
-  rr(ctx,room.x+456,room.y+140,22,100,10); ctx.fill();
-  // Coffee table
-  ctx.fillStyle='#b89a60'; ctx.strokeStyle='#a08050'; ctx.lineWidth=2;
-  rr(ctx,room.x+176,room.y+250,250,50,10); ctx.fill(); ctx.stroke();
-  // Items on table
-  ctx.fillStyle='#649aa2'; ctx.beginPath(); ctx.arc(room.x+220,room.y+275,16,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#fff'; ctx.font='10px sans-serif'; ctx.textAlign='center';
-  ctx.fillText('☕',room.x+220,room.y+279);
-  ctx.fillStyle='#c07070'; ctx.beginPath(); ctx.arc(room.x+270,room.y+275,16,0,Math.PI*2); ctx.fill();
-  ctx.fillText('🍎',room.x+270,room.y+279);
-  ctx.fillStyle='#2c2c2a'; rr(ctx,room.x+310,room.y+262,60,28,4); ctx.fill();
-  ctx.fillStyle='#649aa2'; ctx.font='7px monospace'; ctx.fillText('polypus',room.x+316,room.y+279);
-  ctx.textAlign='left';
+// Clock on wall
+function clockHTML(x, y) {
+  return `<div style="position:absolute;left:${x}px;top:${y}px;width:18px;height:18px;
+    background:#f0ede8;border:2px solid #8a8680;border-radius:50%;
+    display:flex;align-items:center;justify-content:center">
+    <div style="font-size:6px;color:#2c2c2a;font-weight:700;font-family:monospace" id="office-clock">🕐</div>
+  </div>`;
 }
 
-// ── RENDER OFFICE ─────────────────────────────────────────────
-function renderOffice(){
-  // BG — warm dotted grid
-  ctx.fillStyle='#f7f6f3'; ctx.fillRect(0,0,CW,CH);
-  ctx.fillStyle='#e0dbd4';
-  for(let gx=0;gx<CW;gx+=60) for(let gy=0;gy<CH;gy+=60){
-    ctx.beginPath(); ctx.arc(gx,gy,1.5,0,Math.PI*2); ctx.fill();
-  }
+// Build the office
+function buildOffice() {
+  const container = document.getElementById('office-container');
+  const inner     = document.getElementById('office-inner');
+  if (!inner) return;
 
-  // Rooms
-  ROOMS.forEach((room,ri)=>{
-    // Shadow
-    ctx.fillStyle='rgba(0,0,0,0.06)';
-    rr(ctx,room.x+6,room.y+6,room.w,room.h,16); ctx.fill();
-    // Fill
-    ctx.fillStyle=room.color; ctx.strokeStyle=room.border+'60'; ctx.lineWidth=2;
-    rr(ctx,room.x,room.y,room.w,room.h,16); ctx.fill(); ctx.stroke();
-    // Top accent bar
-    ctx.fillStyle=room.border+'20';
-    rr(ctx,room.x,room.y,room.w,28,16); ctx.fill();
-    ctx.fillStyle=room.border+'80';
-    ctx.beginPath(); ctx.moveTo(room.x,room.y+28); ctx.lineTo(room.x+room.w,room.y+28); ctx.stroke();
-    // Label
-    ctx.fillStyle=room.border; ctx.font='bold 15px DM Sans,sans-serif'; ctx.textAlign='left';
-    ctx.fillText(room.label, room.x+18, room.y+19);
-    // Status dot
-    const pct=0.4+Math.sin(frame*0.05+ri)*0.3;
-    ctx.fillStyle=room.border; ctx.globalAlpha=pct;
-    ctx.beginPath(); ctx.arc(room.x+room.w-18,room.y+14,5,0,Math.PI*2); ctx.fill();
-    ctx.globalAlpha=1;
-    // Furniture
-    if(room.meeting){ drawMeeting(room); return; }
-    if(room.agentIdx===-3){ drawBreakRoom(room); return; }
-    if(room.agentIdx===-2){
-      // HQ room — company sign + octopus logo
-      ctx.fillStyle=room.border; ctx.font='bold 36px DM Serif Display,serif';
-      ctx.textAlign='center';
-      ctx.fillText('🐙 PolypusTech', room.x+room.w/2, room.y+120);
-      ctx.font='16px DM Sans,sans-serif'; ctx.fillStyle='#8a8680';
-      ctx.fillText('polypustech.ch', room.x+room.w/2, room.y+155);
-      ctx.fillStyle=room.border+'15';
-      ctx.beginPath(); ctx.arc(room.x+room.w/2,room.y+room.h/2+20,90,0,Math.PI*2); ctx.fill();
-      ctx.textAlign='left'; return;
+  // Scale to fit container
+  const cw = container ? container.offsetWidth : 600;
+  officeScale = cw / VW;
+
+  // Wall color + hallway
+  inner.style.background = '#c8b89a';
+  inner.innerHTML = '';
+
+  // Hallway strip
+  inner.insertAdjacentHTML('beforeend', `
+    <div style="position:absolute;left:0;top:132px;width:${VW}px;height:21px;
+      background:#d8c8a8;border-top:3px solid #8a7858;border-bottom:3px solid #8a7858">
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+        font-size:8px;color:#a09070;font-weight:700;letter-spacing:.1em;white-space:nowrap">
+        POLYPUSTECH STUDIOS
+      </div>
+    </div>`);
+
+  // Build rooms
+  PIXEL_ROOMS.forEach(room => {
+    const isTop = room.y < 140;
+    let furniture = '';
+
+    if (room.meeting) {
+      furniture = meetingTableHTML(room.w/2, room.h/2+4, 60, 32)
+        + shelfHTML(4, 22, 14, room.h-28, ['#c07070','#649aa2','#6b8f71','#8a7ba8','#b89a60','#c07070'], true)
+        + clockHTML(room.w-24, 12)
+        + plantHTML(room.w-26, room.h-30, 22);
+    } else {
+      // Bookshelf on back wall
+      const shelfY = isTop ? 22 : 4;
+      furniture += shelfHTML(18, shelfY, room.w-36, 14,
+        ['#c07070','#649aa2','#6b8f71','#8a7ba8','#b89a60','#c07070','#8a7ba8','#6b8f71','#b89a60'], false);
+      // Desk
+      const deskY = isTop ? 50 : 30;
+      furniture += deskHTML(room.w/2-26, deskY, 54, 40, room.color, 'down');
+      // Chair
+      furniture += `<div style="position:absolute;left:${Math.round(room.w/2-12)}px;top:${deskY+46}px;
+        width:24px;height:20px;background:#a09080;border:1px solid #806850;border-radius:3px;
+        box-shadow:inset 0 2px 0 #b0a090"></div>`;
+      // Side table / coffee mug
+      furniture += `<div style="position:absolute;right:8px;top:${deskY+10}px;width:14px;height:14px;
+        background:#e8c090;border:1px solid #c0a070;border-radius:50%">
+        <div style="margin:3px;height:8px;width:8px;background:#7a4a20;border-radius:50%"></div>
+      </div>`;
+      // Plants
+      furniture += plantHTML(4, isTop ? room.h-28 : 4, 20);
+      furniture += plantHTML(room.w-26, isTop ? room.h-28 : 4, 20);
+      // Clock
+      furniture += clockHTML(room.w-22, isTop ? 12 : room.h-22);
+      // Computer screen glow (subtle)
+      furniture += `<div style="position:absolute;left:${Math.round(room.w/2-14)}px;top:${deskY+4}px;
+        width:22px;height:12px;background:${room.color}18;border-radius:1px;
+        animation:cryptoBlink 3s infinite"></div>`;
     }
-    if(room.agentIdx>=0){
-      drawDesk(ctx,room.x+room.w/2,room.y+room.h/2+30,room.border);
-      // Shelf & plant decor
-      ctx.fillStyle=room.border+'15'; ctx.fillRect(room.x+room.w-56,room.y+38,40,room.h-56);
-      ctx.fillStyle=room.border+'50'; ctx.font='10px sans-serif'; ctx.textAlign='center';
-      ctx.fillText('📚',room.x+room.w-36,room.y+80);
-      ctx.fillText('🌱',room.x+room.w-36,room.y+130);
-      ctx.textAlign='left';
-    }
+
+    inner.insertAdjacentHTML('beforeend', `
+      <div style="position:absolute;left:${room.x}px;top:${room.y}px;
+        width:${room.w}px;height:${room.h}px;
+        background:${room.floor};overflow:hidden;
+        border:3px solid #7a6848;box-shadow:inset 0 0 0 1px #8a7858">
+        <!-- Floor tile pattern -->
+        <div style="position:absolute;inset:0;opacity:.35;
+          background-image:linear-gradient(#00000010 1px,transparent 1px),
+          linear-gradient(90deg,#00000010 1px,transparent 1px);
+          background-size:16px 16px"></div>
+        <!-- Label -->
+        <div style="position:absolute;${room.y<140?'bottom':'top'}:2px;left:50%;transform:translateX(-50%);
+          font-size:7px;font-weight:700;color:${room.color};white-space:nowrap;
+          background:${room.color}18;padding:1px 5px;border-radius:3px;z-index:2">
+          ${room.label}
+        </div>
+        <!-- Furniture -->
+        ${furniture}
+      </div>`);
   });
 
-  // Agents
-  ags.forEach((ag,i)=>{
-    const enabled = agentEnabled[ag.name]!==false;
-    if(!enabled){ ctx.globalAlpha=0.25; }
-    ctx.save(); ctx.translate(ag.x,ag.y);
-    const bob=(ag.state==='task')?0:Math.sin(frame*0.05+i)*3;
-    ctx.translate(0,bob); ctx.save(); ctx.scale(1.6,1.6);
-    drawOcto(ctx,0,0,ag.color,ag.blink,ag.state==='task');
-    ctx.restore();
-    // Progress bar
-    if(ag.state==='task'&&ag.task){
-      rr(ctx,-56,-58,112,10,5); ctx.fillStyle='#e8e2d8'; ctx.fill();
-      rr(ctx,-56,-58,112*ag.progress,10,5); ctx.fillStyle=ag.color; ctx.fill();
-      ctx.fillStyle=ag.color; ctx.font='bold 11px DM Sans,sans-serif'; ctx.textAlign='center';
-      ctx.fillText(ag.task.length>28?ag.task.slice(0,28)+'…':ag.task,0,-65);
-    }
-    ctx.restore();
-    ctx.globalAlpha=1;
-    // Name badge
-    ctx.fillStyle=ag.color; ctx.font='bold 13px DM Sans,sans-serif'; ctx.textAlign='center';
-    ctx.fillText(ag.name,ag.x,ag.y-42);
-    ctx.textAlign='left';
+  // Build persons
+  persons.length = 0;
+  PIXEL_PERSONS.forEach(def => {
+    const room = PIXEL_ROOMS.find(r => r.id === def.roomId);
+    if (!room) return;
+    const hx = room.x + room.w/2;
+    const hy = room.y + room.h*0.62;
+    const p = {
+      ...def,
+      x:hx, y:hy, tx:hx, ty:hy, hx, hy,
+      roomX:room.x, roomY:room.y, roomW:room.w, roomH:room.h,
+      state:'idle', timer:70+Math.random()*60,
+      walkFrame:0, facing:1, el:null, task:''
+    };
+
+    const wrap = document.createElement('div');
+    wrap.id    = 'person-' + def.id;
+    wrap.style.cssText = `position:absolute;text-align:center;pointer-events:none;z-index:20;
+      transform:translateX(-50%);transition:none`;
+    wrap.innerHTML = makePersonSVG(def.skin, def.hair, def.shirt, def.id) +
+      `<div id="${def.id}-name" style="font-size:7px;font-weight:700;color:${def.shirt};
+        white-space:nowrap;margin-top:1px;text-shadow:0 0 4px #fff,0 0 4px #fff">${def.name}</div>
+       <div id="${def.id}-task" style="font-size:6px;color:#649aa2;background:#ffffffcc;
+         border-radius:3px;padding:1px 4px;white-space:nowrap;display:none;max-width:72px;
+         overflow:hidden;text-overflow:ellipsis"></div>`;
+    inner.appendChild(wrap);
+    p.el = wrap;
+    persons.push(p);
   });
+
+  // Start clock
+  updateOfficeClock();
 }
 
-// ── TICK ──────────────────────────────────────────────────────
-function tickChars(){
-  ags.forEach((ag,i)=>{
-    ag.blink++; ag.timer--;
-    const dx=ag.tx-ag.x, dy=ag.ty-ag.y;
-    if(Math.sqrt(dx*dx+dy*dy)>2){ ag.x+=dx*0.07; ag.y+=dy*0.07; }
-    else { ag.x=ag.tx; ag.y=ag.ty; }
-    const enabled=agentEnabled[ag.name]!==false;
-    if(ag.timer<=0){
-      const r=Math.random();
-      if(ag.state==='idle'){
-        if(r<0.2){
-          // Walk — stay within room or go to meeting room
-          const room=ROOMS[i<6?i:0];
-          const goMtg=Math.random()<0.15;
-          const mtg=ROOMS[1];
-          ag.tx=goMtg?mtg.x+100+Math.random()*(mtg.w-200):room.x+60+Math.random()*(room.w-120);
-          ag.ty=goMtg?mtg.y+80+Math.random()*(mtg.h-100):room.y+80+Math.random()*(room.h-100);
-          ag.state='walk'; ag.timer=60+Math.random()*50;
-        } else if(r<0.55&&enabled){
-          ag.state='task'; ag.progress=0;
-          ag.task=TASK_LINES[i%6][Math.floor(Math.random()*3)];
-          ag.timer=100+Math.random()*80;
-          addOfficeLog(ag.name+': '+ag.task);
-          if(typeof totalTokens!=="undefined")totalTokens+=Math.floor(Math.random()*200+80);
-          if(typeof updateTokenDisplay==="function")updateTokenDisplay();
-        } else { ag.timer=50+Math.random()*60; }
-      } else if(ag.state==='walk'){
-        ag.tx=ag.hx; ag.ty=ag.hy; ag.state='idle'; ag.timer=70+Math.random()*60;
-      } else if(ag.state==='task'){
-        if(!enabled){ag.state='idle';ag.task='';ag.progress=0;ag.timer=30;return;}
-        ag.state='idle'; ag.task=''; ag.progress=0; ag.timer=60+Math.random()*60;
+function updateOfficeClock() {
+  const el = document.getElementById('office-clock');
+  if (!el) return;
+  const h = new Date().getHours() % 12;
+  const clocks = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚'];
+  el.textContent = clocks[h] || '🕐';
+  setTimeout(updateOfficeClock, 60000);
+}
+
+function tickPersons() {
+  officeFrame++;
+  persons.forEach(p => {
+    if (!p.el) return;
+    p.timer--;
+    const enabled = agentEnabled[p.id] !== false;
+
+    // Move
+    const dx = p.tx - p.x, dy = p.ty - p.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (dist > 0.4) {
+      p.x += dx * 0.07;
+      p.y += dy * 0.07;
+      p.facing = dx > 0 ? 1 : -1;
+      // Walk animation — bob head
+      p.walkFrame++;
+      const bob = Math.sin(p.walkFrame * 0.35) * 1.5;
+      const svg = p.el.querySelector('svg');
+      if (svg) svg.style.transform = `translateY(${bob}px)`;
+    } else {
+      p.x = p.tx; p.y = p.ty;
+      const svg = p.el.querySelector('svg');
+      if (svg) svg.style.transform = '';
+    }
+
+    // Update DOM
+    p.el.style.left = p.x + 'px';
+    p.el.style.top  = (p.y - 28) + 'px';
+    p.el.style.transform = `translateX(-50%) scaleX(${p.facing})`;
+
+    // Dim if disabled
+    p.el.style.opacity = enabled ? '1' : '0.35';
+
+    const taskEl = document.getElementById(`${p.id}-task`);
+
+    // State machine
+    if (p.timer <= 0) {
+      const roll = Math.random();
+      if (p.state === 'idle') {
+        if (roll < 0.22) {
+          // Wander inside own room
+          p.tx = p.roomX + 14 + Math.random()*(p.roomW-28);
+          p.ty = p.roomY + 26 + Math.random()*(p.roomH-36);
+          p.state = 'walk'; p.timer = 50+Math.random()*40;
+          if(taskEl) taskEl.style.display='none';
+        } else if (roll < 0.55 && enabled) {
+          p.state = 'task';
+          p.task  = p.tasks[Math.floor(Math.random()*p.tasks.length)];
+          p.timer = 80+Math.random()*60;
+          if(taskEl){taskEl.textContent=p.task;taskEl.style.display='block';}
+          addOfficeLog(p.name+': '+p.task);
+          if(typeof totalTokens!=='undefined'){
+            totalTokens+=Math.floor(Math.random()*180+60);
+            if(typeof updateTokenDisplay==='function') updateTokenDisplay();
+          }
+        } else {
+          p.timer = 40+Math.random()*50;
+        }
+      } else if (p.state==='walk') {
+        p.tx=p.hx; p.ty=p.hy; p.state='idle'; p.timer=60+Math.random()*60;
+        if(taskEl) taskEl.style.display='none';
+      } else if (p.state==='task') {
+        if(!enabled){p.state='idle';p.task='';p.timer=20;if(taskEl)taskEl.style.display='none';return;}
+        p.state='idle';p.task='';p.timer=50+Math.random()*50;
+        if(taskEl) taskEl.style.display='none';
       }
     }
-    if(ag.state==='task') ag.progress=Math.min(0.95,1-ag.timer/180);
   });
+  officeRAF = requestAnimationFrame(tickPersons);
 }
 
-function officeLoop() {
-  frame++;
-  if(ctx){ tickChars(); renderOffice(); }
-  requestAnimationFrame(officeLoop);
+function startOffice() {
+  buildOffice();
+  // Scale inner to fill container width
+  const container = document.getElementById('office-container');
+  const inner     = document.getElementById('office-inner');
+  if (container && inner) {
+    const scale = container.offsetWidth / VW;
+    inner.style.transform = `scale(${scale})`;
+    inner.style.width  = VW + 'px';
+    inner.style.height = VH + 'px';
+    container.style.height = Math.round(VH * scale) + 'px';
+  }
+  if (officeRAF) cancelAnimationFrame(officeRAF);
+  tickPersons();
 }
+
 
 // ═══════════════════════════════════════════════════════════════
 // INIT
@@ -1694,7 +1683,7 @@ document.getElementById('f-date').value = today;
 // Start office
 addOfficeLog('PolypusTech HQ booted. VIC and GEN online.');
 setTimeout(()=>addOfficeLog('Razer gaming setup initialized. All systems green.'),2000);
-officeLoop();
+startOffice();
 // ═══ EXPENSES EXTREME GAMES ═══
 
 function addExpense() {
