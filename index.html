@@ -13,7 +13,7 @@
   --r:14px;--sh:0 2px 16px rgba(0,0,0,.05);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal);min-height:100vh;display:flex;font-size:14px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal);min-height:100vh;display:flex;font-size:14px;overflow-x:hidden}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 @keyframes tickerMove{0%{transform:translateX(100%)}100%{transform:translateX(-120%)}}
 @keyframes cryptoBlink{0%,100%{opacity:1}50%{opacity:.7}}
@@ -35,7 +35,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 .sb-ft strong{display:block;color:var(--sage);font-size:10px}
 
 /* MAIN */
-.main{margin-left:68px;margin-right:68px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.main{margin-left:68px;margin-right:68px;flex:1;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden;max-width:calc(100vw - 136px)}
 
 /* HEADER */
 .hdr{background:var(--card);border-bottom:1px solid var(--border);padding:0 22px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
@@ -51,7 +51,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 .ib{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer}
 
 /* CONTENT */
-.cnt{padding:20px 22px;flex:1}
+.cnt{padding:20px 22px;flex:1;overflow-x:hidden}
 .pg{display:none}.pg.active{display:block}
 
 /* CARDS */
@@ -240,7 +240,7 @@ tr:hover td{background:#fafaf8}
   </div>
 
   <!-- CRYPTO -->
-  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px">
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:14px;min-width:0">
     <div class="sc" style="border-color:rgba(247,147,26,.25);padding:8px"><div style="font-size:9px;color:#f7931a;font-weight:700">BTC</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-btc">—</div><div style="font-size:9px" id="change-btc">—</div></div>
     <div class="sc" style="border-color:rgba(98,126,234,.25);padding:8px"><div style="font-size:9px;color:#627eea;font-weight:700">ETH</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-eth">—</div><div style="font-size:9px" id="change-eth">—</div></div>
     <div class="sc" style="border-color:rgba(153,69,255,.25);padding:8px"><div style="font-size:9px;color:#9945ff;font-weight:700">SOL</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-sol">—</div><div style="font-size:9px" id="change-sol">—</div></div>
@@ -249,11 +249,9 @@ tr:hover td{background:#fafaf8}
     <div class="sc" style="border-color:rgba(184,154,96,.25);padding:8px"><div style="font-size:9px;color:var(--amber);font-weight:700">CHF/USD</div><div style="font-size:12px;font-weight:700;color:var(--charcoal)" id="price-chf">—</div><div style="font-size:9px;color:var(--muted)">live</div></div>
   </div>
 
-  <!-- OFFICE + GOALS SPLIT -->
-  <div style="display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px">
-
-    <!-- OFFICE -->
-    <div class="card" style="padding:0;overflow:hidden">
+  <!-- OFFICE CENTERED -->
+  <div style="align-self:center;width:100%;max-width:720px;margin-bottom:14px">
+  <div class="card" style="padding:0;overflow:hidden">
       <div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
         <div style="font-weight:700;font-size:13px;color:var(--sage)">🏢 PolypusTech HQ <span style="font-weight:400;color:var(--muted);font-size:11px" id="office-status">— All agents online</span></div>
         <div style="display:flex;align-items:center;gap:8px">
@@ -262,8 +260,8 @@ tr:hover td{background:#fafaf8}
         </div>
       </div>
       <!-- CSS OFFICE — no canvas, no zoom bugs -->
-      <div id="office-container" style="position:relative;width:100%;height:290px;background:#c8b89a;overflow:hidden">
-        <div id="office-inner" style="position:absolute;inset:0;transform-origin:top left"></div>
+      <div id="office-container" style="position:relative;width:100%;height:260px;background:#f0ede8;overflow:hidden">
+        <div id="office-inner" style="position:absolute;inset:0"></div>
       </div>
       <!-- Agent toggles -->
       <div style="padding:7px 14px;border-top:1px solid var(--border);background:#fafaf8;display:flex;flex-wrap:wrap;gap:4px;align-items:center">
@@ -281,9 +279,11 @@ tr:hover td{background:#fafaf8}
       <!-- Log -->
       <div style="padding:6px 14px;background:#fafaf8;height:38px;overflow-y:auto;font-size:10px;color:var(--muted);font-family:monospace;border-top:1px solid var(--border)" id="office-log"><div style="color:var(--sage)">PolypusTech HQ — all agents online.</div></div>
     </div>
+  </div>
+  </div>
 
-    <!-- GOALS + SCOREBOARD -->
-    <div style="display:flex;flex-direction:column;gap:12px">
+  <!-- GOALS + SCOREBOARD BELOW OFFICE -->
+  <div style="display:grid;grid-template-columns:1fr 280px;gap:14px;margin-bottom:14px">
       <div class="card" style="flex:1">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
           <div style="font-weight:700;font-size:13px;color:var(--sage)">🎯 Goals — Dec 31, 2026</div>
@@ -1282,7 +1282,7 @@ function renderFinance() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// ═══ PIXEL ART TOP-DOWN OFFICE ════════════════════════════════
+// ═══ PIXEL ART OFFICE — % positioned, fixed 260px height ══════
 var agentEnabled = {};
 var totalTokens  = 0;
 let officeRAF    = null;
@@ -1290,377 +1290,348 @@ let officeFrame  = 0;
 let officeLog    = [];
 
 function addOfficeLog(msg) {
-  const t = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const t=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   officeLog.unshift(`[${t}] ${msg}`);
-  if (officeLog.length > 30) officeLog.pop();
-  const el = document.getElementById('office-log');
-  if (el) el.innerHTML = officeLog.map((l,i)=>
-    `<div style="color:${i===0?'#649aa2':'#8a8680'}">${l}</div>`).join('');
+  if(officeLog.length>30)officeLog.pop();
+  const el=document.getElementById('office-log');
+  if(el)el.innerHTML=officeLog.map((l,i)=>`<div style="color:${i===0?'#649aa2':'#8a8680'}">${l}</div>`).join('');
 }
 
-// ── PIXEL PERSON SVG (top-down view) ─────────────────────────
-function makePersonSVG(skin, hair, shirt, id) {
-  return `<svg id="svg-${id}" width="28" height="28" viewBox="0 0 28 28"
-    style="display:block;image-rendering:pixelated;overflow:visible">
-    <!-- Shadow -->
-    <ellipse cx="14" cy="26" rx="8" ry="2.5" fill="rgba(0,0,0,0.18)"/>
-    <!-- Body/shoulders (top-down) -->
-    <ellipse cx="14" cy="20" rx="7" ry="6" fill="${shirt}"/>
-    <!-- Neck -->
-    <rect x="12" y="15" width="4" height="3" fill="${skin}"/>
-    <!-- Head -->
-    <circle cx="14" cy="12" r="7" fill="${skin}"/>
-    <!-- Hair -->
-    <ellipse cx="14" cy="6.5" rx="6.5" ry="4" fill="${hair}"/>
-    <!-- Hair sides -->
-    <rect x="7" y="8" width="3" height="5" rx="1" fill="${hair}"/>
-    <rect x="18" y="8" width="3" height="5" rx="1" fill="${hair}"/>
-    <!-- Eyes -->
-    <circle cx="11" cy="12" r="1.4" fill="#fff"/>
-    <circle cx="17" cy="12" r="1.4" fill="#fff"/>
-    <circle cx="11.5" cy="12.3" r="0.8" fill="#1a1a1a"/>
-    <circle cx="17.5" cy="12.3" r="0.8" fill="#1a1a1a"/>
-    <!-- Eye shine -->
-    <circle cx="12" cy="11.8" r="0.3" fill="#fff"/>
-    <circle cx="18" cy="11.8" r="0.3" fill="#fff"/>
-    <!-- Nose -->
-    <circle cx="14" cy="14.5" r="0.6" fill="${skin}" style="filter:brightness(.9)"/>
+// ── ROOMS (% of container: width=100%, height=260px) ──────────
+// Layout: 4 cols × 2 rows, corridor at 45-55%
+// Each room: w=24.8%, h=44%
+const RW=24.6, RH=43, GAP=0.4;
+const ROOMS=[
+  {id:'vic',    L:0,            T:0,   W:RW,H:RH,col:'#649aa2',fl:'#e8d8b0',lbl:'Victor — CEO',  isTop:true },
+  {id:'gen',    L:RW+GAP,      T:0,   W:RW,H:RH,col:'#6b8f71',fl:'#ddecd8',lbl:'Gen — Design',  isTop:true },
+  {id:'claude', L:(RW+GAP)*2,  T:0,   W:RW,H:RH,col:'#649aa2',fl:'#e4eef2',lbl:'Claude — AI',   isTop:true },
+  {id:'cinema', L:(RW+GAP)*3,  T:0,   W:RW,H:RH,col:'#8a7ba8',fl:'#12101e',lbl:'Cinema 🎬',     isTop:true, cinema:true},
+  {id:'mailer', L:0,            T:57,  W:RW,H:RH,col:'#8a7ba8',fl:'#eeebf8',lbl:'Mailer',        isTop:false},
+  {id:'builder',L:RW+GAP,      T:57,  W:RW,H:RH,col:'#6b8f71',fl:'#e8f4e8',lbl:'Builder',       isTop:false},
+  {id:'scraper',L:(RW+GAP)*2,  T:57,  W:RW,H:RH,col:'#c07070',fl:'#f4e8e8',lbl:'Scraper',       isTop:false},
+  {id:'meeting',L:(RW+GAP)*3,  T:57,  W:RW+0.8,H:RH,col:'#b89a60',fl:'#f0e8d0',lbl:'Meeting',  isTop:false,meeting:true},
+];
+// Corridor: T=44%, H=12%
+const COR_T=44.5, COR_H=11;
+const COR_MID=COR_T+COR_H/2; // ~50%
+
+// ── PERSONS ───────────────────────────────────────────────────
+const PERSONS=[
+  {id:'VIC',    name:'Victor', skin:'#f0c098',hair:'#3a1a08',shirt:'#649aa2',roomId:'vic',    tasks:['On a client call...','Closing a deal! 🎉','Writing strategy...']},
+  {id:'GEN',    name:'Gen',    skin:'#d4a878',hair:'#1a1010',shirt:'#6b8f71',roomId:'gen',    tasks:['Designing mockup...','In Figma...','Pushing live!']},
+  {id:'Claude', name:'Claude', skin:'#e8c090',hair:'#2c2c2a',shirt:'#649aa2',roomId:'claude', tasks:['Planning AI strategy...','Analysing data...','Pipeline built!']},
+  {id:'Mailer', name:'Mailer', skin:'#f0c098',hair:'#4a3a2a',shirt:'#8a7ba8',roomId:'mailer', tasks:['Writing cold email...','Scheduling sends...','A/B testing...']},
+  {id:'Builder',name:'Builder',skin:'#d4a878',hair:'#555',   shirt:'#6b8f71',roomId:'builder',tasks:['Deploying to Vercel...','Building component...','Pushing to GitHub...']},
+  {id:'Scraper',name:'Scraper',skin:'#f0c098',hair:'#3a3a3a',shirt:'#c07070',roomId:'scraper',tasks:['Scraping 47 leads...','Found hot prospects...','CRM updated!']},
+];
+const persons=[];
+
+// ── SVG PERSON (top-down pixel art) ──────────────────────────
+function pSVG(sk,hr,sh){
+  return `<svg width="24" height="24" viewBox="0 0 24 24" style="display:block;image-rendering:pixelated;overflow:visible">
+    <ellipse cx="12" cy="23" rx="7.5" ry="2.3" fill="rgba(0,0,0,.15)"/>
+    <ellipse cx="12" cy="19" rx="6.5" ry="5" fill="${sh}"/>
+    <rect x="10.5" y="14.5" width="3" height="2.5" fill="${sk}"/>
+    <circle cx="12" cy="10.5" r="6.5" fill="${sk}"/>
+    <ellipse cx="12" cy="5.5" rx="6" ry="3.8" fill="${hr}"/>
+    <rect x="6" y="7" width="2.5" height="4.5" rx="1" fill="${hr}"/>
+    <rect x="15.5" y="7" width="2.5" height="4.5" rx="1" fill="${hr}"/>
+    <circle cx="9.5" cy="10.5" r="1.3" fill="#fff"/>
+    <circle cx="14.5" cy="10.5" r="1.3" fill="#fff"/>
+    <circle cx="10" cy="10.7" r=".75" fill="#1a1a1a"/>
+    <circle cx="15" cy="10.7" r=".75" fill="#1a1a1a"/>
+    <circle cx="10.3" cy="10.3" r=".28" fill="#fff"/>
+    <circle cx="15.3" cy="10.3" r=".28" fill="#fff"/>
   </svg>`;
 }
 
-// ── OFFICE LAYOUT (pixel art top-down) ───────────────────────
-// Container is 100% wide × 290px tall. Positions in px relative to container.
-// We'll use a virtual 640×290 grid and scale via CSS transform.
-
-const VW = 640, VH = 290; // virtual office dimensions
-
-// Rooms in virtual px
-const PIXEL_ROOMS = [
-  // Top row: 3 individual offices
-  { id:'vic',     x:0,   y:0,   w:148, h:130, color:'#7a9e7e', floor:'#e8d8b0', label:'Victor', agent:'VIC'     },
-  { id:'gen',     x:154, y:0,   w:148, h:130, color:'#6b8f9e', floor:'#e0dcc8', label:'Gen',    agent:'GEN'     },
-  { id:'meeting', x:308, y:0,   w:176, h:130, color:'#b89a60', floor:'#f0e8d0', label:'Meeting Room', agent:null, meeting:true },
-  { id:'claude',  x:490, y:0,   w:150, h:130, color:'#649aa2', floor:'#e8f0e8', label:'Claude', agent:'Claude'  },
-  // Bottom row
-  { id:'mailer',  x:0,   y:155, w:148, h:135, color:'#8a7ba8', floor:'#ede8f4', label:'Mailer',  agent:'Mailer'  },
-  { id:'builder', x:154, y:155, w:148, h:135, color:'#6b8f71', floor:'#e8f4e8', label:'Builder', agent:'Builder' },
-  { id:'trader',  x:308, y:155, w:176, h:135, color:'#b89a60', floor:'#f8f4e0', label:'Trader',  agent:'Trader'  },
-  { id:'scraper', x:490, y:155, w:150, h:135, color:'#c07070', floor:'#f4e8e8', label:'Scraper', agent:'Scraper' },
-];
-
-// People definitions
-const PIXEL_PERSONS = [
-  { id:'VIC',     name:'Victor',  skin:'#f0c098', hair:'#3a1a08', shirt:'#649aa2', roomId:'vic',     tasks:['On a client call...','Closing a deal! 🎉','Writing strategy...','Reviewing proposals...'] },
-  { id:'GEN',     name:'Gen',     skin:'#d4a878', hair:'#1a1010', shirt:'#6b8f71', roomId:'gen',     tasks:['Designing mockup...','In Figma...','Pushing live!','Brewing coffee ☕'] },
-  { id:'Claude',  name:'Claude',  skin:'#e8c090', hair:'#2c2c2a', shirt:'#649aa2', roomId:'claude',  tasks:['Planning AI strategy...','Analysing data...','Building pipeline...'] },
-  { id:'Mailer',  name:'Mailer',  skin:'#f0c098', hair:'#4a3a2a', shirt:'#8a7ba8', roomId:'mailer',  tasks:['Writing cold email...','Scheduling 300 sends...','A/B testing...'] },
-  { id:'Builder', name:'Builder', skin:'#d4a878', hair:'#555',    shirt:'#6b8f71', roomId:'builder', tasks:['Deploying to Vercel...','Building component...','Pushing to GitHub...'] },
-  { id:'Trader',  name:'Trader',  skin:'#e8c090', hair:'#2a1a08', shirt:'#b89a60', roomId:'trader',  tasks:['Analyzing EURUSD...','Checking RSI...','Calculating R:R...'] },
-  { id:'Scraper', name:'Scraper', skin:'#f0c098', hair:'#3a3a3a', shirt:'#c07070', roomId:'scraper', tasks:['Scraping 47 leads...','Found hot prospects...','Updating CRM...'] },
-];
-
-const persons = [];
-let officeScale = 1;
-
-// Draw a top-down desk with monitor
-function deskHTML(x, y, w, h, color, facing) {
-  // facing: 'down' = monitor at top, 'right' = monitor at left
-  const monW = facing==='right' ? 18 : 28, monH = facing==='right' ? 22 : 14;
-  const monX = facing==='right' ? 2 : Math.round((w-monW)/2);
-  const monY = facing==='right' ? Math.round((h-monH)/2) : 2;
-  return `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;
-    background:#c8a870;border:2px solid #a07840;border-radius:3px;box-shadow:inset 0 -2px 0 #8b6020">
-    <!-- Monitor -->
-    <div style="position:absolute;left:${monX}px;top:${monY}px;width:${monW}px;height:${monH}px;
-      background:#1a2030;border:1px solid #0a1020;border-radius:1px">
-      <div style="margin:2px;background:#3a6a9a18;height:calc(100% - 4px);border-radius:1px;
-        display:flex;align-items:center;justify-content:center">
-        <div style="width:60%;height:1px;background:#649aa260;box-shadow:0 2px 0 #649aa240,0 4px 0 #649aa220"></div>
+// ── FURNITURE (sized in % relative to room) ───────────────────
+function fDesk(top){
+  // All % of room
+  const my = top ? 30 : 10;
+  return `
+    <!-- Desk -->
+    <div style="position:absolute;left:30%;top:${my}%;width:42%;height:28%;
+      background:#c8a870;border:1.5px solid #9a7030;border-radius:3px;
+      box-shadow:inset 0 -2px 0 #8b6020">
+      <!-- Monitor -->
+      <div style="position:absolute;left:18%;top:8%;width:46%;height:48%;
+        background:#1a2030;border-radius:1px">
+        <div style="margin:2px;background:#3a6a9a15;height:calc(100%-4px);border-radius:1px"></div>
       </div>
+      <!-- KB -->
+      <div style="position:absolute;bottom:10%;left:15%;width:55%;height:18%;
+        background:#555;border-radius:1px"></div>
+      <!-- Mouse -->
+      <div style="position:absolute;bottom:10%;right:6%;width:12%;height:22%;
+        background:#666;border-radius:2px 2px 3px 3px;border:1px solid #444"></div>
     </div>
-    <!-- Keyboard -->
-    <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-      width:${Math.round(w*0.55)}px;height:5px;background:#555;border-radius:1px;
-      display:flex;gap:1px;padding:1px">
-      ${[...Array(5)].map((_,i)=>`<div style="flex:1;background:${color}44;border-radius:1px"></div>`).join('')}
-    </div>
-    <!-- Mouse -->
-    <div style="position:absolute;bottom:4px;right:5px;width:7px;height:9px;
-      background:#666;border-radius:3px 3px 4px 4px;border:1px solid #444"></div>
+    <!-- Chair -->
+    <div style="position:absolute;left:33%;top:${my+30}%;width:36%;height:18%;
+      background:#a09080;border:1px solid #806850;border-radius:2px;
+      box-shadow:inset 0 2px 0 #b0a090"></div>`;
+}
+
+function fShelf(top){
+  const ty = top ? 6 : 'unset';
+  const by = top ? 'unset' : 6;
+  const bks=['#c07070','#649aa2','#6b8f71','#8a7ba8','#b89a60','#c07070','#649aa2','#6b8f71'];
+  return `<div style="position:absolute;left:5%;${top?'top:'+ty+'px':'bottom:'+by+'px'};
+    width:90%;height:10px;background:#7a5020;border:1px solid #5a3810;border-radius:2px;
+    display:flex;gap:1px;padding:1px">
+    ${bks.map(b=>`<div style="flex:1;background:${b};border-radius:1px"></div>`).join('')}
   </div>`;
 }
 
-// Bookshelf along wall
-function shelfHTML(x, y, w, h, colors, vertical) {
-  const books = colors.map(bc =>
-    `<div style="flex:1;background:${bc};${vertical?'min-height':'min-width'}:3px;border-radius:1px;
-      box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)"></div>`).join('');
-  return `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;
-    background:#7a5020;border:1px solid #5a3810;border-radius:2px;
-    display:flex;flex-direction:${vertical?'column':'row'};gap:1px;padding:2px;overflow:hidden">
-    ${books}
-  </div>`;
+function fPlants(){
+  return `
+    <div style="position:absolute;left:2%;bottom:4%;width:12%;padding-bottom:12%;font-size:10px;line-height:1;text-align:center">🌱</div>
+    <div style="position:absolute;right:2%;bottom:4%;width:12%;padding-bottom:12%;font-size:10px;line-height:1;text-align:center">🌱</div>`;
 }
 
-// Plant
-function plantHTML(x, y, size) {
-  const s = size || 22;
-  return `<div style="position:absolute;left:${x}px;top:${y}px;width:${s}px;height:${s}px;
-    display:flex;align-items:flex-end;justify-content:center">
-    <!-- Pot -->
-    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-      width:${Math.round(s*0.5)}px;height:${Math.round(s*0.35)}px;
-      background:#a06040;border:1px solid #804020;border-radius:0 0 3px 3px"></div>
-    <!-- Plant leaves -->
-    <div style="position:absolute;bottom:${Math.round(s*0.28)}px;left:50%;transform:translateX(-50%);
-      width:${s}px;height:${Math.round(s*0.7)}px;
-      background:radial-gradient(circle at 30% 70%, #4a8a3a, #3a7030 40%, #2a5a20 80%);
-      border-radius:50% 60% 50% 40%;box-shadow:3px -3px 0 #5a9a4a,-3px -3px 0 #3a7030"></div>
-  </div>`;
+function fClock(top){
+  return `<div style="position:absolute;right:4%;${top?'top':'bottom'}:4%;
+    width:14px;height:14px;background:#f0ede8;border:1.5px solid #8a8680;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:6px" id="office-clock">🕐</div>`;
 }
 
-// Meeting table (oval top-down)
-function meetingTableHTML(cx, cy, rx, ry) {
-  const chairs = [0,60,120,180,240,300].map(deg => {
-    const rad = deg * Math.PI/180;
-    const cx2 = cx + Math.cos(rad)*(rx+12);
-    const cy2 = cy + Math.sin(rad)*(ry+8);
-    return `<div style="position:absolute;left:${cx2-8}px;top:${cy2-6}px;width:16px;height:12px;
-      background:#b8a070;border:1px solid #907840;border-radius:3px"></div>`;
-  }).join('');
-  return chairs + `<div style="position:absolute;left:${cx-rx}px;top:${cy-ry}px;
-    width:${rx*2}px;height:${ry*2}px;
-    background:radial-gradient(ellipse at 35% 35%, #d4b880, #b89050 70%);
-    border:2px solid #907840;border-radius:50%;
-    box-shadow:2px 3px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.3)">
-    <!-- Laptop on table -->
-    <div style="position:absolute;top:30%;left:35%;width:30%;height:22%;
-      background:#1a2030;border-radius:2px;
-      display:flex;align-items:center;justify-content:center">
-      <div style="width:80%;height:60%;background:#649aa215"></div>
-    </div>
-  </div>`;
-}
+// ── BUILD OFFICE ──────────────────────────────────────────────
+function buildOffice(){
+  const inner=document.getElementById('office-inner');
+  if(!inner)return;
+  inner.innerHTML='';
+  inner.style.cssText='position:absolute;inset:0;background:#f0ede8';
 
-// Clock on wall
-function clockHTML(x, y) {
-  return `<div style="position:absolute;left:${x}px;top:${y}px;width:18px;height:18px;
-    background:#f0ede8;border:2px solid #8a8680;border-radius:50%;
-    display:flex;align-items:center;justify-content:center">
-    <div style="font-size:6px;color:#2c2c2a;font-weight:700;font-family:monospace" id="office-clock">🕐</div>
-  </div>`;
-}
-
-// Build the office
-function buildOffice() {
-  const container = document.getElementById('office-container');
-  const inner     = document.getElementById('office-inner');
-  if (!inner) return;
-
-  // Scale to fit container
-  const cw = container ? container.offsetWidth : 600;
-  officeScale = cw / VW;
-
-  // Wall color + hallway
-  inner.style.background = '#c8b89a';
-  inner.innerHTML = '';
-
-  // Hallway strip
-  inner.insertAdjacentHTML('beforeend', `
-    <div style="position:absolute;left:0;top:132px;width:${VW}px;height:21px;
-      background:#d8c8a8;border-top:3px solid #8a7858;border-bottom:3px solid #8a7858">
+  // Corridor
+  inner.insertAdjacentHTML('beforeend',`
+    <div style="position:absolute;left:0;top:${COR_T}%;width:100%;height:${COR_H}%;
+      background:#d8cfc0;border-top:2.5px solid #8a7848;border-bottom:2.5px solid #8a7848;overflow:hidden">
+      <div style="position:absolute;inset:0;
+        background-image:linear-gradient(#00000008 1px,transparent 1px),
+          linear-gradient(90deg,#00000008 1px,transparent 1px);background-size:20px 20px"></div>
       <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-        font-size:8px;color:#a09070;font-weight:700;letter-spacing:.1em;white-space:nowrap">
-        POLYPUSTECH STUDIOS
-      </div>
+        font-size:7px;font-weight:700;color:#a09070;letter-spacing:.1em;white-space:nowrap">
+        ✦ POLYPUSTECH STUDIOS ✦</div>
+      ${[12,30,50,70,88].map(lx=>`
+        <div style="position:absolute;left:${lx}%;top:3px;width:14px;height:7px;
+          background:rgba(255,255,200,.55);border-radius:0 0 3px 3px;
+          box-shadow:0 0 7px rgba(255,255,180,.4);transform:translateX(-50%)"></div>`).join('')}
     </div>`);
 
-  // Build rooms
-  PIXEL_ROOMS.forEach(room => {
-    const isTop = room.y < 140;
-    let furniture = '';
+  // Rooms
+  ROOMS.forEach(room=>{
+    const isTop=room.isTop;
+    let furniture='';
 
-    if (room.meeting) {
-      furniture = meetingTableHTML(room.w/2, room.h/2+4, 60, 32)
-        + shelfHTML(4, 22, 14, room.h-28, ['#c07070','#649aa2','#6b8f71','#8a7ba8','#b89a60','#c07070'], true)
-        + clockHTML(room.w-24, 12)
-        + plantHTML(room.w-26, room.h-30, 22);
+    if(room.cinema){
+      furniture=`
+        <div style="position:absolute;left:8%;${isTop?'top:12%':'bottom:12%'};width:84%;height:18%;
+          background:#f0f0f0;border:1.5px solid #ccc;border-radius:2px;
+          display:flex;align-items:center;justify-content:center;
+          box-shadow:0 0 6px rgba(180,180,255,.6)">
+          <span style="font-size:6px;color:#649aa2;font-weight:700">▶ NOW PLAYING</span>
+        </div>
+        <div style="position:absolute;${isTop?'bottom:10%':'top:10%'};left:50%;transform:translateX(-50%);
+          width:20%;height:8%;background:#3a3a4a;border-radius:3px;border:1px solid #555"></div>
+        ${[8,22,36,50,64,78].map(sx=>`
+          <div style="position:absolute;left:${sx}%;${isTop?'bottom:28%':'top:28%'};
+            width:10%;height:12%;background:#8a2a2a;border:1px solid #6a1a1a;border-radius:1px 1px 0 0"></div>
+          <div style="position:absolute;left:${sx}%;${isTop?'bottom:42%':'top:42%'};
+            width:10%;height:12%;background:#6a1a1a;border:1px solid #4a0a0a;border-radius:1px 1px 0 0"></div>`).join('')}
+        <div style="position:absolute;right:4%;${isTop?'bottom:28%':'top:28%'};font-size:10px">🍿</div>`;
+    } else if(room.meeting){
+      furniture=`
+        ${[0,60,120,180,240,300].map(deg=>{
+          const r=deg*Math.PI/180;
+          return `<div style="position:absolute;left:calc(50% + ${Math.cos(r)*36}%);top:calc(52% + ${Math.sin(r)*25}%);
+            transform:translate(-50%,-50%);width:10%;height:8%;
+            background:#b8a070;border:1px solid #907840;border-radius:2px"></div>`;
+        }).join('')}
+        <div style="position:absolute;left:22%;top:28%;width:56%;height:48%;
+          background:radial-gradient(ellipse at 35% 35%,#d4b880,#b89050 70%);
+          border:1.5px solid #907840;border-radius:50%;
+          box-shadow:2px 3px 6px rgba(0,0,0,.18)">
+          <div style="position:absolute;top:30%;left:32%;width:30%;height:22%;
+            background:#1a2030;border-radius:1px"></div>
+        </div>
+        <div style="position:absolute;left:2%;top:15%;width:14%;height:55%;
+          background:#f8f8f4;border:1px solid #ddd;border-radius:2px;
+          display:flex;flex-direction:column;align-items:center;padding-top:3px;gap:2px">
+          <div style="font-size:7px">📊</div>
+          ${[...Array(4)].map(()=>`<div style="width:80%;height:1px;background:#649aa230"></div>`).join('')}
+        </div>`;
     } else {
-      // Bookshelf on back wall
-      const shelfY = isTop ? 22 : 4;
-      furniture += shelfHTML(18, shelfY, room.w-36, 14,
-        ['#c07070','#649aa2','#6b8f71','#8a7ba8','#b89a60','#c07070','#8a7ba8','#6b8f71','#b89a60'], false);
-      // Desk
-      const deskY = isTop ? 50 : 30;
-      furniture += deskHTML(room.w/2-26, deskY, 54, 40, room.color, 'down');
-      // Chair
-      furniture += `<div style="position:absolute;left:${Math.round(room.w/2-12)}px;top:${deskY+46}px;
-        width:24px;height:20px;background:#a09080;border:1px solid #806850;border-radius:3px;
-        box-shadow:inset 0 2px 0 #b0a090"></div>`;
-      // Side table / coffee mug
-      furniture += `<div style="position:absolute;right:8px;top:${deskY+10}px;width:14px;height:14px;
-        background:#e8c090;border:1px solid #c0a070;border-radius:50%">
-        <div style="margin:3px;height:8px;width:8px;background:#7a4a20;border-radius:50%"></div>
-      </div>`;
-      // Plants
-      furniture += plantHTML(4, isTop ? room.h-28 : 4, 20);
-      furniture += plantHTML(room.w-26, isTop ? room.h-28 : 4, 20);
-      // Clock
-      furniture += clockHTML(room.w-22, isTop ? 12 : room.h-22);
-      // Computer screen glow (subtle)
-      furniture += `<div style="position:absolute;left:${Math.round(room.w/2-14)}px;top:${deskY+4}px;
-        width:22px;height:12px;background:${room.color}18;border-radius:1px;
-        animation:cryptoBlink 3s infinite"></div>`;
+      furniture = fShelf(isTop) + fDesk(isTop) + fPlants() + fClock(isTop);
+      // Coffee mug
+      furniture += `<div style="position:absolute;right:8%;${isTop?'top:36%':'bottom:36%'};
+        width:8%;padding-bottom:8%;background:#e8c090;border:1px solid #c0a070;
+        border-radius:50%;display:flex;align-items:center;justify-content:center;
+        font-size:6px">☕</div>`;
     }
 
-    inner.insertAdjacentHTML('beforeend', `
-      <div style="position:absolute;left:${room.x}px;top:${room.y}px;
-        width:${room.w}px;height:${room.h}px;
-        background:${room.floor};overflow:hidden;
-        border:3px solid #7a6848;box-shadow:inset 0 0 0 1px #8a7858">
-        <!-- Floor tile pattern -->
-        <div style="position:absolute;inset:0;opacity:.35;
+    // Door opening on corridor side
+    const doorSide = isTop ? 'bottom:-2px' : 'top:-2px';
+    furniture += `
+      <div style="position:absolute;left:38%;${doorSide};width:24%;height:5px;
+        background:#d4c4a0;z-index:5"></div>
+      <div style="position:absolute;left:36%;${doorSide};width:28%;height:4px;
+        border-left:2px solid #8a7848;border-right:2px solid #8a7848;z-index:4"></div>`;
+
+    inner.insertAdjacentHTML('beforeend',`
+      <div style="position:absolute;left:${room.L}%;top:${room.T}%;width:${room.W}%;height:${room.H}%;
+        background:${room.fl};border:2.5px solid #7a6848;overflow:visible;z-index:1">
+        <div style="position:absolute;inset:0;overflow:hidden;
           background-image:linear-gradient(#00000010 1px,transparent 1px),
           linear-gradient(90deg,#00000010 1px,transparent 1px);
-          background-size:16px 16px"></div>
-        <!-- Label -->
-        <div style="position:absolute;${room.y<140?'bottom':'top'}:2px;left:50%;transform:translateX(-50%);
-          font-size:7px;font-weight:700;color:${room.color};white-space:nowrap;
-          background:${room.color}18;padding:1px 5px;border-radius:3px;z-index:2">
-          ${room.label}
-        </div>
-        <!-- Furniture -->
+          background-size:14px 14px"></div>
+        <div style="position:absolute;${isTop?'bottom':'top'}:3%;left:50%;transform:translateX(-50%);
+          font-size:6.5px;font-weight:700;color:${room.col};white-space:nowrap;
+          background:${room.fl}ee;padding:1px 4px;border-radius:2px;z-index:6">
+          ${room.lbl}</div>
         ${furniture}
       </div>`);
   });
 
   // Build persons
-  persons.length = 0;
-  PIXEL_PERSONS.forEach(def => {
-    const room = PIXEL_ROOMS.find(r => r.id === def.roomId);
-    if (!room) return;
-    const hx = room.x + room.w/2;
-    const hy = room.y + room.h*0.62;
-    const p = {
-      ...def,
-      x:hx, y:hy, tx:hx, ty:hy, hx, hy,
-      roomX:room.x, roomY:room.y, roomW:room.w, roomH:room.h,
-      state:'idle', timer:70+Math.random()*60,
-      walkFrame:0, facing:1, el:null, task:''
-    };
-
-    const wrap = document.createElement('div');
-    wrap.id    = 'person-' + def.id;
-    wrap.style.cssText = `position:absolute;text-align:center;pointer-events:none;z-index:20;
-      transform:translateX(-50%);transition:none`;
-    wrap.innerHTML = makePersonSVG(def.skin, def.hair, def.shirt, def.id) +
-      `<div id="${def.id}-name" style="font-size:7px;font-weight:700;color:${def.shirt};
-        white-space:nowrap;margin-top:1px;text-shadow:0 0 4px #fff,0 0 4px #fff">${def.name}</div>
-       <div id="${def.id}-task" style="font-size:6px;color:#649aa2;background:#ffffffcc;
-         border-radius:3px;padding:1px 4px;white-space:nowrap;display:none;max-width:72px;
-         overflow:hidden;text-overflow:ellipsis"></div>`;
-    inner.appendChild(wrap);
-    p.el = wrap;
+  persons.length=0;
+  PERSONS.forEach(def=>{
+    const room=ROOMS.find(r=>r.id===def.roomId);
+    if(!room)return;
+    const hx=room.L+room.W/2;
+    const hy=room.isTop ? room.T+room.H*0.62 : room.T+room.H*0.38;
+    const p={...def, x:hx,y:hy,tx:hx,ty:hy,hx,hy,
+      room, state:'idle', timer:60+Math.random()*80,
+      walkFrame:0, facing:1, waypoints:[], wpIdx:0,
+      el:null, task:''};
+    const div=document.createElement('div');
+    div.id='person-'+def.id;
+    div.style.cssText='position:absolute;text-align:center;pointer-events:none;z-index:20;transform:translate(-50%,-50%)';
+    div.innerHTML=pSVG(def.skin,def.hair,def.shirt)+
+      `<div id="${def.id}-lbl" style="font-size:6.5px;font-weight:700;color:${def.shirt};
+        white-space:nowrap;margin-top:1px;text-shadow:0 0 3px #fff,0 0 3px #fff">${def.name}</div>
+       <div id="${def.id}-task" style="font-size:5.5px;color:#649aa2;background:#ffffffd0;
+         border-radius:2px;padding:1px 3px;white-space:nowrap;display:none;
+         max-width:64px;overflow:hidden;text-overflow:ellipsis"></div>`;
+    inner.appendChild(div);
+    p.el=div;
     persons.push(p);
+    // Initial position
+    p.el.style.left=p.x+'%';
+    p.el.style.top=p.y+'%';
   });
 
-  // Start clock
   updateOfficeClock();
 }
 
-function updateOfficeClock() {
-  const el = document.getElementById('office-clock');
-  if (!el) return;
-  const h = new Date().getHours() % 12;
-  const clocks = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚'];
-  el.textContent = clocks[h] || '🕐';
-  setTimeout(updateOfficeClock, 60000);
+function updateOfficeClock(){
+  const el=document.getElementById('office-clock');
+  if(el){const h=new Date().getHours()%12;
+    el.textContent=['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚'][h];}
+  setTimeout(updateOfficeClock,60000);
 }
 
-function tickPersons() {
-  officeFrame++;
-  persons.forEach(p => {
-    if (!p.el) return;
-    p.timer--;
-    const enabled = agentEnabled[p.id] !== false;
+// Waypoint path through corridor
+function makePath(p, destRoom){
+  const myDoorY  = p.room.isTop  ? p.room.T+p.room.H+1  : p.room.T-1;
+  const dstDoorY = destRoom.isTop? destRoom.T+destRoom.H+1: destRoom.T-1;
+  const myCorY   = p.room.isTop  ? COR_T+COR_H*0.3 : COR_T+COR_H*0.7;
+  const dstCorY  = destRoom.isTop? COR_T+COR_H*0.3  : COR_T+COR_H*0.7;
+  const dstX     = destRoom.L+destRoom.W/2;
+  const dstY     = destRoom.isTop? destRoom.T+destRoom.H*0.62 : destRoom.T+destRoom.H*0.38;
+  return [
+    {x:p.room.L+p.room.W/2, y:myDoorY},
+    {x:p.room.L+p.room.W/2, y:myCorY},
+    {x:dstX, y:dstCorY},
+    {x:dstX, y:dstDoorY},
+    {x:dstX, y:dstY}
+  ];
+}
 
-    // Move
-    const dx = p.tx - p.x, dy = p.ty - p.y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist > 0.4) {
-      p.x += dx * 0.07;
-      p.y += dy * 0.07;
-      p.facing = dx > 0 ? 1 : -1;
-      // Walk animation — bob head
-      p.walkFrame++;
-      const bob = Math.sin(p.walkFrame * 0.35) * 1.5;
-      const svg = p.el.querySelector('svg');
-      if (svg) svg.style.transform = `translateY(${bob}px)`;
-    } else {
-      p.x = p.tx; p.y = p.ty;
-      const svg = p.el.querySelector('svg');
-      if (svg) svg.style.transform = '';
+// ── TICK ─────────────────────────────────────────────────────
+function tickPersons(){
+  officeFrame++;
+  persons.forEach(p=>{
+    if(!p.el)return;
+    p.timer--;
+    const enabled=agentEnabled[p.id]!==false;
+
+    // Current target (from waypoints or direct)
+    let tx=p.tx, ty=p.ty;
+    if(p.waypoints.length>0){
+      const wp=p.waypoints[p.wpIdx]||p.waypoints[p.waypoints.length-1];
+      tx=wp.x; ty=wp.y;
+      const dx=tx-p.x, dy=ty-p.y;
+      if(Math.sqrt(dx*dx+dy*dy)<0.4){
+        p.wpIdx++;
+        if(p.wpIdx>=p.waypoints.length){p.waypoints=[];p.wpIdx=0;}
+      }
     }
 
-    // Update DOM
-    p.el.style.left = p.x + 'px';
-    p.el.style.top  = (p.y - 28) + 'px';
-    p.el.style.transform = `translateX(-50%) scaleX(${p.facing})`;
+    const dx=tx-p.x, dy=ty-p.y, dist=Math.sqrt(dx*dx+dy*dy);
+    const spd=0.1;
+    if(dist>0.25){
+      p.x+=dx*spd; p.y+=dy*spd;
+      p.facing=dx>0?1:-1;
+      p.walkFrame++;
+      const bob=Math.sin(p.walkFrame*.4)*0.6;
+      const svg=p.el.querySelector('svg');
+      if(svg)svg.style.marginTop=bob+'px';
+    } else {
+      const svg=p.el.querySelector('svg');
+      if(svg)svg.style.marginTop='0';
+    }
 
-    // Dim if disabled
-    p.el.style.opacity = enabled ? '1' : '0.35';
+    p.el.style.left=p.x+'%';
+    p.el.style.top=p.y+'%';
+    p.el.style.transform=`translate(-50%,-50%) scaleX(${p.facing})`;
+    p.el.style.opacity=enabled?'1':'0.35';
 
-    const taskEl = document.getElementById(`${p.id}-task`);
-
-    // State machine
-    if (p.timer <= 0) {
-      const roll = Math.random();
-      if (p.state === 'idle') {
-        if (roll < 0.22) {
-          // Wander inside own room
-          p.tx = p.roomX + 14 + Math.random()*(p.roomW-28);
-          p.ty = p.roomY + 26 + Math.random()*(p.roomH-36);
-          p.state = 'walk'; p.timer = 50+Math.random()*40;
-          if(taskEl) taskEl.style.display='none';
-        } else if (roll < 0.55 && enabled) {
-          p.state = 'task';
-          p.task  = p.tasks[Math.floor(Math.random()*p.tasks.length)];
-          p.timer = 80+Math.random()*60;
+    const taskEl=document.getElementById(`${p.id}-task`);
+    if(p.timer<=0&&p.waypoints.length===0){
+      const roll=Math.random();
+      if(p.state==='idle'){
+        if(roll<0.18){
+          // Wander own room
+          p.tx=p.room.L+3+Math.random()*(p.room.W-6);
+          p.ty=p.room.isTop?p.room.T+12+Math.random()*(p.room.H-18):p.room.T+4+Math.random()*(p.room.H-12);
+          p.state='walk'; p.timer=55+Math.random()*45;
+          if(taskEl)taskEl.style.display='none';
+        } else if(roll<0.32){
+          // Travel to another room via corridor
+          const others=ROOMS.filter(r=>r.id!==p.room.id&&!r.cinema);
+          const dest=others[Math.floor(Math.random()*others.length)];
+          p.waypoints=makePath(p,dest);
+          p.wpIdx=0; p.state='travel'; p.timer=140+Math.random()*60;
+          if(taskEl)taskEl.style.display='none';
+        } else if(roll<0.65&&enabled){
+          p.state='task';
+          p.task=p.tasks[Math.floor(Math.random()*p.tasks.length)];
+          p.timer=85+Math.random()*55;
           if(taskEl){taskEl.textContent=p.task;taskEl.style.display='block';}
           addOfficeLog(p.name+': '+p.task);
           if(typeof totalTokens!=='undefined'){
             totalTokens+=Math.floor(Math.random()*180+60);
-            if(typeof updateTokenDisplay==='function') updateTokenDisplay();
+            if(typeof updateTokenDisplay==='function')updateTokenDisplay();
           }
-        } else {
-          p.timer = 40+Math.random()*50;
-        }
-      } else if (p.state==='walk') {
-        p.tx=p.hx; p.ty=p.hy; p.state='idle'; p.timer=60+Math.random()*60;
-        if(taskEl) taskEl.style.display='none';
-      } else if (p.state==='task') {
+        } else {p.timer=45+Math.random()*50;}
+      } else if(p.state==='walk'||p.state==='travel'){
+        // Return home
+        p.waypoints=makePath(p,p.room);
+        p.wpIdx=0; p.state='idle'; p.timer=80+Math.random()*70;
+        if(taskEl)taskEl.style.display='none';
+      } else if(p.state==='task'){
         if(!enabled){p.state='idle';p.task='';p.timer=20;if(taskEl)taskEl.style.display='none';return;}
-        p.state='idle';p.task='';p.timer=50+Math.random()*50;
-        if(taskEl) taskEl.style.display='none';
+        p.state='idle';p.task='';p.timer=60+Math.random()*50;
+        if(taskEl)taskEl.style.display='none';
       }
     }
   });
-  officeRAF = requestAnimationFrame(tickPersons);
+  officeRAF=requestAnimationFrame(tickPersons);
 }
 
-function startOffice() {
+function startOffice(){
   buildOffice();
-  // Scale inner to fill container width
-  const container = document.getElementById('office-container');
-  const inner     = document.getElementById('office-inner');
-  if (container && inner) {
-    const scale = container.offsetWidth / VW;
-    inner.style.transform = `scale(${scale})`;
-    inner.style.width  = VW + 'px';
-    inner.style.height = VH + 'px';
-    container.style.height = Math.round(VH * scale) + 'px';
-  }
-  if (officeRAF) cancelAnimationFrame(officeRAF);
+  if(officeRAF)cancelAnimationFrame(officeRAF);
   tickPersons();
 }
 
