@@ -7,28 +7,21 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#060a06;--card:#0d120d;--border:#00ff4122;--sage:#00ff41;--sage-d:#00cc33;
-  --sage-l:#00ff4112;--charcoal:#e0ffe0;--muted:#5a7a5a;--warm:#2a4a2a;
-  --red:#ff4444;--amber:#ffaa00;--purple:#aa44ff;--green:#00ff41;
-  --r:10px;--sh:0 2px 24px rgba(0,255,65,0.12);
-  --neon:#00ff41;--neon2:#00ccff;--neon3:#ff00aa;
+  --bg:#f7f6f3;--card:#ffffff;--border:#ede9e3;--sage:#649aa2;--sage-d:#4a7a82;
+  --sage-l:#e6f2f4;--charcoal:#2c2c2a;--muted:#8a8680;--warm:#b8a898;
+  --red:#c07070;--amber:#b89a60;--purple:#8a7ba8;--green:#6b8f71;
+  --r:14px;--sh:0 2px 16px rgba(0,0,0,.05);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal);min-height:100vh;display:flex;font-size:14px}
-::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:#00ff4130;border-radius:3px}
-::-webkit-scrollbar-track{background:#060a06}
-@keyframes neonPulse{0%,100%{box-shadow:0 0 4px #00ff41,0 0 8px #00ff4140}50%{box-shadow:0 0 8px #00ff41,0 0 16px #00ff4160}}
-@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
-@keyframes tickerMove{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@keyframes tickerMove{0%{transform:translateX(100%)}100%{transform:translateX(-120%)}}
 @keyframes cryptoBlink{0%,100%{opacity:1}50%{opacity:.7}}
-@keyframes neonBorder{0%,100%{border-color:#00ff4140}50%{border-color:#00ff41}}
-.neon-card{animation:neonBorder 3s infinite;border-width:1px!important}
-.razer-glow{text-shadow:0 0 8px #00ff41,0 0 16px #00ff4160}
-.scanline-overlay{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(transparent,#00ff4130,transparent);animation:scanline 4s linear infinite;pointer-events:none;z-index:5}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* SIDEBAR */
-.sb{width:68px;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:2px 0 8px rgba(0,0,0,.04)}
-.sb-r{width:68px;background:var(--card);border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;right:0;bottom:0;z-index:100;box-shadow:-2px 0 8px rgba(0,0,0,.04)}
+.sb{width:68px;background:#ffffff;border-right:1px solid #ede9e3;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:2px 0 8px rgba(0,0,0,.04)}
+.sb-r{width:68px;background:#ffffff;border-left:1px solid #ede9e3;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;right:0;bottom:0;z-index:100;box-shadow:-2px 0 8px rgba(0,0,0,.04)}
 .sb-logo{width:36px;height:36px;border-radius:10px;background:var(--sage);display:flex;align-items:center;justify-content:center;margin-bottom:14px;cursor:pointer;overflow:hidden}
 .sb-logo img{width:100%;height:100%;object-fit:cover}
 .nb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0;width:100%;border:none;background:none;cursor:pointer;color:var(--warm);transition:color .2s;font-family:inherit}
@@ -62,8 +55,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 .pg{display:none}.pg.active{display:block}
 
 /* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--sh);position:relative}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00ff4140,transparent);border-radius:var(--r) var(--r) 0 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
 .ct{font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 
 /* GRID */
@@ -89,14 +81,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 /* FORMS */
 .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .fl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.fi,.fs,.fta{border:1px solid #00ff4125;border-radius:9px;padding:9px 12px;font-size:14px;font-family:inherit;outline:none;background:#060a06;color:#e0ffe0;width:100%;transition:border-color .15s}
-.fi:focus,.fs:focus,.fta:focus{border-color:#00ff41;box-shadow:0 0 8px #00ff4130}
-.fi::placeholder{color:#2a4a2a}
-.fs option{background:#0d120d;color:#e0ffe0}
+.fi,.fs,.fta{border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-size:14px;font-family:inherit;outline:none;background:var(--bg);color:var(--charcoal);width:100%;transition:border-color .15s}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--sage)}
+.fi::placeholder{color:var(--muted)}
 .fta{resize:vertical;min-height:72px}
 .fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.gold-note{border:1px solid #ffaa0050;background:rgba(255,170,0,.06);border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 0 10px rgba(255,170,0,.1)}
+.gold-note{border:1px solid var(--amber);background:rgba(184,154,96,.07);border-radius:10px;padding:12px;margin-bottom:12px}
 .gn-label{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:5px}
 
 /* MODAL */
@@ -198,10 +189,8 @@ tr:hover td{background:#fafaf8}
   <button class="nb" onclick="goTo('finance')" id="nb-finance"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="nl">Finance</span></button>
   <button class="nb" onclick="goTo('expenses')" id="nb-expenses"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="nl">Bills</span></button>
   <button class="nb" onclick="goTo('extreme')" id="nb-extreme"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><span class="nl">EXTREME</span></button>
-  <button class="nb" onclick="goTo('games')" id="nb-games"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4"/><circle cx="16" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/></svg></div><span class="nl">Games</span></button>
+
   <button class="nb" onclick="goTo('emailai')" id="nb-emailai"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><span class="nl">Email</span></button>
-  <button class="nb" onclick="goTo('scraper')" id="nb-scraper"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div><span class="nl">Scraper</span></button>
-  <button class="nb" onclick="goTo('eventsai')" id="nb-eventsai"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="16" r="1" fill="currentColor"/><circle cx="12" cy="16" r="1" fill="currentColor"/><circle cx="16" cy="16" r="1" fill="currentColor"/></svg></div><span class="nl">EventsAI</span></button>
   <button class="nb" onclick="goTo('goals')" id="nb-goals"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="nl">Goals</span></button>
   <div class="sb-ft" style="margin-top:auto"><strong id="sb-tasks">0</strong>tasks</div>
 </div>
@@ -242,24 +231,24 @@ tr:hover td{background:#fafaf8}
   <!-- OFFICE FULL WIDTH + GOALS BELOW -->
   <div style="margin-bottom:12px">
     <div class="card" style="padding:0;overflow:hidden;border-color:#1a2a1a">
-      <div style="padding:8px 14px;border-bottom:1px solid #1a2a1a;background:#050f05;display:flex;align-items:center;justify-content:space-between">
-        <div style="font-weight:700;font-size:12px;color:#00ff41">⚡ PolypusTech HQ <span style="font-weight:400;color:#00aa20;font-size:10px" id="office-status">— VIC &amp; GEN online</span></div>
-        <span style="color:#00aa20;font-size:10px;font-family:monospace" id="office-time">--:--</span>
+      <div style="padding:10px 16px;border-bottom:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-weight:700;font-size:13px;color:var(--sage)">🐙 PolypusTech HQ <span style="font-weight:400;color:var(--muted);font-size:11px" id="office-status">— All agents online</span></div>
+        <span style="color:var(--muted);font-size:11px;font-family:monospace" id="office-time">--:--</span>
       </div>
-      <canvas id="officeCanvas" width="530" height="180" style="display:block;width:100%;background:#050f05"></canvas>
-      <div class="office-log" id="office-log" style="height:44px;font-size:10px;padding:6px 12px"><div>PolypusTech HQ online.</div></div>
+      <canvas id="officeCanvas" width="1650" height="900" style="display:block;width:100%;background:#f7f6f3"></canvas>
+      <div style="padding:6px 14px;background:#fafaf8;border-top:1px solid var(--border);height:42px;overflow-y:auto;font-size:11px;color:var(--muted);font-family:monospace;border-radius:0 0 14px 14px" id="office-log"><div style="color:var(--sage)">PolypusTech HQ — all agents online.</div></div>
       <!-- AGENT TOGGLES -->
-      <div style="padding:8px 12px;border-top:1px solid #00ff4110;background:#060a06;display:flex;flex-wrap:wrap;gap:5px;align-items:center">
-        <span style="font-size:9px;color:#2a4a2a;font-family:monospace;text-transform:uppercase;letter-spacing:.08em;margin-right:4px">AGENTS:</span>
+      <div style="padding:8px 12px;border-top:1px solid var(--border);background:var(--bg);display:flex;flex-wrap:wrap;gap:5px;align-items:center">
+        <span style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-right:4px">AGENTS:</span>
         <div id="agent-toggles" style="display:flex;flex-wrap:wrap;gap:4px"></div>
       </div>
       <!-- TOKEN TRACKER -->
-      <div style="padding:7px 12px;border-top:1px solid #00ff4108;background:#050f05;display:flex;align-items:center;gap:12px">
-        <div style="flex:1;background:#0a1a0a;border-radius:4px;height:4px;overflow:hidden">
-          <div id="tok-bar" style="height:100%;background:linear-gradient(90deg,#00ff41,#ffaa00);border-radius:4px;width:0%;transition:width .5s"></div>
+      <div style="padding:7px 14px;border-top:1px solid var(--border);background:#fafaf8;display:flex;align-items:center;gap:12px">
+        <div style="flex:1;background:var(--border);border-radius:4px;height:4px;overflow:hidden">
+          <div id="tok-bar" style="height:100%;background:linear-gradient(90deg,var(--sage),var(--amber));border-radius:4px;width:0%;transition:width .5s"></div>
         </div>
-        <span style="font-size:9px;font-family:monospace;color:#00ff41;white-space:nowrap">USED: <strong id="tok-used">0</strong></span>
-        <span style="font-size:9px;font-family:monospace;color:#2a4a2a;white-space:nowrap">LEFT: <strong id="tok-left">1,000,000</strong></span>
+        <span style="font-size:10px;color:var(--sage);font-weight:600;white-space:nowrap">Used: <strong id="tok-used">0</strong></span>
+        <span style="font-size:10px;color:var(--muted);white-space:nowrap">Left: <strong id="tok-left">1,000,000</strong></span>
       </div>
     </div>
   </div>
@@ -299,19 +288,19 @@ tr:hover td{background:#fafaf8}
   </div>
 
   <!-- NEWS TICKER + CRYPTO -->
-  <div style="background:#0d120d;border:1px solid #00ff4130;border-radius:10px;margin-bottom:12px;overflow:hidden;position:relative">
-    <div class="scanline-overlay"></div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;position:relative;box-shadow:var(--sh)">
+    
     <div style="display:flex;align-items:center">
-      <div style="background:#00ff41;color:#060a06;padding:6px 14px;font-size:11px;font-weight:700;font-family:monospace;flex-shrink:0;display:flex;align-items:center;gap:6px">
-        <span style="width:8px;height:8px;border-radius:50%;background:#060a06;animation:cryptoBlink 1s infinite;display:inline-block"></span>
+      <div style="background:var(--sage);color:#fff;padding:6px 14px;font-size:11px;font-weight:700;font-family:monospace;flex-shrink:0;display:flex;align-items:center;gap:6px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#fff;animation:cryptoBlink 1s infinite;display:inline-block"></span>
         LIVE
       </div>
       <div style="overflow:hidden;flex:1;height:34px;display:flex;align-items:center">
-        <div id="news-ticker" style="white-space:nowrap;animation:tickerMove 60s linear infinite;font-size:12px;color:#00ff41;font-family:monospace;padding:0 20px">
+        <div id="news-ticker" style="white-space:nowrap;animation:tickerMove 60s linear infinite;font-size:12px;color:var(--charcoal);font-family:inherit;padding:0 20px">
           Loading latest news... ⚡
         </div>
       </div>
-      <div style="padding:4px 12px;font-size:10px;color:#2a4a2a;font-family:monospace;flex-shrink:0">
+      <div style="padding:4px 12px;font-size:10px;color:var(--muted);font-family:monospace;flex-shrink:0">
         <span id="news-tokens">0</span> tok
       </div>
     </div>
@@ -319,34 +308,34 @@ tr:hover td{background:#fafaf8}
 
   <!-- CRYPTO PRICES -->
   <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px" id="crypto-row">
-    <div class="card" style="padding:8px;text-align:center;border-color:#f7931a30">
-      <div style="font-size:9px;color:#f7931a;font-weight:700;font-family:monospace">BTC</div>
-      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-btc">—</div>
+    <div class="card" style="padding:8px;text-align:center;border-color:rgba(247,147,26,.25)">
+      <div style="font-size:9px;color:#f7931a;font-weight:700">BTC</div>
+      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-btc">—</div>
       <div style="font-size:9px;font-family:monospace" id="change-btc">—</div>
     </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:#627eea30">
-      <div style="font-size:9px;color:#627eea;font-weight:700;font-family:monospace">ETH</div>
-      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-eth">—</div>
+    <div class="card" style="padding:8px;text-align:center;border-color:rgba(98,126,234,.25)">
+      <div style="font-size:9px;color:#627eea;font-weight:700">ETH</div>
+      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-eth">—</div>
       <div style="font-size:9px;font-family:monospace" id="change-eth">—</div>
     </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:#9945ff30">
-      <div style="font-size:9px;color:#9945ff;font-weight:700;font-family:monospace">SOL</div>
-      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-sol">—</div>
+    <div class="card" style="padding:8px;text-align:center;border-color:rgba(153,69,255,.25)">
+      <div style="font-size:9px;color:#9945ff;font-weight:700">SOL</div>
+      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-sol">—</div>
       <div style="font-size:9px;font-family:monospace" id="change-sol">—</div>
     </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:#00ff4130">
-      <div style="font-size:9px;color:#00ff41;font-weight:700;font-family:monospace">BNB</div>
-      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-bnb">—</div>
+    <div class="card" style="padding:8px;text-align:center;border-color:rgba(100,154,162,.25)">
+      <div style="font-size:9px;color:var(--sage);font-weight:700">BNB</div>
+      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-bnb">—</div>
       <div style="font-size:9px;font-family:monospace" id="change-bnb">—</div>
     </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:#2775ca30">
-      <div style="font-size:9px;color:#2775ca;font-weight:700;font-family:monospace">XRP</div>
-      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-xrp">—</div>
+    <div class="card" style="padding:8px;text-align:center;border-color:rgba(39,117,202,.25)">
+      <div style="font-size:9px;color:#2775ca;font-weight:700">XRP</div>
+      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-xrp">—</div>
       <div style="font-size:9px;font-family:monospace" id="change-xrp">—</div>
     </div>
-    <div class="card" style="padding:8px;text-align:center;border-color:#ffaa0030">
-      <div style="font-size:9px;color:#ffaa00;font-weight:700;font-family:monospace">CHF/USD</div>
-      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-chf">—</div>
+    <div class="card" style="padding:8px;text-align:center;border-color:rgba(184,154,96,.25)">
+      <div style="font-size:9px;color:var(--amber);font-weight:700">CHF/USD</div>
+      <div style="font-size:13px;font-weight:700;color:var(--charcoal);font-weight:700" id="price-chf">—</div>
       <div style="font-size:9px;color:#2a4a2a;font-family:monospace">live</div>
     </div>
   </div>
@@ -425,6 +414,29 @@ tr:hover td{background:#fafaf8}
       <tbody id="leads-table"><tr><td colspan="8" style="text-align:center;color:var(--muted);font-style:italic;padding:24px">No leads yet. Upload a CSV or add manually.</td></tr></tbody>
     </table>
   </div>
+
+  <!-- SCRAPER AGENT EMBEDDED -->
+  <div class="card" style="margin-top:14px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--sage-l);border:1px solid rgba(100,154,162,.3);display:flex;align-items:center;justify-content:center;font-size:12px">🔍</div>
+      <div><div style="font-weight:700;font-size:13px;color:var(--sage)">Scraper Agent — B2B Lead Discovery</div><div style="font-size:11px;color:var(--muted)">AI-powered Swiss market intelligence</div></div>
+      <div style="margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--sage);animation:cryptoBlink 1.5s infinite"></div>
+    </div>
+    <div id="scraper-chat" style="min-height:220px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:10px">
+      <div style="display:flex;gap:8px"><div style="width:22px;height:22px;border-radius:50%;background:var(--sage-l);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0">🔍</div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px 12px 12px 3px;padding:9px 13px;max-width:82%;font-size:13px;line-height:1.6;color:var(--charcoal)">Ready to find Swiss B2B clients. Tell me industry, city, company size and I'll give you a targeted list with outreach strategy.</div></div>
+    </div>
+    <div style="display:flex;gap:8px;padding-top:10px;border-top:1px solid var(--border)">
+      <input id="scraper-input" class="fi" placeholder="e.g. Swiss marketing agencies in Zurich needing AI tools..." style="flex:1">
+      <button onclick="sendScraperMsg()" class="btn btn-p" style="padding:8px 16px;font-size:13px">Search ↗</button>
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px">
+      <button onclick="scraperQuick('Find Swiss digital marketing agencies in Zurich with no AI tools')" class="btn-o" style="font-size:11px;padding:3px 9px">→ Marketing agencies</button>
+      <button onclick="scraperQuick('Find Zurich funded startups needing tech outsourcing')" class="btn-o" style="font-size:11px;padding:3px 9px">→ Zurich startups</button>
+      <button onclick="scraperQuick('Find Swiss e-commerce companies needing AI automation')" class="btn-o" style="font-size:11px;padding:3px 9px">→ Swiss ecom</button>
+      <button onclick="scraperQuick('Find government IT tenders on simap.ch')" class="btn-o" style="font-size:11px;padding:3px 9px">→ Gov tenders</button>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ EVENTS ═════════════════════════════════════════════════ -->
@@ -441,6 +453,29 @@ tr:hover td{background:#fafaf8}
     <button class="btn-o" onclick="filterEvents('gov',this)">Government</button>
   </div>
   <div id="events-list"><div style="color:var(--muted);font-size:14px;font-style:italic;text-align:center;padding:40px">No events yet. Add your first event!</div></div>
+
+  <!-- EVENTSAI AGENT EMBEDDED -->
+  <div class="card" style="margin-top:14px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:50%;background:rgba(138,123,168,.1);border:1px solid rgba(138,123,168,.3);display:flex;align-items:center;justify-content:center;font-size:12px">🤖</div>
+      <div><div style="font-weight:700;font-size:13px;color:var(--purple)">Events AI Agent — Zurich Intelligence</div><div style="font-size:11px;color:var(--muted)">Find events, networking and government contracts</div></div>
+      <div style="margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--purple);animation:cryptoBlink 1.2s infinite"></div>
+    </div>
+    <div id="eventsai-chat" style="min-height:220px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:10px">
+      <div style="display:flex;gap:8px"><div style="width:22px;height:22px;border-radius:50%;background:rgba(138,123,168,.1);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0">🤖</div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px 12px 12px 3px;padding:9px 13px;max-width:82%;font-size:13px;line-height:1.6;color:var(--charcoal)">Events Agent ready. Ask about Zurich tech meetups, networking strategy, Swiss government IT tenders, or startup accelerators.</div></div>
+    </div>
+    <div style="display:flex;gap:8px;padding-top:10px;border-top:1px solid var(--border)">
+      <input id="eventsai-input" class="fi" placeholder="e.g. Find AI meetups Zurich this month, or gov IT tenders..." style="flex:1">
+      <button onclick="sendEventsAIMsg()" class="btn" style="background:var(--purple);color:#fff;padding:8px 16px;font-size:13px;border:none;border-radius:10px;cursor:pointer;font-weight:600;font-family:inherit">Find ↗</button>
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px">
+      <button onclick="eventsQuick('Find AI and tech networking events in Zurich this month')" class="btn-o" style="font-size:11px;padding:3px 9px">→ AI/Tech meetups</button>
+      <button onclick="eventsQuick('Find Swiss government IT tenders on simap.ch')" class="btn-o" style="font-size:11px;padding:3px 9px">→ Gov tenders</button>
+      <button onclick="eventsQuick('Best networking strategy for a tech startup at Swiss events')" class="btn-o" style="font-size:11px;padding:3px 9px">→ Networking tips</button>
+      <button onclick="eventsQuick('Find startup accelerators in Zurich for PolypusTech')" class="btn-o" style="font-size:11px;padding:3px 9px">→ Accelerators</button>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ MEETINGS ════════════════════════════════════════════════ -->
@@ -540,213 +575,6 @@ tr:hover td{background:#fafaf8}
   <div id="extreme-list"><div style="color:var(--muted);text-align:center;padding:40px;font-style:italic">No missions yet. You better add some.</div></div>
 </div>
 
-<!-- ═══ GAMES ═══════════════════════════════════════════════════ -->
-<div class="pg" id="pg-games">
-  <div style="margin-bottom:16px">
-    <h2 style="font-size:16px;font-weight:700">🎮 Games Room — VIC vs GEN</h2>
-    <p style="color:var(--muted);font-size:12px">Take a break. Compete. Winner does the next coffee run.</p>
-  </div>
-
-  <!-- Game selector -->
-  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-    <button class="btn-o on" onclick="selectGame('tron',this)" id="game-btn-tron">⚡ FL Tron 2</button>
-    <button class="btn-o" onclick="selectGame('pong',this)" id="game-btn-pong">🏓 Pong</button>
-    <button class="btn-o" onclick="selectGame('snake',this)" id="game-btn-snake">🐍 Snake Battle</button>
-    <button class="btn-o" onclick="selectGame('external',this)" id="game-btn-external">🌐 More Games</button>
-  </div>
-
-  <!-- TRON GAME -->
-  <div id="game-tron">
-    <div class="card" style="background:#050f05;border-color:#00ff4130;padding:12px;margin-bottom:10px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div style="color:#00ff41;font-family:monospace;font-weight:700;font-size:15px">⚡ FL TRON 2 — VIC vs GEN</div>
-        <div style="display:flex;gap:16px;font-family:monospace;font-size:13px">
-          <span style="color:#649aa2">VIC: <strong id="tron-score-vic">0</strong></span>
-          <span style="color:#00ff41">GEN: <strong id="tron-score-gen">0</strong></span>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <canvas id="tronCanvas" width="700" height="440" style="border:2px solid #00ff4130;border-radius:8px;background:#050f05;display:block"></canvas>
-        <div style="flex:1;color:#00ff4180;font-family:monospace;font-size:11px;line-height:1.8">
-          <div style="color:#00ff41;font-weight:700;margin-bottom:8px">CONTROLS</div>
-          <div style="background:#0a1a0a;border:1px solid #00ff4120;border-radius:8px;padding:10px;margin-bottom:10px">
-            <div style="color:#649aa2;font-weight:700;margin-bottom:6px">🔵 VIC (Blue)</div>
-            <div>↑ W — Up</div>
-            <div>↓ S — Down</div>
-            <div>← A — Left</div>
-            <div>→ D — Right</div>
-          </div>
-          <div style="background:#0a1a0a;border:1px solid #00ff4120;border-radius:8px;padding:10px;margin-bottom:10px">
-            <div style="color:#00ff41;font-weight:700;margin-bottom:6px">🟢 GEN (Green)</div>
-            <div>↑ Arrow Up</div>
-            <div>↓ Arrow Down</div>
-            <div>← Arrow Left</div>
-            <div>→ Arrow Right</div>
-          </div>
-          <button onclick="startTron()" style="width:100%;background:#00ff41;color:#050f05;border:none;border-radius:8px;padding:10px;font-weight:700;font-family:monospace;cursor:pointer;font-size:13px">▶ START / RESTART</button>
-          <div style="margin-top:10px;color:#00ff4160;font-size:10px;text-align:center" id="tron-status">Press START to begin</div>
-          <div style="margin-top:16px;color:#00ff4180;font-weight:700">RULES</div>
-          <div style="font-size:10px;margin-top:4px;color:#00ff4160">Don't hit walls or trails. Last one moving wins. First to 5 wins the round.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PONG GAME -->
-  <div id="game-pong" style="display:none">
-    <div class="card" style="background:#050505;border-color:#64646430;padding:12px;margin-bottom:10px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div style="color:#fff;font-family:monospace;font-weight:700;font-size:15px">🏓 PONG — VIC vs GEN</div>
-        <div style="display:flex;gap:20px;font-family:monospace;font-size:18px;font-weight:700">
-          <span style="color:#649aa2" id="pong-score-vic">0</span>
-          <span style="color:#fff">—</span>
-          <span style="color:#6b8f71" id="pong-score-gen">0</span>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <canvas id="pongCanvas" width="700" height="440" style="border:2px solid #ffffff20;border-radius:8px;background:#050505;display:block"></canvas>
-        <div style="flex:1;font-family:monospace;font-size:11px;line-height:1.8;color:#888">
-          <div style="color:#fff;font-weight:700;margin-bottom:8px">CONTROLS</div>
-          <div style="background:#111;border:1px solid #333;border-radius:8px;padding:10px;margin-bottom:10px">
-            <div style="color:#649aa2;font-weight:700;margin-bottom:6px">🔵 VIC (Left)</div>
-            <div>W — Up</div><div>S — Down</div>
-          </div>
-          <div style="background:#111;border:1px solid #333;border-radius:8px;padding:10px;margin-bottom:10px">
-            <div style="color:#6b8f71;font-weight:700;margin-bottom:6px">🟢 GEN (Right)</div>
-            <div>↑ — Up</div><div>↓ — Down</div>
-          </div>
-          <button onclick="startPong()" style="width:100%;background:#fff;color:#050505;border:none;border-radius:8px;padding:10px;font-weight:700;font-family:monospace;cursor:pointer">▶ START / RESTART</button>
-          <div style="margin-top:10px;color:#555;font-size:10px;text-align:center" id="pong-status">Press START to begin</div>
-          <div style="margin-top:16px;color:#888;font-weight:700">RULES</div>
-          <div style="font-size:10px;margin-top:4px;color:#555">First to 7 points wins. Ball speeds up every rally.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SNAKE BATTLE -->
-  <div id="game-snake" style="display:none">
-    <div class="card" style="background:#05050f;border-color:#8a7ba830;padding:12px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div style="color:#a88aff;font-family:monospace;font-weight:700;font-size:15px">🐍 SNAKE BATTLE — VIC vs GEN</div>
-        <div style="display:flex;gap:16px;font-family:monospace;font-size:13px">
-          <span style="color:#649aa2">VIC: <strong id="snake-score-vic">0</strong></span>
-          <span style="color:#a88aff">GEN: <strong id="snake-score-gen">0</strong></span>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <canvas id="snakeCanvas" width="700" height="440" style="border:2px solid #a88aff30;border-radius:8px;background:#05050f;display:block"></canvas>
-        <div style="flex:1;font-family:monospace;font-size:11px;line-height:1.8;color:#8a7ba8">
-          <div style="color:#a88aff;font-weight:700;margin-bottom:8px">CONTROLS</div>
-          <div style="background:#0a0a1a;border:1px solid #a88aff20;border-radius:8px;padding:10px;margin-bottom:10px">
-            <div style="color:#649aa2;font-weight:700;margin-bottom:6px">🔵 VIC</div>
-            <div>W A S D</div>
-          </div>
-          <div style="background:#0a0a1a;border:1px solid #a88aff20;border-radius:8px;padding:10px;margin-bottom:10px">
-            <div style="color:#a88aff;font-weight:700;margin-bottom:6px">🟣 GEN</div>
-            <div>Arrow Keys</div>
-          </div>
-          <button onclick="startSnake()" style="width:100%;background:#a88aff;color:#050505;border:none;border-radius:8px;padding:10px;font-weight:700;font-family:monospace;cursor:pointer">▶ START / RESTART</button>
-          <div style="margin-top:10px;color:#8a7ba8;font-size:10px;text-align:center" id="snake-status">Press START to begin</div>
-          <div style="margin-top:16px;color:#a88aff80;font-weight:700">RULES</div>
-          <div style="font-size:10px;margin-top:4px;color:#8a7ba8">Eat apples to grow. Don't hit walls, yourself, or the other snake. Most apples when someone dies wins.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- EXTERNAL GAMES -->
-  <div id="game-external" style="display:none">
-    <div class="g3">
-      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#00ff4130" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/fl-tron','_blank')">
-        <div style="font-size:36px;margin-bottom:8px">⚡</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">FL Tron 2</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player light cycles. Classic Tron battle.</div>
-        <button class="btn" style="background:#00ff41;color:#050f05;font-size:12px;padding:6px 14px">Play Now ↗</button>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#ff664430" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/fireboy-and-watergirl-1','_blank')">
-        <div style="font-size:36px;margin-bottom:8px">🔥</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Fireboy & Watergirl</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player co-op platform adventure.</div>
-        <button class="btn" style="background:#ff6644;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#b89a6030" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/tank-trouble','_blank')">
-        <div style="font-size:36px;margin-bottom:8px">🎯</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Tank Trouble</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2-3 player tank battle arena.</div>
-        <button class="btn" style="background:#b89a60;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#8a7ba830" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/stickman-fighter-infinity','_blank')">
-        <div style="font-size:36px;margin-bottom:8px">🥊</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Stickman Fighter</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player stickman fighting game.</div>
-        <button class="btn" style="background:#8a7ba8;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#649aa230" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/chess','_blank')">
-        <div style="font-size:36px;margin-bottom:8px">♟</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">Chess</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Classic chess. Timeless competition.</div>
-        <button class="btn" style="background:#649aa2;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer;transition:transform .15s;border-color:#6b8f7130" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="window.open('https://www.crazygames.com/game/8-ball-pool','_blank')">
-        <div style="font-size:36px;margin-bottom:8px">🎱</div><div style="font-weight:700;font-size:14px;margin-bottom:4px">8 Ball Pool</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">2 player billiards. Precision wins.</div>
-        <button class="btn" style="background:#6b8f71;color:#fff;font-size:12px;padding:6px 14px">Play Now ↗</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ GOALS ════════════════════════════════════════════════════ -->
-<div class="pg" id="pg-goals">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-    <div><h2 style="font-size:16px;font-weight:700">🎯 Goals & Vision — Dec 31, 2026</h2><p style="color:var(--muted);font-size:12px">Track your big life goals and weekly progress. Stay hungry.</p></div>
-    <button class="btn btn-p" onclick="openModal('add-goal-modal')">+ Add Goal</button>
-  </div>
-
-  <!-- LIFE GOALS PROGRESS -->
-  <div class="card" style="margin-bottom:16px">
-    <div style="font-weight:700;font-size:14px;margin-bottom:14px">🏆 Life Goals — Time to Dec 31, 2026: <span id="goal-days" style="color:var(--sage)">calculating...</span></div>
-    <div id="goals-progress-list"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:20px">No goals yet. Add your first goal!</div></div>
-  </div>
-
-  <!-- VIC vs GEN COMPETITIVE -->
-  <div class="g2" style="margin-bottom:16px">
-    <div class="card" style="border-color:rgba(100,154,162,.4)">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff">V</div>
-        <div><div style="font-weight:700;font-size:14px;color:var(--sage)">Victor (VIC)</div><div style="font-size:11px;color:var(--muted)">Co-founder & CEO</div></div>
-        <button class="btn-o" style="margin-left:auto;font-size:11px" onclick="openModal('edit-vic-modal')">Edit Stats</button>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--sage)" id="vic-stat-clients">0</div><div style="font-size:10px;color:var(--muted)">Clients Closed</div></div>
-        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--sage)" id="vic-stat-projects">0</div><div style="font-size:10px;color:var(--muted)">Projects Managed</div></div>
-        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--sage)" id="vic-stat-tasks">0</div><div style="font-size:10px;color:var(--muted)">Tasks Done</div></div>
-      </div>
-      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:10px">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Weekly Focus</div>
-        <div style="font-size:13px;color:var(--charcoal)" id="vic-weekly-focus">Not set</div>
-      </div>
-    </div>
-    <div class="card" style="border-color:rgba(107,143,113,.4)">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff">G</div>
-        <div><div style="font-weight:700;font-size:14px;color:var(--green)">Partner (GEN)</div><div style="font-size:11px;color:var(--muted)">Co-founder & Partner</div></div>
-        <button class="btn-o" style="margin-left:auto;font-size:11px" onclick="openModal('edit-gen-modal')">Edit Stats</button>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--green)" id="gen-stat-clients">0</div><div style="font-size:10px;color:var(--muted)">Clients Closed</div></div>
-        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--green)" id="gen-stat-projects">0</div><div style="font-size:10px;color:var(--muted)">Projects Managed</div></div>
-        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--green)" id="gen-stat-tasks">0</div><div style="font-size:10px;color:var(--muted)">Tasks Done</div></div>
-      </div>
-      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:10px">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Weekly Focus</div>
-        <div style="font-size:13px;color:var(--charcoal)" id="gen-weekly-focus">Not set</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WEEKLY CHECK-IN -->
-  <div class="card">
-    <div style="font-weight:700;font-size:14px;margin-bottom:14px">📊 Weekly Goal Check-in</div>
-    <div id="goals-weekly-list"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">Add goals above to track weekly progress.</div></div>
-  </div>
-</div>
 
 </div><!-- end cnt -->
 </div><!-- end main -->
@@ -962,7 +790,6 @@ function goTo(id) {
   if (id==='finance') renderFinance();
   if (id==='expenses') setTimeout(renderExpenses, 50);
   if (id==='extreme') setTimeout(renderExtreme, 50);
-  if (id==='games') setTimeout(()=>selectGame('tron', document.getElementById('game-btn-tron')), 50);
   if (id==='scraper') {}
   if (id==='eventsai') {}
   if (id==='emailai') {}
@@ -1477,103 +1304,78 @@ function renderFinance() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// POLYPUSTECH HQ — FLOOR PLAN OFFICE
+// POLYPUSTECH HQ — 4K OFFICE (App_willow 3×3 style)
 // ═══════════════════════════════════════════════════════════════
 const canvas = document.getElementById('officeCanvas');
-const ctx = canvas.getContext('2d');
-const CW = 530, CH = 180; // shorter office
-var agentEnabled = {}; // declared early — will be populated after AGENT_DEFS loads
+const ctx    = canvas ? canvas.getContext('2d') : null;
+if (!canvas || !ctx) { console.warn('Office canvas not found'); }
+const CW = 1650, CH = 900;  // 4K resolution
+var agentEnabled = {};       // var — no TDZ
+var totalTokens = 0;         // var — no TDZ
 let frame = 0;
 let officeLog = [];
-let logMsgs = [
-  'reviewing strategy...','on a client call...','closing a deal 🎉',
-  'designing new mockup...','pushing to GitHub...','brewing coffee ☕',
-  'analyzing market data...','scraping leads...','writing cold email...',
-  'building component...','checking trading signals...','in a meeting...',
-  'reviewing contracts...','deploying to Vercel...','coding new feature...',
-];
 
 function addOfficeLog(msg) {
   const t = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   officeLog.unshift(`[${t}] ${msg}`);
   if (officeLog.length > 30) officeLog.pop();
   const el = document.getElementById('office-log');
-  if (el) el.innerHTML = officeLog.map((l,i)=>
-    `<div style="color:${i===0?'#00ff41':'#2a5a2a'}">${l}</div>`).join('');
+  if (el) el.innerHTML = officeLog.map((l,i)=>`<div style="color:${i===0?'#649aa2':'#8a8680'}">${l}</div>`).join('');
 }
 
-// ── FLOOR PLAN ROOMS ─────────────────────────────────────────
-// Layout: 5 col × 2 row grid of offices + 1 meeting room
-// Row 0 (top):    [VIC] [GEN] [AI ] [SC ] [ML ]
-// Row 1 (bottom): [MEET ROOM  ] [WB ] [TR ] [VP ] [EM ]
-const HALL_Y = 118; // hallway y-center
-const WALL = 1;
-
+// ── ROOM GRID  3×3 ──────────────────────────────────────────
+const RW = 510, RH = 270;
 const ROOMS = [
-  // Top row — individual offices
-  { id:'VIC', x:22,  y:6,  w:88, h:74, color:'#649aa2', label:'VIC' },
-  { id:'GEN', x:112, y:6,  w:82, h:74, color:'#6b8f71', label:'GEN' },
-  { id:'AI',  x:196, y:6,  w:72, h:74, color:'#00ff41', label:'AI'  },
-  { id:'SC',  x:270, y:6,  w:72, h:74, color:'#ff4444', label:'SC'  },
-  { id:'ML',  x:344, y:6,  w:72, h:74, color:'#aa44ff', label:'ML'  },
-  { id:'EM',  x:418, y:6,  w:90, h:74, color:'#ff6600', label:'EM'  },
-  // Bottom row
-  { id:'MTG', x:22,  y:90, w:130, h:86, color:'#ffaa00', label:'MEETING', isMtg:true },
-  { id:'WB',  x:158, y:90, w:75,  h:86, color:'#00ccff', label:'WB'  },
-  { id:'TR',  x:235, y:90, w:75,  h:86, color:'#ffaa00', label:'TR'  },
-  { id:'VP',  x:312, y:90, w:75,  h:86, color:'#ff00aa', label:'VP'  },
-  { id:'SRV', x:389, y:90, w:119, h:86, color:'#00ff41', label:'SERVER', isServer:true },
+  { x:10,  y:10,  w:RW, h:RH, label:"Claude — AI Strategy",    color:"#e6f0f2", border:"#649aa2", agentIdx:0  },
+  { x:530, y:10,  w:RW, h:RH, label:"⚡ Meeting Room",          color:"#f0ede8", border:"#b89a60", agentIdx:-1, meeting:true },
+  { x:1050,y:10,  w:RW, h:RH, label:"Scraper — Lead Research",  color:"#faf0f0", border:"#c07070", agentIdx:1  },
+  { x:10,  y:310, w:RW, h:RH, label:"Mailer — Outreach",        color:"#f0eef8", border:"#8a7ba8", agentIdx:2  },
+  { x:530, y:310, w:RW, h:RH, label:"Builder — Web Dev",        color:"#eef5ee", border:"#6b8f71", agentIdx:3  },
+  { x:1050,y:310, w:RW, h:RH, label:"Trader — Trading Desk",    color:"#fdf8ee", border:"#b89a60", agentIdx:4  },
+  { x:10,  y:610, w:RW, h:RH, label:"Victor — CEO Office",      color:"#faeef4", border:"#c07898", agentIdx:5  },
+  { x:530, y:610, w:RW, h:RH, label:"PolypusTech HQ",           color:"#f5f5f5", border:"#8a8680", agentIdx:-2 },
+  { x:1050,y:610, w:RW, h:RH, label:"Break Room ☕",             color:"#f8f5ee", border:"#b89a60", agentIdx:-3 },
 ];
 
-// Home positions per character (center of their room)
-const HOME_POS = {
-  VIC: { x:66,  y:45  },
-  GEN: { x:153, y:45  },
-  AI:  { x:232, y:45  },
-  SC:  { x:306, y:45  },
-  ML:  { x:380, y:45  },
-  EM:  { x:463, y:45  },
-  WB:  { x:196, y:135 },
-  TR:  { x:273, y:135 },
-  VP:  { x:350, y:135 },
-};
-
-// Characters
-const CHARS = [
-  { name:'VIC', color:'#649aa2', ...HOME_POS.VIC, tx:HOME_POS.VIC.x, ty:HOME_POS.VIC.y, hx:HOME_POS.VIC.x, hy:HOME_POS.VIC.y, state:'idle', timer:90,  blink:0,  task:'', size:0.45 },
-  { name:'GEN', color:'#6b8f71', ...HOME_POS.GEN, tx:HOME_POS.GEN.x, ty:HOME_POS.GEN.y, hx:HOME_POS.GEN.x, hy:HOME_POS.GEN.y, state:'idle', timer:130, blink:50, task:'', size:0.45 },
-  { name:'AI',  color:'#00ff41', ...HOME_POS.AI,  tx:HOME_POS.AI.x,  ty:HOME_POS.AI.y,  hx:HOME_POS.AI.x,  hy:HOME_POS.AI.y,  state:'idle', timer:60,  blink:20, task:'', size:0.3  },
-  { name:'SC',  color:'#ff4444', ...HOME_POS.SC,  tx:HOME_POS.SC.x,  ty:HOME_POS.SC.y,  hx:HOME_POS.SC.x,  hy:HOME_POS.SC.y,  state:'idle', timer:80,  blink:35, task:'', size:0.3  },
-  { name:'ML',  color:'#aa44ff', ...HOME_POS.ML,  tx:HOME_POS.ML.x,  ty:HOME_POS.ML.y,  hx:HOME_POS.ML.x,  hy:HOME_POS.ML.y,  state:'idle', timer:70,  blink:10, task:'', size:0.3  },
-  { name:'EM',  color:'#ff6600', ...HOME_POS.EM,  tx:HOME_POS.EM.x,  ty:HOME_POS.EM.y,  hx:HOME_POS.EM.x,  hy:HOME_POS.EM.y,  state:'idle', timer:110, blink:25, task:'', size:0.3  },
-  { name:'WB',  color:'#00ccff', ...HOME_POS.WB,  tx:HOME_POS.WB.x,  ty:HOME_POS.WB.y,  hx:HOME_POS.WB.x,  hy:HOME_POS.WB.y,  state:'idle', timer:95,  blink:45, task:'', size:0.3  },
-  { name:'TR',  color:'#ffaa00', ...HOME_POS.TR,  tx:HOME_POS.TR.x,  ty:HOME_POS.TR.y,  hx:HOME_POS.TR.x,  hy:HOME_POS.TR.y,  state:'idle', timer:75,  blink:60, task:'', size:0.3  },
-  { name:'VP',  color:'#ff00aa', ...HOME_POS.VP,  tx:HOME_POS.VP.x,  ty:HOME_POS.VP.y,  hx:HOME_POS.VP.x,  hy:HOME_POS.VP.y,  state:'idle', timer:115, blink:15, task:'', size:0.3  },
+// Agent definitions
+const OFFICE_AGENTS = [
+  { name:"Claude",   color:"#649aa2", icon:"AI" },
+  { name:"Scraper",  color:"#c07070", icon:"SC" },
+  { name:"Mailer",   color:"#8a7ba8", icon:"MA" },
+  { name:"Builder",  color:"#6b8f71", icon:"WB" },
+  { name:"Trader",   color:"#b89a60", icon:"TR" },
+  { name:"VictorAI", color:"#c07898", icon:"VP" },
 ];
 
-const agentTaskMap = {
-  VIC: ['on a client call...','reviewing proposals...','closing a deal 🎉','writing strategy...'],
-  GEN: ['designing mockup...','pushing design live!','in Figma...','brewing coffee ☕'],
-  AI:  ['planning AI roadmap...','analyzing competitor tech...','building automation...'],
-  SC:  ['scraping Swiss leads...','analyzing 47 prospects...','updating CRM...'],
-  ML:  ['writing cold email...','personalising outreach...','scheduling 300 sends...'],
-  EM:  ['sending via Brevo...','A/B testing subject lines...','tracking open rates...'],
-  WB:  ['deploying to Vercel...','pushing to GitHub...','building component...'],
-  TR:  ['analyzing EURUSD...','checking RSI...','calculating R:R...'],
-  VP:  ['planning CEO agenda...','reviewing contracts...','preparing pitch deck...'],
-};
+const AGENT_HOME = [
+  { x:210,  y:145 },
+  { x:1250, y:145 },
+  { x:210,  y:445 },
+  { x:730,  y:445 },
+  { x:1250, y:445 },
+  { x:210,  y:745 },
+];
 
-// Walk zones per character (confined to their office + hallway)
-function randomPos(charName) {
-  // Occasionally walk to meeting room
-  if (Math.random() < 0.15) return { x:75+Math.random()*80, y:150+Math.random()*80 };
-  const h = HOME_POS[charName];
-  if (!h) return { x:260, y:185 };
-  return { x: h.x + (Math.random()-0.5)*24, y: h.y + (Math.random()-0.5)*24 };
-}
+const TASK_LINES = [
+  ["Scraping 47 Zurich leads...","Found 12 hot prospects","Exported to Excel ✓"],
+  ["Analyzing polypustech.ch...","SEO score: 87/100","3 improvements ready"],
+  ["Writing cold email...","Swiss market personalised","Email queued ✓"],
+  ["Deploying to Vercel...","Build successful","Live at polypustech.ch ✓"],
+  ["Analyzing EURUSD H4...","RSI divergence spotted!","R:R 1:3 setup found"],
+  ["Planning weekly strategy...","B2B targets updated","Trello synced ✓"],
+];
 
-// ── DRAW HELPERS ─────────────────────────────────────────────
-function rr(ctx, x, y, w, h, r) {
+const ags = OFFICE_AGENTS.map((a,i)=>({
+  ...a,
+  x: AGENT_HOME[i].x, y: AGENT_HOME[i].y,
+  tx:AGENT_HOME[i].x, ty:AGENT_HOME[i].y,
+  hx:AGENT_HOME[i].x, hy:AGENT_HOME[i].y,
+  state:"idle", timer:60+Math.random()*80,
+  task:"", progress:0, blink:Math.floor(Math.random()*120),
+}));
+
+// ── DRAW HELPERS ──────────────────────────────────────────────
+function rr(ctx,x,y,w,h,r){
   ctx.beginPath();
   ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
   ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
@@ -1582,248 +1384,295 @@ function rr(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-function drawDesk(ctx, x, y, color, w, h) {
-  w = w||26; h = h||18;
+function drawDesk(ctx,x,y,color){
+  // Chair
+  ctx.fillStyle='#c8c0b4';
+  ctx.beginPath(); ctx.ellipse(x,y+44,20,12,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#b8b0a4'; ctx.fillRect(x-18,y+26,36,24);
   // Desk surface
-  ctx.fillStyle='#0d1a0d'; ctx.strokeStyle=color+'50'; ctx.lineWidth=1;
-  ctx.shadowColor=color; ctx.shadowBlur=3;
-  rr(ctx,x-w/2,y-h/2,w,h,3); ctx.fill(); ctx.stroke();
-  ctx.shadowBlur=0;
+  ctx.fillStyle='#e8e2d8'; ctx.strokeStyle=color+'40'; ctx.lineWidth=2;
+  rr(ctx,x-52,y-30,104,52,10); ctx.fill(); ctx.stroke();
   // Monitor
-  ctx.fillStyle='#050f05'; ctx.strokeStyle=color+'40'; ctx.lineWidth=0.8;
-  rr(ctx,x-7,y-h/2-9,14,8,1); ctx.fill(); ctx.stroke();
-  // Screen glow
-  ctx.fillStyle=color+'20'; ctx.fillRect(x-6,y-h/2-8,12,6);
-  // Cursor blink
-  if(frame%60<30){ctx.fillStyle=color;ctx.fillRect(x-4,y-h/2-4,2,1);}
+  ctx.fillStyle='#2c2c2a';
+  rr(ctx,x-28,y-60,56,34,5); ctx.fill();
+  ctx.fillStyle=color+'20';
+  rr(ctx,x-24,y-56,48,26,3); ctx.fill();
+  ctx.strokeStyle=color+'50'; ctx.lineWidth=1;
+  [0,1,2].forEach(l=>{ ctx.beginPath(); ctx.moveTo(x-18,y-48+l*8); ctx.lineTo(x+18,y-48+l*8); ctx.stroke(); });
   // Stand
-  ctx.fillStyle='#1a1a1a'; ctx.fillRect(x-1,y-h/2-1,2,3);
+  ctx.fillStyle='#555'; ctx.fillRect(x-4,y-26,8,14); ctx.fillRect(x-14,y-12,28,5);
+  // Keyboard
+  ctx.fillStyle='#3a3a38'; ctx.strokeStyle='#555'; ctx.lineWidth=1;
+  rr(ctx,x-34,y+4,68,18,4); ctx.fill(); ctx.stroke();
+  // Mouse
+  rr(ctx,x+42,y+4,18,22,8); ctx.fill(); ctx.stroke();
+  // Plant
+  ctx.fillStyle='#7a6030'; ctx.fillRect(x+62,y+10,8,22);
+  ctx.fillStyle='#5a8060';
+  ctx.beginPath(); ctx.arc(x+66,y+6,14,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#4a7050';
+  ctx.beginPath(); ctx.arc(x+58,y+12,9,0,Math.PI*2); ctx.fill();
 }
 
-function drawOcto(ctx, x, y, color, blink, busy, scale) {
-  scale = scale||0.4;
-  ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
+function drawOcto(ctx,x,y,color,blink,busy){
+  // Tentacles
   for(let t=0;t<8;t++){
-    const a=(t/8)*Math.PI*2, w=Math.sin(frame*0.07+t*0.9)*3;
-    ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.globalAlpha=0.65;
+    const a=(t/8)*Math.PI*2, w=Math.sin(frame*0.06+t*0.8)*8;
+    const ex=Math.cos(a)*42+w, ey=Math.sin(a)*42+20;
+    ctx.strokeStyle=color; ctx.lineWidth=6; ctx.lineCap='round'; ctx.globalAlpha=0.6;
     ctx.beginPath();
-    ctx.moveTo(Math.cos(a)*7,Math.sin(a)*7+3);
-    ctx.quadraticCurveTo(Math.cos(a)*11+w*0.4,Math.sin(a)*11+5,Math.cos(a)*16+w,Math.sin(a)*16+8);
-    ctx.stroke(); ctx.globalAlpha=0.3; ctx.fillStyle='#fff';
-    ctx.beginPath(); ctx.arc(Math.cos(a)*13,Math.sin(a)*13+6,1.2,0,Math.PI*2); ctx.fill();
+    ctx.moveTo(Math.cos(a)*18,Math.sin(a)*18+8);
+    ctx.quadraticCurveTo(Math.cos(a)*30+w*0.4,Math.sin(a)*30+14,ex,ey);
+    ctx.stroke();
+    ctx.globalAlpha=0.3; ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.arc(ex*0.82,ey*0.82,3,0,Math.PI*2); ctx.fill();
   }
   ctx.globalAlpha=1;
-  const g=ctx.createRadialGradient(-2,-5,1,0,-2,10);
-  g.addColorStop(0,color); g.addColorStop(1,color+'bb');
-  ctx.fillStyle=g; ctx.beginPath(); ctx.ellipse(0,-2,10,11,0,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#ffffff28'; ctx.beginPath(); ctx.ellipse(-3,-6,4,2.5,-0.5,0,Math.PI*2); ctx.fill();
-  if(blink%110<5){ctx.fillStyle='#fff5'; ctx.fillRect(-4,-5,3,1.5); ctx.fillRect(1,-5,3,1.5);}
-  else{
-    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(-2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.arc(-2,-4.5,1,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(3,-4.5,1,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(-1.5,-5,0.45,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(3.5,-5,0.45,0,Math.PI*2); ctx.fill();
+  // Body glow
+  ctx.fillStyle=color; ctx.globalAlpha=0.1;
+  ctx.beginPath(); ctx.arc(0,-4,38,0,Math.PI*2); ctx.fill();
+  ctx.globalAlpha=1;
+  // Body
+  const g=ctx.createRadialGradient(-5,-12,2,0,-5,26);
+  g.addColorStop(0,color); g.addColorStop(1,color+'cc');
+  ctx.fillStyle=g;
+  ctx.beginPath(); ctx.ellipse(0,-5,26,28,0,0,Math.PI*2); ctx.fill();
+  // Shine
+  ctx.fillStyle='#ffffff30';
+  ctx.beginPath(); ctx.ellipse(-8,-15,10,7,-0.5,0,Math.PI*2); ctx.fill();
+  // Eyes
+  if(blink%110<5){
+    ctx.fillStyle='#fff6'; ctx.fillRect(-10,-13,8,4); ctx.fillRect(2,-13,8,4);
+  } else {
+    ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.arc(-6,-11,6,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(7,-11,6,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#1a1a1a';
+    ctx.beginPath(); ctx.arc(-5,-11,3,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(8,-11,3,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.arc(-3,-13,1.2,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(10,-13,1.2,0,Math.PI*2); ctx.fill();
   }
+  // Busy spinner
   if(busy){
-    ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.globalAlpha=0.5; ctx.setLineDash([2,4]);
-    ctx.beginPath(); ctx.arc(0,-2,16,frame*0.08,frame*0.08+Math.PI*1.5); ctx.stroke();
+    ctx.strokeStyle=color; ctx.lineWidth=3; ctx.globalAlpha=0.5; ctx.setLineDash([5,8]);
+    ctx.beginPath(); ctx.arc(0,-5,38,frame*0.08,frame*0.08+Math.PI*1.4); ctx.stroke();
     ctx.setLineDash([]); ctx.globalAlpha=1;
   }
-  ctx.restore();
 }
 
-// ── RENDER ───────────────────────────────────────────────────
-function renderOffice() {
-  // Background floor — dark Razer hex
-  ctx.fillStyle='#050f05'; ctx.fillRect(0,0,CW,CH);
-  ctx.strokeStyle='#00ff4106'; ctx.lineWidth=0.5;
-  const HS=14;
-  for(let gx=0;gx<CW;gx+=HS*1.5) for(let gy=0;gy<CH;gy+=HS){
-    const ox=(Math.floor(gy/HS)%2===0)?0:HS*0.75;
+// ── MEETING ROOM FURNITURE ────────────────────────────────────
+function drawMeeting(room){
+  const cx=room.x+room.w/2, cy=room.y+room.h/2+20;
+  // Rug
+  ctx.fillStyle='rgba(184,154,96,0.08)';
+  ctx.beginPath(); ctx.ellipse(cx,cy,220,100,0,0,Math.PI*2); ctx.fill();
+  // Table
+  ctx.fillStyle='#e8dfc8'; ctx.strokeStyle='#c8b898'; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.ellipse(cx,cy,170,68,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+  // Table shine
+  ctx.fillStyle='#ffffff20';
+  ctx.beginPath(); ctx.ellipse(cx-20,cy-20,80,28,-0.3,0,Math.PI*2); ctx.fill();
+  // Chairs
+  [0,45,90,135,180,225,270,315].forEach(deg=>{
+    const rad=deg*Math.PI/180;
+    ctx.fillStyle='#c8b898'; ctx.strokeStyle='#b0a080'; ctx.lineWidth=2;
     ctx.beginPath();
-    ctx.moveTo(gx+ox+HS*0.5,gy); ctx.lineTo(gx+ox+HS,gy+HS*0.5);
-    ctx.lineTo(gx+ox+HS*0.5,gy+HS); ctx.lineTo(gx+ox,gy+HS*0.5); ctx.closePath();
-    ctx.stroke();
+    ctx.ellipse(cx+Math.cos(rad)*196,cy+Math.sin(rad)*88*0.75,22,14,rad,0,Math.PI*2);
+    ctx.fill(); ctx.stroke();
+  });
+  // Whiteboard
+  ctx.fillStyle='#f8f8f4'; ctx.strokeStyle='#ccc'; ctx.lineWidth=2;
+  ctx.fillRect(room.x+16,room.y+52,130,88); ctx.strokeRect(room.x+16,room.y+52,130,88);
+  ctx.fillStyle='#649aa2'; ctx.font='bold 14px DM Sans,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('STRATEGY', room.x+81, room.y+74);
+  // Chart bars on whiteboard
+  [30,45,28,52,38,58,42].forEach((h,i)=>{
+    ctx.fillStyle=`rgba(100,154,162,${0.4+Math.sin(frame*0.04+i)*0.2})`;
+    ctx.fillRect(room.x+20+i*16,room.y+136-h,12,h);
+  });
+  // Laptop on table
+  ctx.fillStyle='#2c2c2a'; rr(ctx,cx-32,cy-14,64,40,4); ctx.fill();
+  ctx.fillStyle='#649aa2'; ctx.font='9px monospace'; ctx.textAlign='center';
+  ctx.fillText('AI OFFICE', cx, cy+4);
+  ctx.textAlign='left';
+  // Projector
+  ctx.fillStyle='#f0f0e8'; ctx.strokeStyle='#ccc'; ctx.lineWidth=1;
+  ctx.fillRect(room.x+room.w-130,room.y+44,118,80); ctx.strokeRect(room.x+room.w-130,room.y+44,118,80);
+  ['#649aa2','#6b8f71','#c07070','#8a7ba8'].forEach((clr,bi)=>{
+    const bh=20+Math.sin(frame*0.03+bi)*16;
+    ctx.fillStyle=clr+'99'; ctx.fillRect(room.x+room.w-126+bi*28,room.y+120-bh,22,bh);
+  });
+  ctx.fillStyle='#8a8680'; ctx.font='9px monospace'; ctx.textAlign='center';
+  ctx.fillText('Q2 REVENUE', room.x+room.w-71, room.y+58);
+}
+
+// ── BREAK ROOM ────────────────────────────────────────────────
+function drawBreakRoom(room){
+  const cx=room.x+room.w/2, cy=room.y+room.h/2;
+  // Coffee machine
+  ctx.fillStyle='#3a3530'; ctx.strokeStyle='#ccc'; ctx.lineWidth=2;
+  rr(ctx,room.x+26,room.y+62,90,140,8); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#c07070'; ctx.beginPath(); ctx.arc(room.x+71,room.y+100,24,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#fff'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
+  ctx.fillText('☕',room.x+71,room.y+104);
+  // Steam
+  if(frame%80<50){
+    ctx.strokeStyle='#ccc'; ctx.lineWidth=2; ctx.globalAlpha=0.5;
+    [0,1,2].forEach(s=>{
+      ctx.beginPath(); ctx.moveTo(room.x+58+s*12,room.y+60);
+      ctx.quadraticCurveTo(room.x+52+s*12,room.y+44,room.x+58+s*12,room.y+28);
+      ctx.stroke();
+    }); ctx.globalAlpha=1;
+  }
+  // Couch
+  ctx.fillStyle='#d4c5b0'; ctx.strokeStyle='#c4b8a0'; ctx.lineWidth=2;
+  rr(ctx,room.x+130,room.y+130,340,110,16); ctx.fill(); ctx.stroke();
+  // Cushions
+  [150,230,310,390].forEach(px=>{
+    ctx.fillStyle='#c8b898'; ctx.strokeStyle='#b8a888'; ctx.lineWidth=1;
+    rr(ctx,room.x+px-18,room.y+144,62,72,10); ctx.fill(); ctx.stroke();
+  });
+  // Couch arms
+  ctx.fillStyle='#c4b5a0';
+  rr(ctx,room.x+128,room.y+140,22,100,10); ctx.fill();
+  rr(ctx,room.x+456,room.y+140,22,100,10); ctx.fill();
+  // Coffee table
+  ctx.fillStyle='#b89a60'; ctx.strokeStyle='#a08050'; ctx.lineWidth=2;
+  rr(ctx,room.x+176,room.y+250,250,50,10); ctx.fill(); ctx.stroke();
+  // Items on table
+  ctx.fillStyle='#649aa2'; ctx.beginPath(); ctx.arc(room.x+220,room.y+275,16,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#fff'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+  ctx.fillText('☕',room.x+220,room.y+279);
+  ctx.fillStyle='#c07070'; ctx.beginPath(); ctx.arc(room.x+270,room.y+275,16,0,Math.PI*2); ctx.fill();
+  ctx.fillText('🍎',room.x+270,room.y+279);
+  ctx.fillStyle='#2c2c2a'; rr(ctx,room.x+310,room.y+262,60,28,4); ctx.fill();
+  ctx.fillStyle='#649aa2'; ctx.font='7px monospace'; ctx.fillText('polypus',room.x+316,room.y+279);
+  ctx.textAlign='left';
+}
+
+// ── RENDER OFFICE ─────────────────────────────────────────────
+function renderOffice(){
+  // BG — warm dotted grid
+  ctx.fillStyle='#f7f6f3'; ctx.fillRect(0,0,CW,CH);
+  ctx.fillStyle='#e0dbd4';
+  for(let gx=0;gx<CW;gx+=60) for(let gy=0;gy<CH;gy+=60){
+    ctx.beginPath(); ctx.arc(gx,gy,1.5,0,Math.PI*2); ctx.fill();
   }
 
-  // Hallway
-  ctx.fillStyle='#080f08';
-  ctx.fillRect(22, 80, 486, 10);
-  ctx.strokeStyle='#00ff4115'; ctx.lineWidth=0.5;
-  ctx.strokeRect(22,80,486,10);
-
-  // Draw rooms
-  ROOMS.forEach(r => {
-    // Room fill
-    ctx.fillStyle = r.color+'08';
-    ctx.strokeStyle = r.color+'35';
-    ctx.lineWidth = 1.5;
-    ctx.shadowColor = r.color; ctx.shadowBlur = 4;
-    rr(ctx, r.x, r.y, r.w, r.h, 3); ctx.fill(); ctx.stroke();
-    ctx.shadowBlur = 0;
-
-    // Room top label bar
-    ctx.fillStyle = r.color+'20';
-    rr(ctx, r.x, r.y, r.w, 12, 3); ctx.fill();
-    ctx.fillStyle = r.color;
-    ctx.font = `bold ${r.isMtg||r.isServer?8:7}px monospace`;
-    ctx.textAlign = 'center';
-    ctx.shadowColor = r.color; ctx.shadowBlur = 3;
-    ctx.fillText(r.isMtg ? '⚡ MEETING' : r.isServer ? '🖥 SERVERS' : r.label, r.x+r.w/2, r.y+8.5);
-    ctx.shadowBlur = 0;
-
-    // Draw room furniture
-    const cx = r.x + r.w/2;
-    const cy = r.y + r.h/2 + 6;
-
-    if (r.isMtg) {
-      // Meeting table — oval
-      ctx.fillStyle='#0d2a0d'; ctx.strokeStyle='#ffaa0040'; ctx.lineWidth=1;
-      ctx.shadowColor='#ffaa00'; ctx.shadowBlur=4;
-      ctx.beginPath(); ctx.ellipse(cx, cy+4, 44, 20, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.shadowBlur=0;
-      // Chairs
-      [[cx,cy-16],[cx-34,cy+4],[cx+34,cy+4],[cx-20,cy-13],[cx+20,cy-13]].forEach(([px,py])=>{
-        ctx.fillStyle='#1a2a1a'; ctx.strokeStyle='#ffaa0025'; ctx.lineWidth=0.5;
-        ctx.beginPath(); ctx.ellipse(px,py,5,3,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
-      });
-      // Projector screen
-      ctx.fillStyle='#0a1a0a'; ctx.strokeStyle='#ffaa0030'; ctx.lineWidth=1;
-      ctx.fillRect(r.x+6,r.y+13,r.w-12,16); ctx.strokeRect(r.x+6,r.y+13,r.w-12,16);
-      ctx.fillStyle='#ffaa0020'; ctx.fillRect(r.x+7,r.y+14,r.w-14,14);
-      ctx.fillStyle='#ffaa00'; ctx.font='5px monospace'; ctx.textAlign='center';
-      ctx.fillText('STRATEGY', cx, r.y+23);
-      [4,6,5,8,5,9].forEach((h,i)=>{
-        ctx.fillStyle=`rgba(255,170,0,${0.3+Math.sin(frame*0.05+i)*0.2})`;
-        ctx.fillRect(r.x+10+i*16,r.y+27-h,12,h);
-      });
-    } else if (r.isServer) {
-      // Server racks
-      for(let si=0;si<3;si++){
-        ctx.fillStyle='#0a0a0a'; ctx.strokeStyle='#00ff4130'; ctx.lineWidth=0.8;
-        rr(ctx,r.x+8+si*30,r.y+15,24,100,2); ctx.fill(); ctx.stroke();
-        // Rack lights
-        for(let li=0;li<8;li++){
-          const on = (frame+si*3+li*7)%30 < 20;
-          ctx.fillStyle=on?'#00ff41':'#003300';
-          ctx.beginPath(); ctx.arc(r.x+14+si*30,r.y+22+li*11,2,0,Math.PI*2); ctx.fill();
-          if(on){ctx.shadowColor='#00ff41';ctx.shadowBlur=4;ctx.fill();ctx.shadowBlur=0;}
-        }
-        // Blinking activity light
-        if((frame+si*17)%60<30){
-          ctx.fillStyle='#ff4444'; ctx.shadowColor='#ff4444'; ctx.shadowBlur=3;
-          ctx.beginPath(); ctx.arc(r.x+24+si*30,r.y+22,2,0,Math.PI*2); ctx.fill();
-          ctx.shadowBlur=0;
-        }
-      }
-    } else {
-      // Regular office — desk + monitor
-      const col = ROOMS.indexOf(r) < 6 ? r.color : r.color;
-      drawDesk(ctx, cx, cy, r.color);
-      // Small bookshelf on wall
-      ctx.fillStyle='#0a1a0a'; ctx.strokeStyle=r.color+'20'; ctx.lineWidth=0.5;
-      ctx.fillRect(r.x+3,r.y+15,8,r.h-22); ctx.strokeRect(r.x+3,r.y+15,8,r.h-22);
-      ['#649aa2','#ff4444','#aa44ff','#ffaa00','#00ccff'].slice(0,3).forEach((bc,bi)=>{
-        ctx.fillStyle=bc+'80';
-        ctx.fillRect(r.x+4,r.y+18+bi*12,6,10);
-      });
-      // Coffee mug
-      ctx.fillStyle=r.color+'80'; ctx.strokeStyle=r.color+'40'; ctx.lineWidth=0.5;
-      rr(ctx,r.x+r.w-10,r.y+r.h-12,7,8,2); ctx.fill(); ctx.stroke();
+  // Rooms
+  ROOMS.forEach((room,ri)=>{
+    // Shadow
+    ctx.fillStyle='rgba(0,0,0,0.06)';
+    rr(ctx,room.x+6,room.y+6,room.w,room.h,16); ctx.fill();
+    // Fill
+    ctx.fillStyle=room.color; ctx.strokeStyle=room.border+'60'; ctx.lineWidth=2;
+    rr(ctx,room.x,room.y,room.w,room.h,16); ctx.fill(); ctx.stroke();
+    // Top accent bar
+    ctx.fillStyle=room.border+'20';
+    rr(ctx,room.x,room.y,room.w,28,16); ctx.fill();
+    ctx.fillStyle=room.border+'80';
+    ctx.beginPath(); ctx.moveTo(room.x,room.y+28); ctx.lineTo(room.x+room.w,room.y+28); ctx.stroke();
+    // Label
+    ctx.fillStyle=room.border; ctx.font='bold 15px DM Sans,sans-serif'; ctx.textAlign='left';
+    ctx.fillText(room.label, room.x+18, room.y+19);
+    // Status dot
+    const pct=0.4+Math.sin(frame*0.05+ri)*0.3;
+    ctx.fillStyle=room.border; ctx.globalAlpha=pct;
+    ctx.beginPath(); ctx.arc(room.x+room.w-18,room.y+14,5,0,Math.PI*2); ctx.fill();
+    ctx.globalAlpha=1;
+    // Furniture
+    if(room.meeting){ drawMeeting(room); return; }
+    if(room.agentIdx===-3){ drawBreakRoom(room); return; }
+    if(room.agentIdx===-2){
+      // HQ room — company sign + octopus logo
+      ctx.fillStyle=room.border; ctx.font='bold 36px DM Serif Display,serif';
+      ctx.textAlign='center';
+      ctx.fillText('🐙 PolypusTech', room.x+room.w/2, room.y+120);
+      ctx.font='16px DM Sans,sans-serif'; ctx.fillStyle='#8a8680';
+      ctx.fillText('polypustech.ch', room.x+room.w/2, room.y+155);
+      ctx.fillStyle=room.border+'15';
+      ctx.beginPath(); ctx.arc(room.x+room.w/2,room.y+room.h/2+20,90,0,Math.PI*2); ctx.fill();
+      ctx.textAlign='left'; return;
+    }
+    if(room.agentIdx>=0){
+      drawDesk(ctx,room.x+room.w/2,room.y+room.h/2+30,room.border);
+      // Shelf & plant decor
+      ctx.fillStyle=room.border+'15'; ctx.fillRect(room.x+room.w-56,room.y+38,40,room.h-56);
+      ctx.fillStyle=room.border+'50'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('📚',room.x+room.w-36,room.y+80);
+      ctx.fillText('🌱',room.x+room.w-36,room.y+130);
+      ctx.textAlign='left';
     }
   });
 
-  ctx.textAlign='left';
-
-  // PolypusTech logo in hallway
-  ctx.fillStyle='#00ff41'; ctx.font='bold 6px monospace'; ctx.textAlign='center';
-  ctx.shadowColor='#00ff41'; ctx.shadowBlur=4;
-  ctx.fillText('🐙 POLYPUSTECH HQ', CW/2, 87);
-  ctx.shadowBlur=0; ctx.textAlign='left';
-
-  // Door gaps
-  ROOMS.filter(r=>!r.isMtg&&!r.isServer).forEach(r=>{
-    const doorX = r.x+r.w/2-5;
-    const isTop = r.y < 50;
-    const doorY = isTop ? r.y+r.h-1 : r.y-1;
-    ctx.fillStyle='#080f08';
-    ctx.fillRect(doorX, doorY, 10, 3);
-    ctx.strokeStyle='#00ff4120'; ctx.lineWidth=0.5;
-    ctx.beginPath(); ctx.moveTo(doorX,doorY); ctx.lineTo(doorX,doorY+3); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(doorX+10,doorY); ctx.lineTo(doorX+10,doorY+3); ctx.stroke();
-  });
-
-  // Neon bottom strip
-  ctx.shadowColor='#00ff41'; ctx.shadowBlur=6;
-  ctx.strokeStyle=`rgba(0,255,65,${0.12+Math.sin(frame*0.03)*0.04})`; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(0,CH-2); ctx.lineTo(CW,CH-2); ctx.stroke();
-  ctx.shadowBlur=0;
-
-  // ── DRAW CHARACTERS ──
-  CHARS.forEach(c=>{
-    const bob=(c.state==='walk'?Math.sin(frame*0.25)*1.5:Math.sin(frame*0.04)*0.5);
-    const enabled = typeof agentEnabled!=='undefined' ? agentEnabled[c.name]!==false : true;
-    drawOcto(ctx,c.x,c.y+bob,c.color,c.blink,c.state==='task'&&enabled,c.size||0.4);
-    // Progress bar when working
-    if(c.state==='task'&&enabled&&c.task){
-      const pct=Math.min(0.95,1-c.timer/140);
-      ctx.fillStyle='#0a1a0a'; rr(ctx,c.x-14,c.y-14,28,4,2); ctx.fill();
-      ctx.fillStyle=c.color; rr(ctx,c.x-14,c.y-14,28*pct,4,2); ctx.fill();
+  // Agents
+  ags.forEach((ag,i)=>{
+    const enabled = agentEnabled[ag.name]!==false;
+    if(!enabled){ ctx.globalAlpha=0.25; }
+    ctx.save(); ctx.translate(ag.x,ag.y);
+    const bob=(ag.state==='task')?0:Math.sin(frame*0.05+i)*3;
+    ctx.translate(0,bob); ctx.save(); ctx.scale(1.6,1.6);
+    drawOcto(ctx,0,0,ag.color,ag.blink,ag.state==='task');
+    ctx.restore();
+    // Progress bar
+    if(ag.state==='task'&&ag.task){
+      rr(ctx,-56,-58,112,10,5); ctx.fillStyle='#e8e2d8'; ctx.fill();
+      rr(ctx,-56,-58,112*ag.progress,10,5); ctx.fillStyle=ag.color; ctx.fill();
+      ctx.fillStyle=ag.color; ctx.font='bold 11px DM Sans,sans-serif'; ctx.textAlign='center';
+      ctx.fillText(ag.task.length>28?ag.task.slice(0,28)+'…':ag.task,0,-65);
     }
-    // Name tag
-    ctx.fillStyle=c.color; ctx.font=`bold ${c.size>0.35?8:7}px monospace`;
-    ctx.textAlign='center'; ctx.shadowColor=c.color; ctx.shadowBlur=3;
-    ctx.fillText(c.name,c.x,c.y-(c.size>0.35?12:10));
-    ctx.shadowBlur=0;
-    // Dim if disabled
-    if(!enabled){
-      ctx.fillStyle='rgba(0,0,0,0.55)';
-      const s=(c.size||0.4)*18;
-      ctx.fillRect(c.x-s,c.y-s-5,s*2,s*2+8);
-    }
+    ctx.restore();
+    ctx.globalAlpha=1;
+    // Name badge
+    ctx.fillStyle=ag.color; ctx.font='bold 13px DM Sans,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(ag.name,ag.x,ag.y-42);
+    ctx.textAlign='left';
   });
-  ctx.textAlign='left';
 }
 
-// ── TICK ────────────────────────────────────────────────────
-function tickChars() {
-  CHARS.forEach(c=>{
-    c.blink++; c.timer--;
-    const dx=c.tx-c.x,dy=c.ty-c.y;
-    if(Math.sqrt(dx*dx+dy*dy)>1) { c.x+=dx*0.08; c.y+=dy*0.08; }
-    else { c.x=c.tx; c.y=c.ty; }
-
-    if(c.timer<=0){
-      const enabled=typeof agentEnabled!=='undefined'?agentEnabled[c.name]!==false:true;
-      const roll=Math.random();
-      if(c.state==='idle'){
-        if(roll<0.18){
-          const pos=randomPos(c.name);
-          c.tx=pos.x; c.ty=pos.y;
-          c.state='walk'; c.timer=50+Math.random()*40;
-        } else if(roll<0.5&&enabled){
-          c.state='task';
-          const tasks=agentTaskMap[c.name]||logMsgs;
-          c.task=tasks[Math.floor(Math.random()*tasks.length)];
-          c.timer=70+Math.random()*50;
-          addOfficeLog(c.name+': '+c.task);
-        } else { c.timer=40+Math.random()*50; }
-      } else if(c.state==='walk'){
-        c.tx=c.hx; c.ty=c.hy; c.state='idle'; c.timer=60+Math.random()*60;
-      } else if(c.state==='task'){
-        if(!enabled){c.state='idle';c.task='';c.timer=20;return;}
-        c.state='idle'; c.task=''; c.timer=40+Math.random()*50;
+// ── TICK ──────────────────────────────────────────────────────
+function tickChars(){
+  ags.forEach((ag,i)=>{
+    ag.blink++; ag.timer--;
+    const dx=ag.tx-ag.x, dy=ag.ty-ag.y;
+    if(Math.sqrt(dx*dx+dy*dy)>2){ ag.x+=dx*0.07; ag.y+=dy*0.07; }
+    else { ag.x=ag.tx; ag.y=ag.ty; }
+    const enabled=agentEnabled[ag.name]!==false;
+    if(ag.timer<=0){
+      const r=Math.random();
+      if(ag.state==='idle'){
+        if(r<0.2){
+          // Walk — stay within room or go to meeting room
+          const room=ROOMS[i<6?i:0];
+          const goMtg=Math.random()<0.15;
+          const mtg=ROOMS[1];
+          ag.tx=goMtg?mtg.x+100+Math.random()*(mtg.w-200):room.x+60+Math.random()*(room.w-120);
+          ag.ty=goMtg?mtg.y+80+Math.random()*(mtg.h-100):room.y+80+Math.random()*(room.h-100);
+          ag.state='walk'; ag.timer=60+Math.random()*50;
+        } else if(r<0.55&&enabled){
+          ag.state='task'; ag.progress=0;
+          ag.task=TASK_LINES[i%6][Math.floor(Math.random()*3)];
+          ag.timer=100+Math.random()*80;
+          addOfficeLog(ag.name+': '+ag.task);
+          if(typeof totalTokens!=="undefined")totalTokens+=Math.floor(Math.random()*200+80);
+          if(typeof updateTokenDisplay==="function")updateTokenDisplay();
+        } else { ag.timer=50+Math.random()*60; }
+      } else if(ag.state==='walk'){
+        ag.tx=ag.hx; ag.ty=ag.hy; ag.state='idle'; ag.timer=70+Math.random()*60;
+      } else if(ag.state==='task'){
+        if(!enabled){ag.state='idle';ag.task='';ag.progress=0;ag.timer=30;return;}
+        ag.state='idle'; ag.task=''; ag.progress=0; ag.timer=60+Math.random()*60;
       }
     }
+    if(ag.state==='task') ag.progress=Math.min(0.95,1-ag.timer/180);
   });
 }
 
 function officeLoop() {
   frame++;
-  tickChars();
-  renderOffice();
+  if(ctx){ tickChars(); renderOffice(); }
   requestAnimationFrame(officeLoop);
 }
 
@@ -2033,276 +1882,6 @@ function completeExtreme(i) { S.extremeTasks[i].done=!S.extremeTasks[i].done; sa
 function deleteExtreme(i) { if(confirm('Delete mission?')){ S.extremeTasks.splice(i,1); save(); renderExtreme(); } }
 
 // ═══ GAMES ═════════════════════════════════════════════════════
-function selectGame(id, btn) {
-  ['tron','pong','snake','external'].forEach(g=>{
-    document.getElementById('game-'+g).style.display=g===id?'block':'none';
-    document.getElementById('game-btn-'+g).classList.toggle('on',g===id);
-  });
-}
-
-// ── TRON ──
-const tronCanvas = document.getElementById('tronCanvas');
-const tctx = tronCanvas.getContext('2d');
-const TW=700,TH=440,CELL=8;
-let tronGame=null, tronRAF=null;
-let tronScores={vic:0,gen:0};
-
-function startTron(){
-  if(tronRAF) cancelAnimationFrame(tronRAF);
-  const cols=Math.floor(TW/CELL), rows=Math.floor(TH/CELL);
-  tronGame={
-    vic:{x:Math.floor(cols*0.25),y:Math.floor(rows/2),dx:1,dy:0,trail:[],alive:true,color:'#649aa2'},
-    gen:{x:Math.floor(cols*0.75),y:Math.floor(rows/2),dx:-1,dy:0,trail:[],alive:true,color:'#00ff41'},
-    speed:6, frameCount:0
-  };
-  document.getElementById('tron-status').textContent='GO! Don\'t crash!';
-  tronLoop();
-}
-
-const tronKeys={};
-document.addEventListener('keydown',e=>{
-  tronKeys[e.key]=true;
-  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
-});
-document.addEventListener('keyup',e=>tronKeys[e.key]=false);
-
-function tronLoop(){
-  tronRAF=requestAnimationFrame(tronLoop);
-  if(!tronGame) return;
-  tronGame.frameCount++;
-  if(tronGame.frameCount%tronGame.speed!==0) { drawTron(); return; }
-
-  const g=tronGame;
-  // Input VIC (WASD)
-  if(tronKeys['w']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=-1;}
-  if(tronKeys['s']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=1;}
-  if(tronKeys['a']&&g.vic.dx===0){g.vic.dx=-1;g.vic.dy=0;}
-  if(tronKeys['d']&&g.vic.dx===0){g.vic.dx=1;g.vic.dy=0;}
-  // Input GEN (arrows)
-  if(tronKeys['ArrowUp']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=-1;}
-  if(tronKeys['ArrowDown']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=1;}
-  if(tronKeys['ArrowLeft']&&g.gen.dx===0){g.gen.dx=-1;g.gen.dy=0;}
-  if(tronKeys['ArrowRight']&&g.gen.dx===0){g.gen.dx=1;g.gen.dy=0;}
-
-  const cols=Math.floor(TW/CELL), rows=Math.floor(TH/CELL);
-  // Move
-  ['vic','gen'].forEach(p=>{
-    const pl=g[p];
-    if(!pl.alive) return;
-    pl.trail.push({x:pl.x,y:pl.y});
-    pl.x+=pl.dx; pl.y+=pl.dy;
-    // Wall collision
-    if(pl.x<0||pl.x>=cols||pl.y<0||pl.y>=rows) pl.alive=false;
-    // Self + other trail collision
-    const allTrails=[...g.vic.trail,...g.gen.trail];
-    if(allTrails.some(t=>t.x===pl.x&&t.y===pl.y)) pl.alive=false;
-  });
-
-  // Check end
-  if(!g.vic.alive||!g.gen.alive){
-    cancelAnimationFrame(tronRAF);
-    if(!g.vic.alive&&!g.gen.alive){document.getElementById('tron-status').textContent='DRAW! Press START again';}
-    else if(!g.vic.alive){tronScores.gen++;document.getElementById('tron-score-gen').textContent=tronScores.gen;document.getElementById('tron-status').textContent='GEN WINS! 🏆';}
-    else{tronScores.vic++;document.getElementById('tron-score-vic').textContent=tronScores.vic;document.getElementById('tron-status').textContent='VIC WINS! 🏆';}
-    tronGame=null;
-  }
-  drawTron();
-}
-
-function drawTron(){
-  tctx.fillStyle='#050f05';
-  tctx.fillRect(0,0,TW,TH);
-  // Grid
-  tctx.strokeStyle='#00ff4108';tctx.lineWidth=0.5;
-  for(let x=0;x<TW;x+=CELL){tctx.beginPath();tctx.moveTo(x,0);tctx.lineTo(x,TH);tctx.stroke();}
-  for(let y=0;y<TH;y+=CELL){tctx.beginPath();tctx.moveTo(0,y);tctx.lineTo(TW,y);tctx.stroke();}
-  if(!tronGame) return;
-  ['vic','gen'].forEach(p=>{
-    const pl=tronGame[p];
-    // Trail
-    pl.trail.forEach((t,i)=>{
-      tctx.fillStyle=pl.color;
-      tctx.globalAlpha=0.3+0.5*(i/pl.trail.length);
-      tctx.shadowColor=pl.color;tctx.shadowBlur=4;
-      tctx.fillRect(t.x*CELL+1,t.y*CELL+1,CELL-2,CELL-2);
-    });
-    tctx.globalAlpha=1;tctx.shadowBlur=0;
-    // Head
-    if(pl.alive){
-      tctx.fillStyle=pl.color;
-      tctx.shadowColor=pl.color;tctx.shadowBlur=12;
-      tctx.fillRect(pl.x*CELL,pl.y*CELL,CELL,CELL);
-      tctx.shadowBlur=0;
-    }
-  });
-  // Labels
-  tctx.fillStyle='#649aa2';tctx.font='bold 10px monospace';tctx.fillText('VIC',6,14);
-  tctx.fillStyle='#00ff41';tctx.fillText('GEN',TW-38,14);
-}
-drawTron();
-
-// ── PONG ──
-const pongCanvas=document.getElementById('pongCanvas');
-const pctx=pongCanvas.getContext('2d');
-let pongGame=null,pongRAF2=null;
-let pongScores={vic:0,gen:0};
-const pKeys={};
-document.addEventListener('keydown',e=>pKeys[e.key]=true);
-document.addEventListener('keyup',e=>pKeys[e.key]=false);
-
-function startPong(){
-  if(pongRAF2) cancelAnimationFrame(pongRAF2);
-  pongGame={
-    ball:{x:350,y:220,dx:4,dy:3,r:8},
-    vic:{x:18,y:170,w:12,h:80,score:0},
-    gen:{x:670,y:170,w:12,h:80,score:0},
-    speed:4
-  };
-  document.getElementById('pong-status').textContent='RALLY!';
-  pongLoop();
-}
-
-function pongLoop(){
-  pongRAF2=requestAnimationFrame(pongLoop);
-  if(!pongGame) return;
-  const g=pongGame;
-  // Paddles
-  if(pKeys['w']&&g.vic.y>0) g.vic.y-=6;
-  if(pKeys['s']&&g.vic.y<TH-g.vic.h) g.vic.y+=6;
-  if(pKeys['ArrowUp']&&g.gen.y>0) g.gen.y-=6;
-  if(pKeys['ArrowDown']&&g.gen.y<TH-g.gen.h) g.gen.y+=6;
-  // Ball
-  g.ball.x+=g.ball.dx; g.ball.y+=g.ball.dy;
-  if(g.ball.y-g.ball.r<0||g.ball.y+g.ball.r>TH) g.ball.dy*=-1;
-  // Paddle collision
-  if(g.ball.x-g.ball.r<g.vic.x+g.vic.w&&g.ball.y>g.vic.y&&g.ball.y<g.vic.y+g.vic.h&&g.ball.dx<0){
-    g.ball.dx*=-1.05;g.ball.dy+=(Math.random()-.5)*2;
-  }
-  if(g.ball.x+g.ball.r>g.gen.x&&g.ball.y>g.gen.y&&g.ball.y<g.gen.y+g.gen.h&&g.ball.dx>0){
-    g.ball.dx*=-1.05;g.ball.dy+=(Math.random()-.5)*2;
-  }
-  // Score
-  if(g.ball.x<0){pongScores.gen++;document.getElementById('pong-score-gen').textContent=pongScores.gen;resetBall(g,-1);}
-  if(g.ball.x>TW){pongScores.vic++;document.getElementById('pong-score-vic').textContent=pongScores.vic;resetBall(g,1);}
-  // Win
-  if(pongScores.vic>=7||pongScores.gen>=7){
-    cancelAnimationFrame(pongRAF2);
-    document.getElementById('pong-status').textContent=(pongScores.vic>=7?'VIC WINS!':'GEN WINS!')+' 🏆 Press START to rematch';
-    pongGame=null;pongScores={vic:0,gen:0};
-    document.getElementById('pong-score-vic').textContent=0;
-    document.getElementById('pong-score-gen').textContent=0;
-  }
-  drawPong();
-}
-
-function resetBall(g,dir){g.ball.x=350;g.ball.y=220;g.ball.dx=dir*4;g.ball.dy=(Math.random()-.5)*4;}
-
-function drawPong(){
-  pctx.fillStyle='#050505';pctx.fillRect(0,0,700,440);
-  pctx.strokeStyle='#ffffff10';pctx.lineWidth=2;pctx.setLineDash([10,10]);
-  pctx.beginPath();pctx.moveTo(350,0);pctx.lineTo(350,440);pctx.stroke();pctx.setLineDash([]);
-  if(!pongGame){pctx.fillStyle='#333';pctx.font='20px monospace';pctx.textAlign='center';pctx.fillText('Press START',350,220);pctx.textAlign='left';return;}
-  const g=pongGame;
-  pctx.fillStyle='#649aa2';pctx.shadowColor='#649aa2';pctx.shadowBlur=8;
-  pctx.fillRect(g.vic.x,g.vic.y,g.vic.w,g.vic.h);
-  pctx.fillStyle='#6b8f71';pctx.shadowColor='#6b8f71';
-  pctx.fillRect(g.gen.x,g.gen.y,g.gen.w,g.gen.h);
-  pctx.fillStyle='#fff';pctx.shadowColor='#fff';pctx.shadowBlur=12;
-  pctx.beginPath();pctx.arc(g.ball.x,g.ball.y,g.ball.r,0,Math.PI*2);pctx.fill();
-  pctx.shadowBlur=0;
-}
-drawPong();
-
-// ── SNAKE ──
-const snakeCanvas=document.getElementById('snakeCanvas');
-const sctx=snakeCanvas.getContext('2d');
-const SC=20;
-let snakeGame=null,snakeRAF=null,snakeFrame=0;
-let snakeScores={vic:0,gen:0};
-
-function startSnake(){
-  if(snakeRAF) cancelAnimationFrame(snakeRAF);
-  const cols=Math.floor(700/SC),rows=Math.floor(440/SC);
-  snakeGame={
-    vic:{body:[{x:8,y:11}],dx:1,dy:0,color:'#649aa2',score:0,alive:true},
-    gen:{body:[{x:26,y:11}],dx:-1,dy:0,color:'#a88aff',score:0,alive:true},
-    apple:{x:Math.floor(Math.random()*cols),y:Math.floor(Math.random()*rows)},
-    cols,rows,speed:8
-  };
-  document.getElementById('snake-status').textContent='EAT THE APPLES!';
-  snakeLoop();
-}
-
-function snakeLoop(){
-  snakeRAF=requestAnimationFrame(snakeLoop);
-  snakeFrame++;
-  if(!snakeGame||snakeFrame%snakeGame.speed!==0) { drawSnake(); return; }
-  const g=snakeGame;
-  // Input
-  if(tronKeys['w']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=-1;}
-  if(tronKeys['s']&&g.vic.dy===0){g.vic.dx=0;g.vic.dy=1;}
-  if(tronKeys['a']&&g.vic.dx===0){g.vic.dx=-1;g.vic.dy=0;}
-  if(tronKeys['d']&&g.vic.dx===0){g.vic.dx=1;g.vic.dy=0;}
-  if(pKeys['ArrowUp']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=-1;}
-  if(pKeys['ArrowDown']&&g.gen.dy===0){g.gen.dx=0;g.gen.dy=1;}
-  if(pKeys['ArrowLeft']&&g.gen.dx===0){g.gen.dx=-1;g.gen.dy=0;}
-  if(pKeys['ArrowRight']&&g.gen.dx===0){g.gen.dx=1;g.gen.dy=0;}
-
-  ['vic','gen'].forEach(p=>{
-    const pl=g[p]; if(!pl.alive) return;
-    const head={x:pl.body[0].x+pl.dx,y:pl.body[0].y+pl.dy};
-    if(head.x<0||head.x>=g.cols||head.y<0||head.y>=g.rows){pl.alive=false;return;}
-    const all=[...g.vic.body,...g.gen.body];
-    if(all.some(b=>b.x===head.x&&b.y===head.y)){pl.alive=false;return;}
-    pl.body.unshift(head);
-    if(head.x===g.apple.x&&head.y===g.apple.y){
-      pl.score++;
-      document.getElementById('snake-score-'+p).textContent=pl.score;
-      g.apple={x:Math.floor(Math.random()*g.cols),y:Math.floor(Math.random()*g.rows)};
-    } else { pl.body.pop(); }
-  });
-
-  if(!g.vic.alive||!g.gen.alive){
-    cancelAnimationFrame(snakeRAF);
-    const w=g.vic.score>g.gen.score?'VIC':g.gen.score>g.vic.score?'GEN':'TIE';
-    document.getElementById('snake-status').textContent=(w==='TIE'?'DRAW!':w+' WINS! 🏆')+' — Press START to replay';
-    snakeGame=null;
-  }
-  drawSnake();
-}
-
-function drawSnake(){
-  sctx.fillStyle='#05050f';sctx.fillRect(0,0,700,440);
-  sctx.strokeStyle='#a88aff08';sctx.lineWidth=0.5;
-  for(let x=0;x<700;x+=SC){sctx.beginPath();sctx.moveTo(x,0);sctx.lineTo(x,440);sctx.stroke();}
-  for(let y=0;y<440;y+=SC){sctx.beginPath();sctx.moveTo(0,y);sctx.lineTo(700,y);sctx.stroke();}
-  if(!snakeGame){sctx.fillStyle='#a88aff';sctx.font='18px monospace';sctx.textAlign='center';sctx.fillText('Press START to play',350,220);sctx.textAlign='left';return;}
-  const g=snakeGame;
-  // Apple
-  sctx.fillStyle='#ff4444';sctx.shadowColor='#ff4444';sctx.shadowBlur=8;
-  sctx.beginPath();sctx.arc(g.apple.x*SC+SC/2,g.apple.y*SC+SC/2,SC/2-2,0,Math.PI*2);sctx.fill();
-  sctx.shadowBlur=0;
-  // Snakes
-  ['vic','gen'].forEach(p=>{
-    const pl=g[p];
-    pl.body.forEach((b,i)=>{
-      sctx.fillStyle=pl.color;
-      sctx.globalAlpha=i===0?1:0.4+0.5*(1-i/pl.body.length);
-      sctx.shadowColor=pl.color;sctx.shadowBlur=i===0?8:0;
-      sctx.fillRect(b.x*SC+1,b.y*SC+1,SC-2,SC-2);
-    });
-    sctx.globalAlpha=1;sctx.shadowBlur=0;
-  });
-  sctx.fillStyle='#649aa2';sctx.font='10px monospace';sctx.fillText('VIC: '+g.vic.score,5,14);
-  sctx.fillStyle='#a88aff';sctx.textAlign='right';sctx.fillText('GEN: '+g.gen.score,695,14);sctx.textAlign='left';
-}
-drawSnake();
-
-// Render new tabs if on those pages on load
-if(S.expenses && S.expenses.length) renderExpenses();
-if(S.extremeTasks && S.extremeTasks.length) renderExtreme();
-
-
 // ═══ GOALS & SCOREBOARD ═══════════════════════════════════════
 if (!S.goals) S.goals = [];
 if (!S.stats) S.stats = {
@@ -2536,14 +2115,14 @@ function renderAgentToggles() {
   if (!el) return;
   el.innerHTML = AGENT_DEFS.map(a => `
     <button onclick="toggleAgent('${a.id}')" title="${a.role}"
-      style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1px solid ${agentEnabled[a.id]?a.color+'60':'#1a2a1a'};background:${agentEnabled[a.id]?a.color+'15':'transparent'};cursor:pointer;font-size:10px;font-weight:600;font-family:monospace;color:${agentEnabled[a.id]?a.color:'#2a4a2a'};transition:all .2s">
-      <span style="width:6px;height:6px;border-radius:50%;background:${agentEnabled[a.id]?a.color:'#1a2a1a'};display:inline-block;${agentEnabled[a.id]?'box-shadow:0 0 4px '+a.color:''}"></span>
+      style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1px solid ${agentEnabled[a.id]?a.color+'60':' var(--border)'};background:${agentEnabled[a.id]?a.color+'12':'transparent'};cursor:pointer;font-size:10px;font-weight:600;font-family:inherit;color:${agentEnabled[a.id]?a.color:'var(--muted)'};transition:all .2s">
+      <span style="width:6px;height:6px;border-radius:50%;background:${agentEnabled[a.id]?a.color:'var(--border)'};display:inline-block"></span>
       ${a.id}
     </button>`).join('');
 }
 
 // ── TOKEN TRACKER ──────────────────────────────────────────────
-let totalTokens = 0;
+totalTokens = 0; // already declared above
 const TOKEN_BUDGET = 1000000; // ~$3 at Sonnet pricing
 function updateTokenDisplay() {
   const used = document.getElementById('tok-used');
@@ -2570,7 +2149,7 @@ async function callAgentAPI(system, messages, maxTok) {
   if (d.error) throw new Error(d.error.message);
   const used = (d.usage?.input_tokens||0)+(d.usage?.output_tokens||0);
   totalTokens += used;
-  updateTokenDisplay();
+  if(typeof updateTokenDisplay==="function")updateTokenDisplay();
   return { text: d.content[0].text, tokens: used };
 }
 
@@ -2655,9 +2234,9 @@ function addScraperBubble(role,text){
   div.style.cssText='display:flex;gap:8px;align-items:flex-start';
   div.innerHTML=isAI?`
     <div style="width:26px;height:26px;border-radius:50%;background:#00ff4120;border:1px solid #00ff4140;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">🔍</div>
-    <div style="background:#0d120d;border:1px solid #00ff4220;border-radius:12px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:#c0ffc0;white-space:pre-wrap">${text}</div>`:`
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px 12px 12px 3px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:var(--charcoal);white-space:pre-wrap">${text}</div>`:`
     <div style="flex:1;display:flex;justify-content:flex-end">
-      <div style="background:#00ff4115;border:1px solid #00ff4130;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;color:#e0ffe0">${text}</div>
+      <div style="background:var(--sage-l);border:1px solid rgba(100,154,162,.3);border-radius:12px 12px 3px 12px;padding:10px 14px;max-width:80%;font-size:13px;color:var(--sage-d)">${text}</div>
     </div>`;
   chat.appendChild(div);chat.scrollTop=chat.scrollHeight;
 }
@@ -2670,7 +2249,7 @@ async function sendScraperMsg(override){
   scraperHistory.push({role:'user',content:text});
   const thinking=document.createElement('div');
   thinking.style.cssText='display:flex;gap:8px';
-  thinking.innerHTML='<div style="width:26px;height:26px;border-radius:50%;background:#00ff4120;display:flex;align-items:center;justify-content:center;font-size:11px">🔍</div><div style="background:#0d120d;border:1px solid #00ff4220;border-radius:12px;padding:10px 14px;font-size:12px;color:#2a4a2a;font-family:monospace">scanning databases...</div>';
+  thinking.innerHTML='<div style="width:22px;height:22px;border-radius:50%;background:var(--sage-l);display:flex;align-items:center;justify-content:center;font-size:10px">🔍</div><div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:9px 13px;font-size:12px;color:var(--muted);font-style:italic">Scanning databases...</div>';
   document.getElementById('scraper-chat').appendChild(thinking);
   document.getElementById('scraper-chat').scrollTop=99999;
   try{
@@ -2710,9 +2289,9 @@ function addEventsAIBubble(role,text){
   div.style.cssText='display:flex;gap:8px;align-items:flex-start';
   div.innerHTML=isAI?`
     <div style="width:26px;height:26px;border-radius:50%;background:#aa44ff20;border:1px solid #aa44ff40;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">📅</div>
-    <div style="background:#0d120d;border:1px solid #aa44ff20;border-radius:12px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:#ddaaff;white-space:pre-wrap">${text}</div>`:`
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px 12px 12px 3px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:var(--charcoal);white-space:pre-wrap">${text}</div>`:`
     <div style="flex:1;display:flex;justify-content:flex-end">
-      <div style="background:#aa44ff15;border:1px solid #aa44ff30;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;color:#e0ffe0">${text}</div>
+      <div style="background:rgba(138,123,168,.12);border:1px solid rgba(138,123,168,.3);border-radius:12px 12px 3px 12px;padding:10px 14px;max-width:80%;font-size:13px;color:var(--purple)">${text}</div>
     </div>`;
   chat.appendChild(div);chat.scrollTop=chat.scrollHeight;
 }
@@ -2725,7 +2304,7 @@ async function sendEventsAIMsg(override){
   eventsaiHistory.push({role:'user',content:text});
   const thinking=document.createElement('div');
   thinking.style.cssText='display:flex;gap:8px';
-  thinking.innerHTML='<div style="width:26px;height:26px;border-radius:50%;background:#aa44ff20;display:flex;align-items:center;justify-content:center;font-size:11px">📅</div><div style="background:#0d120d;border:1px solid #aa44ff20;border-radius:12px;padding:10px 14px;font-size:12px;color:#5a2a7a;font-family:monospace">searching events...</div>';
+  thinking.innerHTML='<div style="width:22px;height:22px;border-radius:50%;background:rgba(138,123,168,.1);display:flex;align-items:center;justify-content:center;font-size:10px">🤖</div><div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:9px 13px;font-size:12px;color:var(--muted);font-style:italic">Searching events...</div>';
   document.getElementById('eventsai-chat').appendChild(thinking);
   document.getElementById('eventsai-chat').scrollTop=99999;
   try{
@@ -2767,7 +2346,7 @@ function addEmailBubble(role,text){
   div.style.cssText='display:flex;gap:8px;align-items:flex-start';
   div.innerHTML=isAI?`
     <div style="width:26px;height:26px;border-radius:50%;background:#ff660020;border:1px solid #ff660040;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">📧</div>
-    <div style="background:#0d120d;border:1px solid #ff660025;border-radius:12px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:#ffccaa;white-space:pre-wrap">${text}</div>`:`
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:var(--charcoal);white-space:pre-wrap">${text}</div>`:`
     <div style="flex:1;display:flex;justify-content:flex-end">
       <div style="background:#ff660015;border:1px solid #ff660030;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;color:#e0ffe0">${text}</div>
     </div>`;
@@ -2807,14 +2386,14 @@ fetchCrypto();
 setInterval(fetchCrypto, 60000);
 setInterval(fetchNews, 300000);
 renderAgentToggles();
-updateTokenDisplay();
+if(typeof updateTokenDisplay==="function")updateTokenDisplay();
 
 // Safe event listeners — elements live in hidden tabs, add null checks
 document.addEventListener('keydown', e => {
   const active = document.querySelector('.pg.active');
   if (!active) return;
   const id = active.id;
-  if (id==='pg-scraper'   && e.key==='Enter') { e.preventDefault(); sendScraperMsg(); }
+
   if (id==='pg-eventsai'  && e.key==='Enter') { e.preventDefault(); sendEventsAIMsg(); }
   if (id==='pg-emailai'   && e.key==='Enter') { e.preventDefault(); sendEmailMsg(); }
 });
@@ -2874,7 +2453,7 @@ document.addEventListener('keydown', e => {
 <div class="pg" id="pg-emailai">
   <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
     <div>
-      <h2 style="font-size:16px;font-weight:700;color:#ff6600" class="razer-glow">📧 Email Marketing Agent — Brevo</h2>
+      <h2 style="font-size:16px;font-weight:700;color:#ff6600">📧 Email Marketing Agent — Brevo</h2>
       <p style="color:var(--muted);font-size:12px;font-family:monospace">Write cold emails, sequences and follow-ups. Brevo = 300 emails/day FREE — no credit card.</p>
     </div>
     <div style="display:flex;gap:8px;align-items:center">
@@ -2906,14 +2485,14 @@ document.addEventListener('keydown', e => {
       <div id="email-chat" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:460px">
         <div style="display:flex;gap:8px;align-items:flex-start">
           <div style="width:26px;height:26px;border-radius:50%;background:#ff660020;border:1px solid #ff660040;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">📧</div>
-          <div style="background:#0d120d;border:1px solid #ff660025;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;line-height:1.6;color:#ffccaa">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;line-height:1.6;color:#ffccaa">
             Email Marketing Agent online. I write cold outreach campaigns for PolypusTech using Brevo (300 free emails/day).<br><br>
             Tell me your target — industry, company size, pain point — and I'll write a complete 3-email sequence with subject lines, body copy, and follow-ups ready to paste into Brevo.
           </div>
         </div>
       </div>
       <div style="padding:12px 14px;border-top:1px solid #ff660015;display:flex;gap:8px">
-        <input id="email-input" style="flex:1;background:#060a06;border:1px solid #ff660025;border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Write a cold email for Swiss marketing agencies, targeting their lack of AI tools...">
+        <input id="email-input" style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Write a cold email for Swiss marketing agencies, targeting their lack of AI tools...">
         <button onclick="sendEmailMsg()" style="background:#ff6600;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">SEND ↗</button>
       </div>
     </div>
@@ -2921,90 +2500,30 @@ document.addEventListener('keydown', e => {
       <div class="card" style="border-color:#ff660030">
         <div style="font-size:10px;font-weight:700;color:#ff6600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:monospace">Email Templates</div>
         <div style="display:flex;flex-direction:column;gap:5px">
-          <button onclick="emailQuick('Write a cold email for Swiss digital marketing agencies. Pain point: they have no AI tools and are losing clients to agencies that do. Offer: PolypusTech builds AI automation.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Marketing agencies — AI pitch</button>
-          <button onclick="emailQuick('Write a cold email for Swiss SMEs that have a website but no automation. Offer: n8n automation saving 10 hours/week.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ SMEs — automation pitch</button>
-          <button onclick="emailQuick('Write a cold email for Zurich tech startups that need a CTO or tech team on demand. Offer: PolypusTech LATAM devs at 60% cheaper.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Startups — outsource dev</button>
-          <button onclick="emailQuick('Write a follow-up email for someone who opened our first cold email but did not reply. Reference our AI demo offer.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Follow-up (no reply)</button>
-          <button onclick="emailQuick('Write a re-engagement email for a prospect that went cold 2 weeks ago. Include a case study angle.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Re-engage cold prospect</button>
-          <button onclick="emailQuick('Write a post-meeting email for after a discovery call. Summarise what we discussed and propose next steps.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Post-meeting recap</button>
-          <button onclick="emailQuick('Write a referral request email to an existing happy client asking them to introduce us to 2 other businesses.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Referral request email</button>
+          <button onclick="emailQuick('Write a cold email for Swiss digital marketing agencies. Pain point: they have no AI tools and are losing clients to agencies that do. Offer: PolypusTech builds AI automation.')" style="text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Marketing agencies — AI pitch</button>
+          <button onclick="emailQuick('Write a cold email for Swiss SMEs that have a website but no automation. Offer: n8n automation saving 10 hours/week.')" style="text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ SMEs — automation pitch</button>
+          <button onclick="emailQuick('Write a cold email for Zurich tech startups that need a CTO or tech team on demand. Offer: PolypusTech LATAM devs at 60% cheaper.')" style="text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Startups — outsource dev</button>
+          <button onclick="emailQuick('Write a follow-up email for someone who opened our first cold email but did not reply. Reference our AI demo offer.')" style="text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Follow-up (no reply)</button>
+          <button onclick="emailQuick('Write a re-engagement email for a prospect that went cold 2 weeks ago. Include a case study angle.')" style="text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Re-engage cold prospect</button>
+          <button onclick="emailQuick('Write a post-meeting email for after a discovery call. Summarise what we discussed and propose next steps.')" style="text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Post-meeting recap</button>
+          <button onclick="emailQuick('Write a referral request email to an existing happy client asking them to introduce us to 2 other businesses.')" style="text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Referral request email</button>
         </div>
       </div>
-      <div class="card" style="border-color:#ff660020">
+      <div class="card" style="border-color:var(--border)">
         <div style="font-size:10px;font-weight:700;color:#ff6600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:monospace">Session Stats</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-          <div style="background:#060a06;border:1px solid #ff660015;border-radius:8px;padding:8px;text-align:center">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center">
             <div style="font-size:16px;font-weight:700;color:#ff6600;font-family:monospace" id="email-msg-count">0</div>
             <div style="font-size:9px;color:var(--muted);font-family:monospace">emails written</div>
           </div>
-          <div style="background:#060a06;border:1px solid #ff660015;border-radius:8px;padding:8px;text-align:center">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center">
             <div style="font-size:16px;font-weight:700;color:#ff6600;font-family:monospace" id="email-tok-count">0</div>
             <div style="font-size:9px;color:var(--muted);font-family:monospace">tokens</div>
           </div>
         </div>
-        <div style="margin-top:10px;background:#060a06;border:1px solid #ff660015;border-radius:8px;padding:10px">
+        <div style="margin-top:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px">
           <div style="font-size:9px;color:#ff6600;font-family:monospace;margin-bottom:4px">BREVO FREE LIMITS</div>
           <div style="font-size:10px;color:var(--muted);line-height:1.6">300 emails/day ✓<br>Unlimited contacts ✓<br>Email templates ✓<br>Basic analytics ✓<br>SMTP + API ✓</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ SCRAPER AGENT ══════════════════════════════════════════ -->
-<div class="pg" id="pg-scraper">
-  <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
-    <div>
-      <h2 style="font-size:16px;font-weight:700;color:#00ff41" class="razer-glow">🔍 Client Scraper Agent</h2>
-      <p style="color:var(--muted);font-size:12px;font-family:monospace">AI-powered lead discovery. Tell the agent what type of clients to find.</p>
-    </div>
-    <div style="font-size:11px;font-family:monospace;color:#00ff41;background:#00ff4110;border:1px solid #00ff4130;border-radius:8px;padding:4px 12px" id="scraper-tokens-display">0 tokens used</div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 260px;gap:14px">
-    <div class="card neon-card" style="display:flex;flex-direction:column;padding:0;overflow:hidden">
-      <div style="padding:12px 16px;border-bottom:1px solid #00ff4115;display:flex;align-items:center;gap:10px">
-        <div style="width:32px;height:32px;border-radius:50%;background:#00ff4120;border:1px solid #00ff4140;display:flex;align-items:center;justify-content:center;font-size:14px">🔍</div>
-        <div><div style="font-weight:700;font-size:13px;color:#00ff41">SCRAPER</div><div style="font-size:10px;color:var(--muted);font-family:monospace">Client Intelligence Agent · online</div></div>
-        <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#00ff41;animation:cryptoBlink 1s infinite"></div>
-      </div>
-      <div id="scraper-chat" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:460px">
-        <div style="display:flex;gap:8px;align-items:flex-start">
-          <div style="width:26px;height:26px;border-radius:50%;background:#00ff4120;border:1px solid #00ff4140;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">🔍</div>
-          <div style="background:#0d120d;border:1px solid #00ff4120;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;line-height:1.6;color:#c0ffc0">
-            Scraper Agent online. I can help you find potential clients across Switzerland and Europe.<br><br>
-            Tell me what you're looking for — industry, city, company size, budget — and I'll analyze the market and give you a targeted list with outreach strategy.
-          </div>
-        </div>
-      </div>
-      <div style="padding:12px 14px;border-top:1px solid #00ff4115;display:flex;gap:8px">
-        <input id="scraper-input" style="flex:1;background:#060a06;border:1px solid #00ff4125;border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Find Swiss marketing agencies in Zurich with 10-50 employees...">
-        <button onclick="sendScraperMsg()" style="background:#00ff41;color:#060a06;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">RUN ↗</button>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="card" style="border-color:#00ff4130">
-        <div style="font-size:10px;font-weight:700;color:#00ff41;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:monospace">Quick Searches</div>
-        <div style="display:flex;flex-direction:column;gap:5px">
-          <button onclick="scraperQuick('Find Swiss digital marketing agencies in Zurich with no AI tools')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Swiss marketing agencies</button>
-          <button onclick="scraperQuick('Find IT consulting firms in Switzerland that could use our services')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ IT consulting firms CH</button>
-          <button onclick="scraperQuick('Find Zurich startups funded in 2024-2025 that need tech outsourcing')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Zurich funded startups</button>
-          <button onclick="scraperQuick('Find e-commerce companies in Switzerland that need AI automation')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Swiss ecom companies</button>
-          <button onclick="scraperQuick('Find luxury brands in Zurich that need a digital upgrade')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Zurich luxury brands</button>
-          <button onclick="scraperQuick('Find government or canton tenders for IT and digital services in Switzerland')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Gov / Canton tenders</button>
-          <button onclick="scraperQuick('Analyze PolypusTech ideal client profile and suggest where to find more')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Ideal client profile</button>
-        </div>
-      </div>
-      <div class="card" style="border-color:#00ff4120">
-        <div style="font-size:10px;font-weight:700;color:#00ff41;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:monospace">Session Stats</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-          <div style="background:#060a06;border:1px solid #00ff4115;border-radius:8px;padding:8px;text-align:center">
-            <div style="font-size:16px;font-weight:700;color:#00ff41;font-family:monospace" id="scraper-msg-count">0</div>
-            <div style="font-size:9px;color:var(--muted);font-family:monospace">searches</div>
-          </div>
-          <div style="background:#060a06;border:1px solid #00ff4115;border-radius:8px;padding:8px;text-align:center">
-            <div style="font-size:16px;font-weight:700;color:#00ff41;font-family:monospace" id="scraper-tok-count">0</div>
-            <div style="font-size:9px;color:var(--muted);font-family:monospace">tokens</div>
-          </div>
         </div>
       </div>
     </div>
@@ -3015,7 +2534,7 @@ document.addEventListener('keydown', e => {
 <div class="pg" id="pg-eventsai">
   <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
     <div>
-      <h2 style="font-size:16px;font-weight:700;color:#aa44ff" class="razer-glow">📅 Events Intelligence Agent</h2>
+      <h2 style="font-size:16px;font-weight:700;color:#aa44ff">📅 Events Intelligence Agent</h2>
       <p style="color:var(--muted);font-size:12px;font-family:monospace">Find Zurich events, networking opportunities and government contracts with AI.</p>
     </div>
     <div style="font-size:11px;font-family:monospace;color:#aa44ff;background:#aa44ff10;border:1px solid #aa44ff30;border-radius:8px;padding:4px 12px" id="eventsai-tokens-display">0 tokens used</div>
@@ -3037,7 +2556,7 @@ document.addEventListener('keydown', e => {
         </div>
       </div>
       <div style="padding:12px 14px;border-top:1px solid #aa44ff15;display:flex;gap:8px">
-        <input id="eventsai-input" style="flex:1;background:#060a06;border:1px solid #aa44ff25;border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Find AI meetups in Zurich this month, how to network at fintech events...">
+        <input id="eventsai-input" style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Find AI meetups in Zurich this month, how to network at fintech events...">
         <button onclick="sendEventsAIMsg()" style="background:#aa44ff;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">RUN ↗</button>
       </div>
     </div>
@@ -3057,11 +2576,11 @@ document.addEventListener('keydown', e => {
       <div class="card" style="border-color:#aa44ff20">
         <div style="font-size:10px;font-weight:700;color:#aa44ff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:monospace">Session Stats</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-          <div style="background:#060a06;border:1px solid #aa44ff15;border-radius:8px;padding:8px;text-align:center">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center">
             <div style="font-size:16px;font-weight:700;color:#aa44ff;font-family:monospace" id="eventsai-msg-count">0</div>
             <div style="font-size:9px;color:var(--muted);font-family:monospace">searches</div>
           </div>
-          <div style="background:#060a06;border:1px solid #aa44ff15;border-radius:8px;padding:8px;text-align:center">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center">
             <div style="font-size:16px;font-weight:700;color:#aa44ff;font-family:monospace" id="eventsai-tok-count">0</div>
             <div style="font-size:9px;color:var(--muted);font-family:monospace">tokens</div>
           </div>
