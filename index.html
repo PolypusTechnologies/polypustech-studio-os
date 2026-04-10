@@ -18,6 +18,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 
 /* SIDEBAR */
 .sb{width:68px;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:2px 0 8px rgba(0,0,0,.04)}
+.sb-r{width:68px;background:var(--card);border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;right:0;bottom:0;z-index:100;box-shadow:-2px 0 8px rgba(0,0,0,.04)}
 .sb-logo{width:36px;height:36px;border-radius:10px;background:var(--sage);display:flex;align-items:center;justify-content:center;margin-bottom:14px;cursor:pointer;overflow:hidden}
 .sb-logo img{width:100%;height:100%;object-fit:cover}
 .nb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0;width:100%;border:none;background:none;cursor:pointer;color:var(--warm);transition:color .2s;font-family:inherit}
@@ -25,11 +26,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 .ni{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .nb.active .ni,.nb:hover .ni{background:var(--sage-l)}
 .nl{font-size:8px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.sb::-webkit-scrollbar{display:none}
+.sb{scrollbar-width:none}
 .sb-ft{margin-top:auto;font-size:9px;color:var(--warm);text-align:center;padding:0 4px}
 .sb-ft strong{display:block;color:var(--sage);font-size:10px}
 
 /* MAIN */
-.main{margin-left:68px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.main{margin-left:68px;margin-right:68px;flex:1;display:flex;flex-direction:column;min-height:100vh}
 
 /* HEADER */
 .hdr{background:var(--card);border-bottom:1px solid var(--border);padding:0 22px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
@@ -172,12 +175,19 @@ tr:hover td{background:#fafaf8}
   <button class="nb" onclick="goTo('clients')" id="nb-clients"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="nl">Clients</span></button>
   <button class="nb" onclick="goTo('leads')" id="nb-leads"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span class="nl">Data</span></button>
   <button class="nb" onclick="goTo('events')" id="nb-events"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="nl">Events</span></button>
+  <div class="sb-ft"><strong id="sb-clients">0</strong>clients</div>
+</div>
+
+<!-- RIGHT SIDEBAR -->
+<div class="sb-r">
+  <div style="width:36px;height:36px;border-radius:10px;background:var(--sage-l);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px">🎯</div>
   <button class="nb" onclick="goTo('meetings')" id="nb-meetings"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="nl">Meetings</span></button>
   <button class="nb" onclick="goTo('finance')" id="nb-finance"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="nl">Finance</span></button>
   <button class="nb" onclick="goTo('expenses')" id="nb-expenses"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="nl">Bills</span></button>
   <button class="nb" onclick="goTo('extreme')" id="nb-extreme"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><span class="nl">EXTREME</span></button>
   <button class="nb" onclick="goTo('games')" id="nb-games"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4"/><circle cx="16" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/></svg></div><span class="nl">Games</span></button>
-  <div class="sb-ft"><strong id="sb-clients">0</strong>clients</div>
+  <button class="nb" onclick="goTo('goals')" id="nb-goals"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="nl">Goals</span></button>
+  <div class="sb-ft" style="margin-top:auto"><strong id="sb-tasks">0</strong>tasks</div>
 </div>
 
 <!-- MAIN -->
@@ -213,18 +223,45 @@ tr:hover td{background:#fafaf8}
     </div>
   </div>
 
-  <!-- RAZER OFFICE -->
-  <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px;border-color:#1a2a1a">
-    <div style="padding:12px 18px;border-bottom:1px solid #1a2a1a;background:#050f05;display:flex;align-items:center;justify-content:space-between">
-      <div><div style="font-weight:700;font-size:14px;color:#00ff41">PolypusTech HQ — Live Office</div><div style="font-size:11px;color:#00aa20" id="office-status">VIC and GEN are in the office</div></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span style="background:#0a1a0a;border:1px solid #00ff4133;color:#00ff41;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;font-family:monospace">⚡ RAZER</span>
-        <span style="background:#0a1a0a;border:1px solid #00ff4133;color:#00aa20;padding:3px 10px;border-radius:20px;font-size:11px;font-family:monospace" id="office-time">--:--</span>
+  <!-- OFFICE + GOALS SPLIT -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div class="card" style="padding:0;overflow:hidden;border-color:#1a2a1a">
+      <div style="padding:8px 14px;border-bottom:1px solid #1a2a1a;background:#050f05;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-weight:700;font-size:12px;color:#00ff41">⚡ PolypusTech HQ <span style="font-weight:400;color:#00aa20;font-size:10px" id="office-status">— VIC &amp; GEN online</span></div>
+        <span style="color:#00aa20;font-size:10px;font-family:monospace" id="office-time">--:--</span>
       </div>
+      <canvas id="officeCanvas" width="530" height="260" style="display:block;width:100%;background:#050f05"></canvas>
+      <div class="office-log" id="office-log" style="height:44px;font-size:10px;padding:6px 12px"><div>PolypusTech HQ online.</div></div>
     </div>
-    <canvas id="officeCanvas" width="1060" height="280"></canvas>
-    <div class="office-log" id="office-log">
-      <div>System boot... PolypusTech HQ online.</div>
+    <div class="card" style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="font-weight:700;font-size:14px">🎯 Goals — Dec 31, 2026</div>
+        <button class="btn-o" style="font-size:11px;padding:4px 10px" onclick="goTo('goals')">Full view →</button>
+      </div>
+      <div id="home-goals-preview"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:16px">No goals yet. Go to Goals tab!</div></div>
+      <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:auto">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px">⚔️ VIC vs GEN — Scoreboard</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+          <div style="background:rgba(100,154,162,.08);border:1px solid rgba(100,154,162,.25);border-radius:10px;padding:8px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:var(--sage);margin-bottom:4px">🔵 VIC</div>
+            <div id="sc-vic-clients" style="font-size:20px;font-weight:700;color:var(--charcoal)">0</div>
+            <div style="font-size:9px;color:var(--muted)">clients</div>
+            <div id="sc-vic-tasks" style="font-size:14px;font-weight:600;color:var(--sage);margin-top:3px">0</div>
+            <div style="font-size:9px;color:var(--muted)">tasks done</div>
+          </div>
+          <div style="background:rgba(107,143,113,.08);border:1px solid rgba(107,143,113,.25);border-radius:10px;padding:8px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px">🟢 GEN</div>
+            <div id="sc-gen-clients" style="font-size:20px;font-weight:700;color:var(--charcoal)">0</div>
+            <div style="font-size:9px;color:var(--muted)">clients</div>
+            <div id="sc-gen-tasks" style="font-size:14px;font-weight:600;color:var(--green);margin-top:3px">0</div>
+            <div style="font-size:9px;color:var(--muted)">tasks done</div>
+          </div>
+        </div>
+        <div style="background:var(--border);border-radius:6px;height:6px;overflow:hidden">
+          <div id="sc-bar" style="height:100%;background:linear-gradient(90deg,var(--sage),var(--green));border-radius:6px;width:50%;transition:width .5s"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:3px"><span>← VIC</span><span>GEN →</span></div>
+      </div>
     </div>
   </div>
 
@@ -569,6 +606,62 @@ tr:hover td{background:#fafaf8}
   </div>
 </div>
 
+<!-- ═══ GOALS ════════════════════════════════════════════════════ -->
+<div class="pg" id="pg-goals">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div><h2 style="font-size:16px;font-weight:700">🎯 Goals & Vision — Dec 31, 2026</h2><p style="color:var(--muted);font-size:12px">Track your big life goals and weekly progress. Stay hungry.</p></div>
+    <button class="btn btn-p" onclick="openModal('add-goal-modal')">+ Add Goal</button>
+  </div>
+
+  <!-- LIFE GOALS PROGRESS -->
+  <div class="card" style="margin-bottom:16px">
+    <div style="font-weight:700;font-size:14px;margin-bottom:14px">🏆 Life Goals — Time to Dec 31, 2026: <span id="goal-days" style="color:var(--sage)">calculating...</span></div>
+    <div id="goals-progress-list"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:20px">No goals yet. Add your first goal!</div></div>
+  </div>
+
+  <!-- VIC vs GEN COMPETITIVE -->
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card" style="border-color:rgba(100,154,162,.4)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff">V</div>
+        <div><div style="font-weight:700;font-size:14px;color:var(--sage)">Victor (VIC)</div><div style="font-size:11px;color:var(--muted)">Co-founder & CEO</div></div>
+        <button class="btn-o" style="margin-left:auto;font-size:11px" onclick="openModal('edit-vic-modal')">Edit Stats</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--sage)" id="vic-stat-clients">0</div><div style="font-size:10px;color:var(--muted)">Clients Closed</div></div>
+        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--sage)" id="vic-stat-projects">0</div><div style="font-size:10px;color:var(--muted)">Projects Managed</div></div>
+        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--sage)" id="vic-stat-tasks">0</div><div style="font-size:10px;color:var(--muted)">Tasks Done</div></div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:10px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Weekly Focus</div>
+        <div style="font-size:13px;color:var(--charcoal)" id="vic-weekly-focus">Not set</div>
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(107,143,113,.4)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff">G</div>
+        <div><div style="font-weight:700;font-size:14px;color:var(--green)">Partner (GEN)</div><div style="font-size:11px;color:var(--muted)">Co-founder & Partner</div></div>
+        <button class="btn-o" style="margin-left:auto;font-size:11px" onclick="openModal('edit-gen-modal')">Edit Stats</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--green)" id="gen-stat-clients">0</div><div style="font-size:10px;color:var(--muted)">Clients Closed</div></div>
+        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--green)" id="gen-stat-projects">0</div><div style="font-size:10px;color:var(--muted)">Projects Managed</div></div>
+        <div style="text-align:center;background:var(--bg);border-radius:10px;padding:12px"><div style="font-size:22px;font-weight:700;color:var(--green)" id="gen-stat-tasks">0</div><div style="font-size:10px;color:var(--muted)">Tasks Done</div></div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:10px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Weekly Focus</div>
+        <div style="font-size:13px;color:var(--charcoal)" id="gen-weekly-focus">Not set</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEKLY CHECK-IN -->
+  <div class="card">
+    <div style="font-weight:700;font-size:14px;margin-bottom:14px">📊 Weekly Goal Check-in</div>
+    <div id="goals-weekly-list"><div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:16px">Add goals above to track weekly progress.</div></div>
+  </div>
+</div>
+
 </div><!-- end cnt -->
 </div><!-- end main -->
 
@@ -765,13 +858,15 @@ function save() {
 // ═══════════════════════════════════════════════════════════════
 // NAVIGATION
 // ═══════════════════════════════════════════════════════════════
-const PAGE_TITLES = { home:'Dashboard', tasks:'Task Board', clients:'Clients', leads:'Data & Leads', events:'Events', meetings:'Client Meetings', finance:'Finance' };
+const PAGE_TITLES = { home:'Dashboard', tasks:'Task Board', clients:'Clients', leads:'Data & Leads', events:'Events', meetings:'Client Meetings', finance:'Finance', expenses:'Bills & Expenses', extreme:'⚡ Extreme Mode', games:'🎮 Games Room' };
 
 function goTo(id) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
-  document.getElementById('pg-'+id).classList.add('active');
-  document.getElementById('nb-'+id).classList.add('active');
+  const pg = document.getElementById('pg-'+id);
+  const nb = document.getElementById('nb-'+id);
+  if (pg) pg.classList.add('active');
+  if (nb) nb.classList.add('active');
   document.getElementById('pg-title').textContent = PAGE_TITLES[id] || id;
   if (id==='tasks') renderKanban();
   if (id==='clients') renderClients();
@@ -779,6 +874,9 @@ function goTo(id) {
   if (id==='events') renderEvents();
   if (id==='meetings') renderMeetings();
   if (id==='finance') renderFinance();
+  if (id==='expenses') setTimeout(renderExpenses, 50);
+  if (id==='extreme') setTimeout(renderExtreme, 50);
+  if (id==='games') setTimeout(()=>selectGame('tron', document.getElementById('game-btn-tron')), 50);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1290,132 +1388,106 @@ function renderFinance() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// RAZER OFFICE CANVAS
+// POLYPUSTECH HQ — REDESIGNED COMPACT OFFICE
 // ═══════════════════════════════════════════════════════════════
 const canvas = document.getElementById('officeCanvas');
 const ctx = canvas.getContext('2d');
-const CW = 1060, CH = 280;
+const CW = 530, CH = 260;
 let frame = 0;
 let officeLog = [];
 let logMsgs = [
   'VIC is reviewing the client proposal...',
   'GEN is working on the new website design...',
   'VIC is on a call with a prospect...',
-  'GEN is updating the Trello board...',
-  'VIC is analyzing Meta ads data...',
+  'GEN is updating the task board...',
+  'VIC is analyzing competitor data...',
   'GEN is preparing the event presentation...',
   'VIC is coding the new feature...',
   'GEN is brewing coffee ☕',
   'VIC is reviewing contracts...',
   'GEN is doing competitor research...',
-  'VIC joined the meeting...',
-  'GEN is on a call...',
+  'VIC joined the video call...',
+  'GEN is on a client call...',
+  'VIC closed a new deal! 🎉',
+  'GEN pushed a new design live!',
 ];
 
 function addOfficeLog(msg) {
   const t = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   officeLog.unshift(`[${t}] ${msg}`);
-  if (officeLog.length > 20) officeLog.pop();
+  if (officeLog.length > 30) officeLog.pop();
   const el = document.getElementById('office-log');
-  if (el) el.innerHTML = officeLog.map((l,i)=>`<div style="${i===0?'color:#00ff41':'color:#00aa20'}">${l}</div>`).join('');
+  if (el) el.innerHTML = officeLog.map((l,i)=>`<div style="${i===0?'color:#649aa2':'color:#8a8680'}">${l}</div>`).join('');
 }
 
-// Characters
+// CHARACTERS — start at their desks
 const CHARS = [
-  { name:'VIC', color:'#649aa2', label:'V', x:340, y:200, tx:340, ty:200, hx:340, hy:200, state:'idle', timer:80, blink:0, task:'' },
-  { name:'GEN', color:'#6b8f71', label:'G', x:680, y:200, tx:680, ty:200, hx:680, hy:200, state:'idle', timer:120, blink:40, task:'' },
+  { name:'VIC', color:'#649aa2', x:118, y:115, tx:118, ty:115, hx:118, hy:115, state:'idle', timer:90, blink:0, task:'' },
+  { name:'GEN', color:'#6b8f71', x:412, y:115, tx:412, ty:115, hx:412, hy:115, state:'idle', timer:130, blink:50, task:'' },
 ];
 
-// Random walk targets within room bounds
+const WALK_ZONES = [
+  { x:90,  y:90,  w:110, h:80  }, // VIC desk area
+  { x:330, y:90,  w:120, h:80  }, // GEN desk area
+  { x:200, y:155, w:130, h:60  }, // center / meeting
+  { x:100, y:195, w:80,  h:50  }, // kitchen zone
+  { x:360, y:195, w:80,  h:50  }, // right zone
+];
+
 function randomPos() {
-  const zones = [
-    { x:200, y:140, w:220, h:130 }, // left side
-    { x:620, y:140, w:220, h:130 }, // right side
-    { x:380, y:160, w:300, h:100 }, // center living area
-    { x:100, y:280, w:160, h:100 }, // kitchen area
-    { x:820, y:120, w:120, h:100 }, // bathroom area
-  ];
-  const z = zones[Math.floor(Math.random()*zones.length)];
+  const z = WALK_ZONES[Math.floor(Math.random()*WALK_ZONES.length)];
   return { x: z.x + Math.random()*z.w, y: z.y + Math.random()*z.h };
 }
 
-function drawRazerLogo(ctx, cx, cy, size, alpha) {
-  ctx.save();
-  ctx.globalAlpha = alpha;
-  ctx.translate(cx, cy);
-  // Razer snake simplified
-  ctx.strokeStyle = '#00ff41';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = '#00ff41';
-  ctx.shadowBlur = 8;
-  // Triangle shape
+// ── DRAW HELPERS ──────────────────────────────────────────────
+function rr(ctx, x, y, w, h, r) {
   ctx.beginPath();
-  ctx.moveTo(0, -size);
-  ctx.lineTo(size*0.866, size*0.5);
-  ctx.lineTo(-size*0.866, size*0.5);
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
   ctx.closePath();
-  ctx.stroke();
-  // Inner triangle
-  ctx.beginPath();
-  ctx.moveTo(0, -size*0.5);
-  ctx.lineTo(size*0.433, size*0.25);
-  ctx.lineTo(-size*0.433, size*0.25);
-  ctx.closePath();
-  ctx.fillStyle = '#00ff4122';
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
 }
 
-function drawOcto(ctx, x, y, color, blink, busy, scale=1) {
+function drawOcto(ctx, x, y, color, blink, busy, scale) {
+  scale = scale || 0.5;
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scale, scale);
   // Tentacles
   for (let t=0; t<8; t++) {
     const a = (t/8)*Math.PI*2;
-    const w = Math.sin(frame*0.07+t)*3;
+    const w = Math.sin(frame*0.07+t*0.9)*3;
     ctx.strokeStyle = color;
     ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
-    ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.65;
     ctx.beginPath();
     ctx.moveTo(Math.cos(a)*7, Math.sin(a)*7+3);
-    const ex = Math.cos(a)*16+w;
-    const ey = Math.sin(a)*16+8;
-    ctx.quadraticCurveTo(Math.cos(a)*11+w*0.4, Math.sin(a)*11+5, ex, ey);
+    ctx.quadraticCurveTo(Math.cos(a)*11+w*0.4, Math.sin(a)*11+5, Math.cos(a)*16+w, Math.sin(a)*16+8);
     ctx.stroke();
     ctx.globalAlpha = 0.3;
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#fff';
     ctx.beginPath();
-    ctx.arc(ex*0.82, ey*0.82, 1.2, 0, Math.PI*2);
+    ctx.arc(Math.cos(a)*13, Math.sin(a)*13+6, 1.2, 0, Math.PI*2);
     ctx.fill();
   }
   ctx.globalAlpha = 1;
-  // Body glow
-  ctx.fillStyle = color;
-  ctx.globalAlpha = 0.12;
-  ctx.beginPath();
-  ctx.arc(0, -2, 15, 0, Math.PI*2);
-  ctx.fill();
+  // Glow
+  ctx.fillStyle = color; ctx.globalAlpha = 0.12;
+  ctx.beginPath(); ctx.arc(0,-2,15,0,Math.PI*2); ctx.fill();
   ctx.globalAlpha = 1;
-  // Body
-  const g = ctx.createRadialGradient(-2,-4,1,0,-2,10);
-  g.addColorStop(0, color);
-  g.addColorStop(1, color+'cc');
+  // Body gradient
+  const g = ctx.createRadialGradient(-2,-5,1,0,-2,10);
+  g.addColorStop(0, color); g.addColorStop(1, color+'bb');
   ctx.fillStyle = g;
-  ctx.beginPath();
-  ctx.ellipse(0,-2,10,11,0,0,Math.PI*2);
-  ctx.fill();
+  ctx.beginPath(); ctx.ellipse(0,-2,10,11,0,0,Math.PI*2); ctx.fill();
   // Shine
-  ctx.fillStyle = '#ffffff33';
-  ctx.beginPath();
-  ctx.ellipse(-3,-6,4,2.5,-0.5,0,Math.PI*2);
-  ctx.fill();
+  ctx.fillStyle='#ffffff30';
+  ctx.beginPath(); ctx.ellipse(-3,-6,4,2.5,-0.5,0,Math.PI*2); ctx.fill();
   // Eyes
-  if (blink%100 < 5) {
-    ctx.fillStyle='#fff5';
-    ctx.fillRect(-4,-5,3,1.5); ctx.fillRect(1,-5,3,1.5);
+  if (blink%110 < 5) {
+    ctx.fillStyle='#fff6'; ctx.fillRect(-4,-5,3,1.5); ctx.fillRect(1,-5,3,1.5);
   } else {
     ctx.fillStyle='#fff';
     ctx.beginPath(); ctx.arc(-2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
@@ -1427,467 +1499,400 @@ function drawOcto(ctx, x, y, color, blink, busy, scale=1) {
     ctx.beginPath(); ctx.arc(-1.5,-5,0.45,0,Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.arc(3.5,-5,0.45,0,Math.PI*2); ctx.fill();
   }
-  // Name badge
-  ctx.fillStyle = color;
-  ctx.font = 'bold 8px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 4;
-  ctx.fillText(busy ? '...' : '', 0, -26);
-  ctx.shadowBlur = 0;
   // Busy ring
   if (busy) {
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1.5;
-    ctx.globalAlpha = 0.5;
-    ctx.setLineDash([3,4]);
-    ctx.beginPath();
-    ctx.arc(0,-2,16,frame*0.08, frame*0.08+Math.PI*1.5);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.globalAlpha = 1;
+    ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.globalAlpha=0.5; ctx.setLineDash([2,4]);
+    ctx.beginPath(); ctx.arc(0,-2,16,frame*0.08,frame*0.08+Math.PI*1.5); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha=1;
   }
   ctx.restore();
 }
 
+// ── MAIN RENDER ───────────────────────────────────────────────
 function renderOffice() {
-  // === FLOOR — RAZER DARK GAMING ===
-  // Dark floor with Razer grid pattern
-  ctx.fillStyle = '#050f05';
+  // BG — warm cream / off-white
+  ctx.fillStyle = '#f5f2ed';
   ctx.fillRect(0,0,CW,CH);
 
-  // Razer hex grid pattern
-  ctx.strokeStyle = '#00ff4112';
+  // Subtle floor tiles
+  ctx.strokeStyle = '#ede9e3';
   ctx.lineWidth = 0.5;
-  const hs = 28;
-  for (let gx = 0; gx < CW; gx += hs*1.5) {
-    for (let gy = 0; gy < CH; gy += hs) {
-      const ox = (Math.floor(gy/hs)%2===0) ? 0 : hs*0.75;
-      ctx.beginPath();
-      ctx.moveTo(gx+ox+hs*0.5, gy);
-      ctx.lineTo(gx+ox+hs, gy+hs*0.5);
-      ctx.lineTo(gx+ox+hs*0.5, gy+hs);
-      ctx.lineTo(gx+ox, gy+hs*0.5);
-      ctx.closePath();
-      ctx.stroke();
-    }
+  for (let x=0; x<CW; x+=30) {
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke();
+  }
+  for (let y=0; y<CH; y+=30) {
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke();
   }
 
-  // Razer logo watermark on floor
-  for (let rx = 120; rx < CW-100; rx += 320) {
-    for (let ry = 80; ry < CH-60; ry += 200) {
-      drawRazerLogo(ctx, rx, ry, 28, 0.08+Math.sin(frame*0.02+rx*0.01)*0.03);
-    }
-  }
+  // ── BACK WALL ──
+  ctx.fillStyle = '#e8e4dc';
+  ctx.fillRect(0, 0, CW, 72);
+  ctx.strokeStyle = '#d9d4cc';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0,72); ctx.lineTo(CW,72); ctx.stroke();
 
-  // Central big Razer logo
-  drawRazerLogo(ctx, CW/2, CH/2-20, 55, 0.06+Math.sin(frame*0.015)*0.02);
+  // Wall baseboard
+  ctx.fillStyle = '#d4cfc6';
+  ctx.fillRect(0, 68, CW, 4);
 
-  // Razer text
-  ctx.fillStyle = '#00ff4120';
-  ctx.font = 'bold 80px sans-serif';
+  // Window left
+  ctx.fillStyle = '#ddf0f8';
+  ctx.strokeStyle = '#b8d4e0';
+  ctx.lineWidth = 1.5;
+  rr(ctx, 30, 10, 80, 52, 4); ctx.fill(); ctx.stroke();
+  // Window frame
+  ctx.strokeStyle = '#a8c4d0'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(70,10); ctx.lineTo(70,62); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(30,36); ctx.lineTo(110,36); ctx.stroke();
+  // Window light rays
+  ctx.fillStyle = '#ffffff30';
+  [[35,12,60,62],[72,12,108,62]].forEach(([x1,y1,x2,y2])=>{
+    ctx.fillStyle='#ffffff20';
+    ctx.fillRect(x1,y1,x2-x1,y2-y1);
+  });
+  // Window plants on sill
+  ctx.fillStyle='#8b6914'; ctx.fillRect(32,60,6,8);
+  ctx.fillStyle='#6b8f71';
+  ctx.beginPath(); ctx.arc(35,58,8,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#5a7e60';
+  ctx.beginPath(); ctx.arc(40,56,5,0,Math.PI*2); ctx.fill();
+
+  // Window right
+  ctx.fillStyle = '#ddf0f8';
+  ctx.strokeStyle = '#b8d4e0'; ctx.lineWidth = 1.5;
+  rr(ctx, CW-110, 10, 80, 52, 4); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#a8c4d0'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(CW-70,10); ctx.lineTo(CW-70,62); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(CW-110,36); ctx.lineTo(CW-30,36); ctx.stroke();
+  ctx.fillStyle='#8b6914'; ctx.fillRect(CW-38,60,6,8);
+  ctx.fillStyle='#6b8f71';
+  ctx.beginPath(); ctx.arc(CW-35,58,8,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#5a7e60';
+  ctx.beginPath(); ctx.arc(CW-40,56,5,0,Math.PI*2); ctx.fill();
+
+  // Center wall sign: POLYPUSTECH
+  ctx.fillStyle = '#c8b898';
+  rr(ctx, 195, 12, 140, 46, 6); ctx.fill();
+  ctx.strokeStyle = '#b8a888'; ctx.lineWidth = 1;
+  rr(ctx, 195, 12, 140, 46, 6); ctx.stroke();
+  ctx.fillStyle = '#649aa2';
+  ctx.font = 'bold 11px DM Sans, sans-serif';
   ctx.textAlign = 'center';
-  ctx.letterSpacing = '8px';
-  ctx.fillText('RAZER', CW/2, CH/2+45);
+  ctx.shadowColor = '#649aa2';
+  ctx.shadowBlur = 4;
+  ctx.fillText('🐙 PolypusTech', 265, 32);
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#8a8680';
+  ctx.font = '8px DM Sans, sans-serif';
+  ctx.fillText('polypustech.ch', 265, 46);
   ctx.textAlign = 'left';
 
-  // === WALLS ===
-  // Back wall
-  ctx.fillStyle = '#0a1a0a';
-  ctx.fillRect(0, 0, CW, 110);
-  // Wall border glow
-  ctx.strokeStyle = '#00ff4130';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = '#00ff41';
-  ctx.shadowBlur = 8;
-  ctx.beginPath();
-  ctx.moveTo(0,110); ctx.lineTo(CW,110);
-  ctx.stroke();
-  ctx.shadowBlur = 0;
+  // ── LEFT WALL ──
+  ctx.fillStyle = '#ece7de';
+  ctx.fillRect(0, 0, 22, CH);
+  ctx.strokeStyle = '#d9d4cc'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(22,0); ctx.lineTo(22,CH); ctx.stroke();
 
-  // Left wall
-  ctx.fillStyle = '#0a160a';
-  ctx.fillRect(0,0,90,CH);
-  ctx.strokeStyle = '#00ff4120';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(90,0); ctx.lineTo(90,CH);
-  ctx.stroke();
+  // ── RIGHT WALL ──
+  ctx.fillStyle = '#ece7de';
+  ctx.fillRect(CW-22, 0, 22, CH);
+  ctx.beginPath(); ctx.moveTo(CW-22,0); ctx.lineTo(CW-22,CH); ctx.stroke();
 
-  // Right wall
-  ctx.fillStyle = '#0a160a';
-  ctx.fillRect(CW-90,0,90,CH);
-  ctx.beginPath();
-  ctx.moveTo(CW-90,0); ctx.lineTo(CW-90,CH);
-  ctx.stroke();
-
-  // === VIC's DESK (left side against wall) ===
+  // ── VIC DESK (left, against wall) ──
   // Desk surface
-  ctx.fillStyle = '#1a1a1a';
-  ctx.strokeStyle = '#00ff4140';
-  ctx.lineWidth = 1.5;
-  ctx.shadowColor = '#00ff41';
-  ctx.shadowBlur = 6;
-  roundRect(ctx, 95, 120, 210, 90, 6);
-  ctx.fill();
-  ctx.stroke();
-  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#d4c8b0';
+  ctx.strokeStyle = '#c4b8a0'; ctx.lineWidth = 1.5;
+  rr(ctx, 28, 98, 170, 52, 6); ctx.fill(); ctx.stroke();
+  // Desk top edge (3D effect)
+  ctx.fillStyle = '#c4b8a0';
+  rr(ctx, 28, 98, 170, 6, 3); ctx.fill();
 
-  // Monitor stand
-  ctx.fillStyle = '#111';
-  ctx.fillRect(175, 104, 50, 20);
-  // Monitor screen
-  ctx.fillStyle = '#0d0d0d';
-  ctx.strokeStyle = '#00ff4150';
-  ctx.lineWidth = 2;
-  roundRect(ctx, 140, 60, 120, 50, 4);
-  ctx.fill(); ctx.stroke();
-  // Screen content - Razer green glow
-  ctx.fillStyle = '#00ff4115';
-  ctx.fillRect(145, 65, 110, 40);
-  // Code lines on screen
-  ctx.fillStyle = '#00ff4150';
-  ctx.font = '6px monospace';
-  ['const agent = new Claude()', 'await scrapeLeads(zurich)', 'analysis.run()', '// PolypusTech OS'].forEach((l,i)=>{
-    ctx.fillText(l, 150, 73+i*9);
+  // VIC Monitor
+  ctx.fillStyle = '#1a1a1a';
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+  rr(ctx, 55, 68, 90, 34, 3); ctx.fill(); ctx.stroke();
+  // Screen
+  ctx.fillStyle = '#0d1a2d';
+  rr(ctx, 58, 71, 84, 28, 2); ctx.fill();
+  // Screen content — code
+  ctx.fillStyle = '#649aa250';
+  ctx.font = '5px monospace';
+  ['const api = Claude()', 'await leads.scrape()', 'deploy → vercel ✓'].forEach((l,i)=>{
+    ctx.fillStyle = i===2 ? '#6b8f7180' : '#649aa260';
+    ctx.fillText(l, 62, 78+i*8);
   });
+  // Monitor stand
+  ctx.fillStyle = '#333';
+  ctx.fillRect(96, 102, 8, 6);
+  ctx.fillRect(90, 108, 20, 3);
+  // Cursor blink
+  if (frame%60 < 30) {
+    ctx.fillStyle = '#649aa2'; ctx.fillRect(62, 92, 4, 2);
+  }
 
   // Keyboard
-  ctx.fillStyle = '#111';
-  ctx.strokeStyle = '#00ff4130';
-  ctx.lineWidth = 1;
-  roundRect(ctx, 105, 188, 130, 18, 3);
-  ctx.fill(); ctx.stroke();
-  // Razer keyboard keys glow
-  for (let k=0; k<13; k++) {
-    ctx.fillStyle = `hsl(${120+k*5},100%,${40+Math.sin(frame*0.1+k)*10}%)`;
-    ctx.globalAlpha = 0.4;
-    ctx.fillRect(108+k*9, 190, 7, 14);
-    ctx.globalAlpha = 1;
+  ctx.fillStyle = '#2a2a2a';
+  ctx.strokeStyle = '#444'; ctx.lineWidth = 0.5;
+  rr(ctx, 36, 116, 95, 14, 3); ctx.fill(); ctx.stroke();
+  // Keys with teal glow
+  for (let k=0; k<9; k++) {
+    ctx.fillStyle = `rgba(100,154,162,${0.3+Math.sin(frame*0.08+k)*0.15})`;
+    rr(ctx, 39+k*9.5, 118, 7, 9, 1); ctx.fill();
   }
+  // Space bar
+  ctx.fillStyle = 'rgba(100,154,162,0.4)';
+  rr(ctx, 50, 128, 55, 0, 1); ctx.fill();
+
   // Mouse
-  ctx.fillStyle = '#1a1a1a';
-  ctx.strokeStyle = '#00ff4130';
-  roundRect(ctx, 248, 188, 28, 18, 6);
-  ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#00ff4140';
-  ctx.fillRect(262, 189, 1, 16);
+  ctx.fillStyle = '#2a2a2a';
+  ctx.strokeStyle = '#444';
+  rr(ctx, 140, 116, 18, 24, 7); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#649aa250'; ctx.lineWidth = 0.8;
+  ctx.beginPath(); ctx.moveTo(149,116); ctx.lineTo(149,128); ctx.stroke();
 
+  // Coffee mug VIC
+  ctx.fillStyle = '#649aa2';
+  rr(ctx, 165, 108, 16, 18, 3); ctx.fill();
+  ctx.fillStyle = '#4a7a82';
+  ctx.fillRect(167,110,12,3); // coffee
+  ctx.strokeStyle = '#649aa280'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(181,112); ctx.quadraticCurveTo(188,112,188,118); ctx.quadraticCurveTo(188,124,181,124); ctx.stroke(); // handle
+  // Steam
+  ctx.strokeStyle = '#888'; ctx.lineWidth = 0.8;
+  if (frame%60 < 40) {
+    ctx.beginPath(); ctx.moveTo(170,108); ctx.quadraticCurveTo(167,102,170,96); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(176,108); ctx.quadraticCurveTo(179,102,176,96); ctx.stroke();
+  }
   // VIC nameplate
-  ctx.fillStyle = '#00ff41';
-  ctx.font = 'bold 9px sans-serif';
+  ctx.fillStyle = '#649aa2';
+  ctx.font = 'bold 8px DM Sans, sans-serif';
   ctx.textAlign = 'center';
-  ctx.shadowColor = '#00ff41';
-  ctx.shadowBlur = 4;
-  ctx.fillText('VIC', 200, 218);
-  ctx.shadowBlur = 0;
+  ctx.fillText('VIC', 113, 155);
 
-  // === GEN's DESK (right side against wall) ===
-  ctx.fillStyle = '#1a1a1a';
-  ctx.strokeStyle = '#39ff1440';
-  ctx.lineWidth = 1.5;
-  ctx.shadowColor = '#39ff14';
-  ctx.shadowBlur = 6;
-  roundRect(ctx, CW-305, 120, 210, 90, 6);
-  ctx.fill(); ctx.stroke();
-  ctx.shadowBlur = 0;
+  // ── GEN DESK (right, against wall) ──
+  ctx.fillStyle = '#d4c8b0';
+  ctx.strokeStyle = '#c4b8a0'; ctx.lineWidth = 1.5;
+  rr(ctx, CW-198, 98, 170, 52, 6); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#c4b8a0';
+  rr(ctx, CW-198, 98, 170, 6, 3); ctx.fill();
 
   // GEN Monitor
-  ctx.fillStyle = '#111';
-  ctx.fillRect(CW-195, 104, 50, 20);
-  ctx.fillStyle = '#0d0d0d';
-  ctx.strokeStyle = '#39ff1450';
-  ctx.lineWidth = 2;
-  roundRect(ctx, CW-230, 60, 120, 50, 4);
-  ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#39ff1415';
-  ctx.fillRect(CW-225, 65, 110, 40);
-  ctx.fillStyle = '#39ff1450';
-  ctx.font = '6px monospace';
-  ['Figma — Design v3.2', 'client: Maison Doux', 'export: final_v3.fig', '// GEN workspace'].forEach((l,i)=>{
-    ctx.fillText(l, CW-220, 73+i*9);
-  });
-  // GEN Keyboard
-  ctx.fillStyle = '#111';
-  ctx.strokeStyle = '#39ff1430';
-  roundRect(ctx, CW-295, 188, 130, 18, 3);
-  ctx.fill(); ctx.stroke();
-  for (let k=0; k<13; k++) {
-    ctx.fillStyle = `hsl(${100+k*3},100%,${40+Math.sin(frame*0.08+k)*10}%)`;
-    ctx.globalAlpha = 0.4;
-    ctx.fillRect(CW-292+k*9, 190, 7, 14);
-    ctx.globalAlpha = 1;
-  }
-  // GEN nameplate
-  ctx.fillStyle = '#39ff14';
-  ctx.font = 'bold 9px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.shadowColor = '#39ff14';
-  ctx.shadowBlur = 4;
-  ctx.fillText('GEN', CW-200, 218);
-  ctx.shadowBlur = 0;
-  ctx.textAlign = 'left';
-
-  // === COUCH (center) ===
-  // Couch body
-  ctx.fillStyle = '#1a1a2a';
-  ctx.strokeStyle = '#00ff4120';
-  ctx.lineWidth = 1.5;
-  roundRect(ctx, 380, 240, 300, 80, 12);
-  ctx.fill(); ctx.stroke();
-  // Cushions
-  [395,450,510,570].forEach(cx=>{
-    ctx.fillStyle = '#222233';
-    ctx.strokeStyle = '#00ff4115';
-    roundRect(ctx, cx, 250, 50, 55, 8);
-    ctx.fill(); ctx.stroke();
-  });
-  // Couch back
-  ctx.fillStyle = '#16162a';
-  ctx.strokeStyle = '#00ff4120';
-  roundRect(ctx, 380, 225, 300, 22, 8);
-  ctx.fill(); ctx.stroke();
-  // Couch arms
-  ctx.fillStyle = '#1a1a2a';
-  ctx.strokeStyle = '#00ff4120';
-  roundRect(ctx, 375, 235, 18, 88, 6); ctx.fill(); ctx.stroke();
-  roundRect(ctx, 667, 235, 18, 88, 6); ctx.fill(); ctx.stroke();
-  // Couch pillows
-  ctx.fillStyle = '#649aa233';
-  ctx.strokeStyle = '#649aa250';
-  roundRect(ctx, 398, 235, 40, 30, 6); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#6b8f7133';
-  ctx.strokeStyle = '#6b8f7150';
-  roundRect(ctx, 620, 235, 40, 30, 6); ctx.fill(); ctx.stroke();
-
-  // Coffee table
-  ctx.fillStyle = '#111100';
-  ctx.strokeStyle = '#b89a6040';
-  ctx.lineWidth = 1;
-  roundRect(ctx, 440, 330, 180, 50, 8);
-  ctx.fill(); ctx.stroke();
-  // Items on table
-  ctx.fillStyle = '#2a1a0a';
-  roundRect(ctx, 455, 337, 35, 36, 4); ctx.fill(); // book
-  ctx.fillStyle = '#8a8680';
-  ctx.beginPath(); ctx.arc(530, 355, 8, 0, Math.PI*2); ctx.fill(); // mug
-  ctx.fillStyle = '#3a200a';
-  ctx.beginPath(); ctx.arc(530, 355, 5, 0, Math.PI*2); ctx.fill(); // coffee
-  // Laptop on table
   ctx.fillStyle = '#1a1a1a';
-  ctx.strokeStyle = '#00ff4130';
-  roundRect(ctx, 555, 335, 50, 35, 3); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#00ff4110';
-  ctx.fillRect(558, 338, 44, 28);
-
-  // === KITCHEN AREA (left bottom) ===
-  // Kitchen counter
-  ctx.fillStyle = '#0f1a0f';
-  ctx.strokeStyle = '#00ff4125';
-  ctx.lineWidth = 1.5;
-  roundRect(ctx, 90, 310, 240, 70, 8);
-  ctx.fill(); ctx.stroke();
-  // Counter top
-  ctx.fillStyle = '#1a2a1a';
-  roundRect(ctx, 92, 310, 238, 18, 6);
-  ctx.fill();
-  // Sink
-  ctx.fillStyle = '#0a0a0a';
-  ctx.strokeStyle = '#00ff4120';
-  roundRect(ctx, 210, 313, 60, 12, 3);
-  ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = '#649aa2';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.arc(240, 314, 3, 0, Math.PI*2); ctx.stroke();
-
-  // FRIDGE (next to kitchen)
-  ctx.fillStyle = '#0d1a0d';
-  ctx.strokeStyle = '#00ff4140';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = '#00ff41';
-  ctx.shadowBlur = 5;
-  roundRect(ctx, 340, 295, 55, 95, 6);
-  ctx.fill(); ctx.stroke();
-  ctx.shadowBlur = 0;
-  // Fridge handle
-  ctx.strokeStyle = '#00ff4160';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(360, 305); ctx.lineTo(360, 320);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(360, 340); ctx.lineTo(360, 358);
-  ctx.stroke();
-  // Fridge divider
-  ctx.strokeStyle = '#00ff4125';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(342, 332); ctx.lineTo(393, 332);
-  ctx.stroke();
-  // Fridge glow light
-  ctx.fillStyle = '#00ff4108';
-  ctx.fillRect(344, 298, 48, 32);
-  ctx.fillStyle = '#00ff41';
-  ctx.font = 'bold 7px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('❄', 367, 316);
-  ctx.textAlign = 'left';
-  // Fridge label
-  ctx.fillStyle = '#00ff4140';
-  ctx.font = '7px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('FRIDGE', 367, 378);
-  ctx.textAlign = 'left';
-
-  // Kitchen appliances
-  // Coffee machine
-  ctx.fillStyle = '#111';
-  ctx.strokeStyle = '#c0707050';
-  roundRect(ctx, 100, 316, 40, 40, 4); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#c0707040';
-  roundRect(ctx, 105, 320, 30, 16, 3); ctx.fill();
-  ctx.fillStyle = '#c07070';
-  ctx.font = 'bold 7px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('☕', 120, 348);
-
-  // Stove
-  ctx.fillStyle = '#0a0a0a';
-  ctx.strokeStyle = '#b89a6030';
-  roundRect(ctx, 155, 316, 45, 40, 4); ctx.fill(); ctx.stroke();
-  [10,10,30,30].forEach((ox,i)=>{
-    ctx.strokeStyle = '#ff440030';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.arc(160+(i%2)*22, 322+(Math.floor(i/2))*16, 6, 0, Math.PI*2);
-    ctx.stroke();
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+  rr(ctx, CW-195, 68, 90, 34, 3); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#1a1a0a';
+  rr(ctx, CW-192, 71, 84, 28, 2); ctx.fill();
+  // Design tool screen
+  ctx.fillStyle = '#6b8f7130';
+  ctx.fillRect(CW-190, 73, 80, 24);
+  ctx.fillStyle = '#6b8f71';
+  ctx.font = '5px monospace';
+  ['Figma — design v3', 'client_final_v3.fig', 'export → live ✓'].forEach((l,i)=>{
+    ctx.fillStyle = i===2 ? '#6b8f71aa' : '#6b8f7170';
+    ctx.fillText(l, CW-188, 79+i*8);
   });
-  ctx.textAlign = 'left';
+  ctx.fillStyle = '#333';
+  ctx.fillRect(CW-155, 102, 8, 6);
+  ctx.fillRect(CW-161, 108, 20, 3);
+  if (frame%60 < 30) {
+    ctx.fillStyle = '#6b8f71'; ctx.fillRect(CW-188, 92, 4, 2);
+  }
 
-  // Kitchen label
-  ctx.fillStyle = '#00ff4130';
-  ctx.font = '8px monospace';
+  // GEN Keyboard
+  ctx.fillStyle = '#2a2a2a';
+  ctx.strokeStyle = '#444'; ctx.lineWidth = 0.5;
+  rr(ctx, CW-195, 116, 95, 14, 3); ctx.fill(); ctx.stroke();
+  for (let k=0; k<9; k++) {
+    ctx.fillStyle = `rgba(107,143,113,${0.3+Math.sin(frame*0.08+k)*0.15})`;
+    rr(ctx, CW-192+k*9.5, 118, 7, 9, 1); ctx.fill();
+  }
+  ctx.fillStyle = 'rgba(107,143,113,0.4)';
+  rr(ctx, CW-180, 128, 55, 0, 1); ctx.fill();
+
+  // GEN Mouse
+  ctx.fillStyle = '#2a2a2a'; ctx.strokeStyle = '#444';
+  rr(ctx, CW-108, 116, 18, 24, 7); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#6b8f7150'; ctx.lineWidth = 0.8;
+  ctx.beginPath(); ctx.moveTo(CW-99,116); ctx.lineTo(CW-99,128); ctx.stroke();
+
+  // Coffee mug GEN
+  ctx.fillStyle = '#6b8f71';
+  rr(ctx, CW-86, 108, 16, 18, 3); ctx.fill();
+  ctx.fillStyle = '#4a6b4f';
+  ctx.fillRect(CW-84, 110, 12, 3);
+  ctx.strokeStyle = '#6b8f7180'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(CW-70,112); ctx.quadraticCurveTo(CW-63,112,CW-63,118); ctx.quadraticCurveTo(CW-63,124,CW-70,124); ctx.stroke();
+  if (frame%60 < 40) {
+    ctx.strokeStyle = '#888'; ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(CW-81,108); ctx.quadraticCurveTo(CW-84,102,CW-81,96); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(CW-75,108); ctx.quadraticCurveTo(CW-72,102,CW-75,96); ctx.stroke();
+  }
+  ctx.fillStyle = '#6b8f71';
+  ctx.font = 'bold 8px DM Sans, sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('KITCHEN', 210, 392);
-  ctx.textAlign = 'left';
+  ctx.fillText('GEN', CW-113, 155);
 
-  // === BATHROOM (right side behind kitchen) ===
-  // Bathroom door
-  ctx.fillStyle = '#0a150a';
-  ctx.strokeStyle = '#00ff4130';
-  ctx.lineWidth = 1.5;
-  roundRect(ctx, CW-88, 250, 60, 100, 4);
-  ctx.fill(); ctx.stroke();
-  // Door handle
-  ctx.strokeStyle = '#00ff4160';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(CW-45, 300, 5, 0, Math.PI*2);
-  ctx.stroke();
-  // Door label
-  ctx.fillStyle = '#00ff4140';
-  ctx.font = '7px monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('WC', CW-58, 380);
-  // Bathroom sign
-  ctx.font = '14px sans-serif';
-  ctx.fillText('🚽', CW-70, 300);
-  ctx.textAlign = 'left';
+  // ── CENTER ZONE — Meeting Table ──
+  // Rug under table
+  ctx.fillStyle = '#e0d8cc';
+  ctx.strokeStyle = '#c8c0b4'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.ellipse(265, 185, 95, 48, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  // Rug inner
+  ctx.strokeStyle = '#b8a898'; ctx.lineWidth = 0.5;
+  ctx.beginPath(); ctx.ellipse(265, 185, 80, 38, 0, 0, Math.PI*2); ctx.stroke();
 
-  // === PLANTS ===
-  [[100,230],[CW-88,230],[530,100],[CW/2-20,100]].forEach(([px,py])=>{
-    ctx.fillStyle = '#1a0a0a';
-    ctx.fillRect(px, py+10, 10, 16);
-    ctx.fillStyle = '#0a2a0a';
-    ctx.beginPath();
-    ctx.arc(px+5, py, 16, 0, Math.PI*2);
-    ctx.fill();
-    ctx.fillStyle = '#0a1a0a';
-    ctx.beginPath();
-    ctx.arc(px-6, py+4, 10, 0, Math.PI*2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(px+16, py+4, 10, 0, Math.PI*2);
-    ctx.fill();
+  // Meeting table
+  ctx.fillStyle = '#c4b090';
+  ctx.strokeStyle = '#b0a080'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.ellipse(265, 183, 65, 30, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  // Table shine
+  ctx.fillStyle = '#ffffff15';
+  ctx.beginPath(); ctx.ellipse(255, 175, 30, 12, -0.3, 0, Math.PI*2); ctx.fill();
+  // Table edge shadow
+  ctx.fillStyle = '#00000015';
+  ctx.beginPath(); ctx.ellipse(265, 190, 65, 12, 0, 0, Math.PI*2); ctx.fill();
+
+  // Items on table
+  // Laptop
+  ctx.fillStyle = '#1a1a1a'; ctx.strokeStyle = '#333'; ctx.lineWidth = 0.8;
+  rr(ctx, 242, 173, 36, 24, 2); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#649aa215';
+  ctx.fillRect(244, 175, 32, 20);
+  ctx.fillStyle = '#649aa2';
+  ctx.font = '5px monospace'; ctx.textAlign = 'center';
+  ctx.fillText('PP', 260, 186);
+  // Notebook
+  ctx.fillStyle = '#f5f0e8'; ctx.strokeStyle = '#e0dbd2'; ctx.lineWidth = 0.8;
+  rr(ctx, 278, 175, 28, 20, 2); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#c8c0b4'; ctx.lineWidth = 0.5;
+  [179,183,187,191].forEach(y=>{ ctx.beginPath(); ctx.moveTo(281,y); ctx.lineTo(304,y); ctx.stroke(); });
+  // Pen
+  ctx.fillStyle = '#649aa2'; ctx.strokeStyle = '#4a7a82'; ctx.lineWidth = 0.5;
+  ctx.fillRect(308, 175, 3, 18); ctx.strokeRect(308, 175, 3, 18);
+  // Water bottle
+  ctx.fillStyle = '#e6f2f4'; ctx.strokeStyle = '#b0d0d8'; ctx.lineWidth = 0.8;
+  rr(ctx, 232, 174, 9, 22, 3); ctx.fill(); ctx.stroke();
+
+  // Chairs around table
+  const chairPositions = [
+    {x:265, y:148, r:0},    // top
+    {x:265, y:218, r:Math.PI}, // bottom
+    {x:196, y:183, r:-Math.PI/2}, // left
+    {x:334, y:183, r:Math.PI/2},  // right
+  ];
+  chairPositions.forEach(ch=>{
+    ctx.save(); ctx.translate(ch.x, ch.y); ctx.rotate(ch.r);
+    ctx.fillStyle = '#b8a898'; ctx.strokeStyle = '#a89888'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.ellipse(0, 0, 14, 9, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#c8b8a8';
+    ctx.fillRect(-12, -14, 24, 7);
+    ctx.restore();
   });
 
-  // === RAZER ACCENT LIGHTING strips ===
-  // Floor strips
-  ctx.shadowColor = '#00ff41';
-  ctx.shadowBlur = 12;
-  ctx.strokeStyle = `rgba(0,255,65,${0.2+Math.sin(frame*0.03)*0.08})`;
-  ctx.lineWidth = 2;
-  // Bottom strip
-  ctx.beginPath(); ctx.moveTo(90,CH-8); ctx.lineTo(CW-90,CH-8); ctx.stroke();
-  // Top strip
-  ctx.beginPath(); ctx.moveTo(90,112); ctx.lineTo(CW-90,112); ctx.stroke();
-  ctx.shadowBlur = 0;
-
-  // === CHARACTERS ===
-  CHARS.forEach(c=>{
-    const bob = Math.sin(frame*0.04+c.blink*0.1)*0.8;
-    drawOcto(ctx, c.x, c.y+bob, c.color, c.blink, c.state==='task');
-    // Name label
-    ctx.fillStyle = c.color;
-    ctx.font = 'bold 9px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.shadowColor = c.color;
-    ctx.shadowBlur = 5;
-    ctx.fillText(c.name, c.x, c.y-26);
-    if (c.task) {
-      ctx.font = '8px sans-serif';
-      ctx.fillStyle = c.color+'cc';
-      ctx.fillText(c.task.slice(0,22), c.x, c.y-36);
-    }
-    ctx.shadowBlur = 0;
-    ctx.textAlign = 'left';
+  // ── BOTTOM WALL ELEMENTS ──
+  // Left bookshelf
+  ctx.fillStyle = '#c8b898'; ctx.strokeStyle = '#b8a888'; ctx.lineWidth = 1;
+  rr(ctx, 24, 170, 60, 82, 4); ctx.fill(); ctx.stroke();
+  // Shelf dividers
+  ctx.strokeStyle = '#b0a080'; ctx.lineWidth = 0.5;
+  [195, 220, 245].forEach(y=>{
+    ctx.beginPath(); ctx.moveTo(26,y); ctx.lineTo(82,y); ctx.stroke();
   });
-}
+  // Books on shelves
+  const bookColors = ['#649aa2','#c07070','#6b8f71','#b89a60','#8a7ba8','#649aa2','#c07070','#6b8f71','#b89a60'];
+  bookColors.forEach((c,i)=>{
+    const bx = 27 + (i%7)*7;
+    const by = 174 + Math.floor(i/7)*25;
+    ctx.fillStyle = c;
+    ctx.fillRect(bx, by, 5, 18);
+  });
+  // Top of shelf - small plant
+  ctx.fillStyle='#8b6914'; ctx.fillRect(60, 164, 5, 8);
+  ctx.fillStyle='#6b8f71'; ctx.beginPath(); ctx.arc(62, 162, 8, 0, Math.PI*2); ctx.fill();
 
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
-  ctx.closePath();
-}
+  // Right side — small whiteboard
+  ctx.fillStyle = '#f8f8f0'; ctx.strokeStyle = '#d0ccc4'; ctx.lineWidth = 1.5;
+  rr(ctx, CW-80, 80, 58, 80, 4); ctx.fill(); ctx.stroke();
+  // Whiteboard frame
+  ctx.fillStyle = '#c8b898';
+  rr(ctx, CW-80, 80, 58, 6, 3); ctx.fill();
+  rr(ctx, CW-80, 154, 58, 6, 3); ctx.fill();
+  // Whiteboard content
+  ctx.strokeStyle = '#649aa270'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(CW-74, 98); ctx.lineTo(CW-28, 98); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(CW-74, 108); ctx.lineTo(CW-35, 108); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(CW-74, 118); ctx.lineTo(CW-40, 118); ctx.stroke();
+  ctx.strokeStyle = '#c0707060'; ctx.lineWidth = 2;
+  // Small chart
+  ctx.beginPath(); ctx.moveTo(CW-72,148); ctx.lineTo(CW-72,128); ctx.lineTo(CW-60,132); ctx.lineTo(CW-50,124); ctx.lineTo(CW-38,120); ctx.lineTo(CW-30,115); ctx.stroke();
+  ctx.fillStyle = '#649aa2';
+  ctx.font = 'bold 7px DM Sans, sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('GOALS', CW-51, 91);
+  ctx.textAlign = 'left';
+  // Whiteboard marker tray
+  ctx.fillStyle = '#e0dbd2'; ctx.lineWidth = 0.8;
+  ctx.fillRect(CW-78, 152, 54, 4);
+  ['#c07070','#649aa2','#6b8f71'].forEach((c,i)=>{
+    ctx.fillStyle = c;
+    ctx.fillRect(CW-75+i*10, 152, 7, 4);
+  });
 
-function tickChars() {
+  // ── CHARACTERS ──
   CHARS.forEach(c => {
+    const bob = (c.state==='walk') ? Math.sin(frame*0.25)*2 : Math.sin(frame*0.04)*0.7;
+    drawOcto(ctx, c.x, c.y+bob, c.color, c.blink, c.state==='task', 0.5);
+    // Progress bar when busy
+    if (c.state==='task' && c.task) {
+      const pct = Math.min(0.95, 1 - c.timer/150);
+      ctx.fillStyle = '#ede9e3';
+      rr(ctx, c.x-22, c.y-26, 44, 5, 2); ctx.fill();
+      ctx.fillStyle = c.color;
+      rr(ctx, c.x-22, c.y-26, 44*pct, 5, 2); ctx.fill();
+    }
+    // Name
+    ctx.fillStyle = c.color;
+    ctx.font = 'bold 7px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = c.color; ctx.shadowBlur = 3;
+    ctx.fillText(c.name, c.x, c.y - 16);
+    ctx.shadowBlur = 0;
+  });
+  ctx.textAlign = 'left';
+}
+
+// ── TICK ──────────────────────────────────────────────────────
+function tickChars() {
+  CHARS.forEach((c, i) => {
     c.blink++;
     c.timer--;
-    // Move toward target
     const dx=c.tx-c.x, dy=c.ty-c.y;
-    const d = Math.sqrt(dx*dx+dy*dy);
-    if (d>1.5) { c.x+=dx*0.06; c.y+=dy*0.06; }
+    if (Math.sqrt(dx*dx+dy*dy)>1.5) { c.x+=dx*0.07; c.y+=dy*0.07; }
     else { c.x=c.tx; c.y=c.ty; }
 
     if (c.timer<=0) {
       const roll=Math.random();
       if (c.state==='idle') {
-        if (roll<0.25) {
-          // Walk somewhere
+        if (roll<0.2) {
           const pos = randomPos();
           c.tx=pos.x; c.ty=pos.y;
-          c.state='walk'; c.timer=70+Math.random()*60;
+          c.state='walk'; c.timer=60+Math.random()*50;
         } else if (roll<0.55) {
-          // Do a task
           c.state='task';
-          c.task=logMsgs[Math.floor(Math.random()*logMsgs.length)];
-          c.timer=90+Math.random()*60;
+          c.task = logMsgs[Math.floor(Math.random()*logMsgs.length)];
+          c.timer=80+Math.random()*60;
           addOfficeLog(c.name+': '+c.task);
         } else {
-          c.timer=60+Math.random()*60;
+          c.timer=50+Math.random()*60;
         }
       } else if (c.state==='walk') {
-        c.state='idle'; c.tx=c.hx; c.ty=c.hy;
-        c.timer=80+Math.random()*80;
+        c.tx=c.hx; c.ty=c.hy;
+        c.state='idle'; c.timer=70+Math.random()*70;
       } else if (c.state==='task') {
         c.state='idle'; c.task='';
-        c.timer=60+Math.random()*60;
+        c.timer=50+Math.random()*60;
       }
     }
+    if (c.state==='task') c.timer = Math.max(0, c.timer);
   });
 }
 
@@ -1917,18 +1922,7 @@ document.getElementById('f-date').value = today;
 addOfficeLog('PolypusTech HQ booted. VIC and GEN online.');
 setTimeout(()=>addOfficeLog('Razer gaming setup initialized. All systems green.'),2000);
 officeLoop();
-// ═══ EXPENSES EXTREME GAMES — loaded after main script ═══
-
-const PAGE_TITLES2 = { expenses:'Bills & Expenses', extreme:'⚡ EXTREME MODE', games:'🎮 Games Room' };
-Object.assign(PAGE_TITLES, PAGE_TITLES2);
-
-const _origGoTo = goTo;
-function goTo(id) {
-  _origGoTo(id);
-  if (id==='expenses') renderExpenses();
-  if (id==='extreme') renderExtreme();
-  if (id==='games') selectGame('tron', document.getElementById('game-btn-tron'));
-}
+// ═══ EXPENSES EXTREME GAMES ═══
 
 function addExpense() {
   const name = document.getElementById('ex-name').value.trim();
@@ -2383,6 +2377,254 @@ drawSnake();
 // Render new tabs if on those pages on load
 if(S.expenses && S.expenses.length) renderExpenses();
 if(S.extremeTasks && S.extremeTasks.length) renderExtreme();
+
+
+// ═══ GOALS & SCOREBOARD ═══════════════════════════════════════
+if (!S.goals) S.goals = [];
+if (!S.stats) S.stats = {
+  vic: { clients:0, projects:0, tasks:0, focus:'' },
+  gen: { clients:0, projects:0, tasks:0, focus:'' }
+};
+
+Object.assign(PAGE_TITLES, { goals: '🎯 Goals & Vision' });
+
+const TARGET_DATE = new Date('2026-12-31');
+
+function daysToTarget() {
+  const now = new Date();
+  return Math.ceil((TARGET_DATE - now) / (1000*60*60*24));
+}
+
+function goalPct(current, target) {
+  if (!target || target===0) return 0;
+  return Math.min(100, Math.round((current/target)*100));
+}
+
+const CAT_ICONS = {
+  'Car':'🚗','Property':'🏠','Travel / Country':'🌍','Cash Net Worth':'💵',
+  'Asset Net Worth':'📈','Business':'💼','Health':'💪','Education':'🎓','Other':'🎯'
+};
+const CAT_COLORS = {
+  'Car':'var(--sage)','Property':'var(--purple)','Travel / Country':'var(--amber)',
+  'Cash Net Worth':'var(--green)','Asset Net Worth':'var(--sage)','Business':'var(--accent)',
+  'Health':'var(--red)','Education':'var(--purple)','Other':'var(--muted)'
+};
+
+function addGoal() {
+  const title = document.getElementById('gl-title').value.trim();
+  if (!title) return;
+  S.goals.push({
+    id: Date.now(), title,
+    cat: document.getElementById('gl-cat').value,
+    date: document.getElementById('gl-date').value,
+    current: parseFloat(document.getElementById('gl-current').value)||0,
+    target: parseFloat(document.getElementById('gl-target').value)||100,
+    unit: document.getElementById('gl-unit').value,
+    why: document.getElementById('gl-why').value,
+    weeklyCheckins: [],
+    created: new Date().toISOString()
+  });
+  ['gl-title','gl-current','gl-target','gl-why'].forEach(id=>document.getElementById(id).value='');
+  closeModal('add-goal-modal');
+  save(); renderGoals(); renderHomeGoals();
+}
+
+function updateGoalProgress(i, val) {
+  S.goals[i].current = parseFloat(val)||0;
+  S.goals[i].weeklyCheckins.push({ date: new Date().toISOString(), value: S.goals[i].current });
+  save(); renderGoals(); renderHomeGoals();
+}
+
+function deleteGoal(i) {
+  if(confirm('Delete this goal?')) { S.goals.splice(i,1); save(); renderGoals(); renderHomeGoals(); }
+}
+
+function renderGoals() {
+  const days = daysToTarget();
+  const el = document.getElementById('goal-days');
+  if (el) el.textContent = days + ' days left';
+
+  const list = document.getElementById('goals-progress-list');
+  if (!list) return;
+  if (!S.goals.length) { list.innerHTML='<div style="color:var(--muted);font-size:13px;font-style:italic;text-align:center;padding:20px">No goals yet. Add your first goal!</div>'; return; }
+
+  list.innerHTML = S.goals.map((g,i) => {
+    const pct = goalPct(g.current, g.target);
+    const color = CAT_COLORS[g.cat]||'var(--sage)';
+    const icon = CAT_ICONS[g.cat]||'🎯';
+    const totalDays = Math.ceil((new Date(g.date||'2026-12-31') - new Date(g.created)) / (1000*60*60*24));
+    const elapsed = totalDays - daysToTarget();
+    const timePct = Math.min(100, Math.max(0, Math.round((elapsed/totalDays)*100)));
+    const onTrack = pct >= timePct;
+    return `
+    <div style="margin-bottom:14px;padding:14px;background:var(--bg);border-radius:12px;border:1px solid var(--border)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:20px">${icon}</span>
+          <div>
+            <div style="font-weight:700;font-size:14px">${g.title}</div>
+            <div style="font-size:11px;color:var(--muted)">${g.cat} · Target: ${g.unit}${g.target.toLocaleString()}</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:22px;font-weight:700;color:${color}">${pct}%</span>
+          <span class="tag" style="background:${onTrack?'rgba(107,143,113,.15)':'rgba(192,112,112,.15)'};color:${onTrack?'var(--green)':'var(--red)'}">${onTrack?'On Track':'Behind'}</span>
+          <button class="btn-d" onclick="deleteGoal(${i})">✕</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div style="flex:1;background:var(--border);border-radius:6px;height:10px;overflow:hidden;position:relative">
+          <div style="position:absolute;top:0;left:0;height:100%;width:${timePct}%;background:rgba(0,0,0,.08);border-radius:6px"></div>
+          <div style="position:relative;height:100%;width:${pct}%;background:${color};border-radius:6px;transition:width .5s"></div>
+        </div>
+        <input type="number" value="${g.current}" onchange="updateGoalProgress(${i},this.value)"
+          style="width:90px;border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-size:12px;font-family:inherit;background:var(--card);text-align:right">
+        <span style="font-size:12px;color:var(--muted)">${g.unit} / ${g.unit}${g.target.toLocaleString()}</span>
+      </div>
+      ${g.why?`<div style="font-size:11px;color:var(--amber);font-style:italic">⭐ ${g.why}</div>`:''}
+    </div>`;
+  }).join('');
+
+  // Weekly check-in list
+  const wl = document.getElementById('goals-weekly-list');
+  if (wl) wl.innerHTML = S.goals.map((g,i)=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:16px">${CAT_ICONS[g.cat]||'🎯'}</span>
+      <div style="flex:1"><div style="font-size:13px;font-weight:600">${g.title}</div></div>
+      <div style="font-size:12px;color:var(--muted)">${g.weeklyCheckins.length} check-ins</div>
+      <div style="font-weight:700;color:${CAT_COLORS[g.cat]||'var(--sage)'}";>${goalPct(g.current,g.target)}%</div>
+    </div>`).join('') || '<div style="color:var(--muted);text-align:center;padding:16px;font-size:13px;font-style:italic">No goals yet.</div>';
+
+  // Render stats
+  renderStats();
+}
+
+function renderHomeGoals() {
+  const el = document.getElementById('home-goals-preview');
+  if (!el) return;
+  if (!S.goals.length) { el.innerHTML='<div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:16px">No goals yet. Go to Goals tab!</div>'; return; }
+  el.innerHTML = S.goals.slice(0,4).map(g=>{
+    const pct = goalPct(g.current, g.target);
+    const color = CAT_COLORS[g.cat]||'var(--sage)';
+    return `
+    <div style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+        <span style="font-size:12px;font-weight:600">${CAT_ICONS[g.cat]||'🎯'} ${g.title}</span>
+        <span style="font-size:12px;font-weight:700;color:${color}">${pct}%</span>
+      </div>
+      <div style="background:var(--border);border-radius:4px;height:6px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${color};border-radius:4px;transition:width .5s"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveStats(who) {
+  const p = who==='vic' ? 'vic' : 'gen';
+  S.stats[p].clients = parseInt(document.getElementById(p+'-inp-clients').value)||0;
+  S.stats[p].projects = parseInt(document.getElementById(p+'-inp-projects').value)||0;
+  S.stats[p].tasks = parseInt(document.getElementById(p+'-inp-tasks').value)||0;
+  S.stats[p].focus = document.getElementById(p+'-inp-focus').value;
+  closeModal('edit-'+p+'-modal');
+  save(); renderStats();
+}
+
+function renderStats() {
+  // Goals page stats
+  ['vic','gen'].forEach(p=>{
+    const st = S.stats[p];
+    const clients = document.getElementById(p+'-stat-clients');
+    const projects = document.getElementById(p+'-stat-projects');
+    const tasks2 = document.getElementById(p+'-stat-tasks');
+    const focus = document.getElementById(p+'-weekly-focus');
+    const inp_clients = document.getElementById(p+'-inp-clients');
+    const inp_projects = document.getElementById(p+'-inp-projects');
+    const inp_tasks = document.getElementById(p+'-inp-tasks');
+    const inp_focus = document.getElementById(p+'-inp-focus');
+    if (clients) clients.textContent = st.clients;
+    if (projects) projects.textContent = st.projects;
+    if (tasks2) tasks2.textContent = st.tasks;
+    if (focus) focus.textContent = st.focus || 'Not set';
+    if (inp_clients) inp_clients.value = st.clients;
+    if (inp_projects) inp_projects.value = st.projects;
+    if (inp_tasks) inp_tasks.value = st.tasks;
+    if (inp_focus) inp_focus.value = st.focus;
+  });
+
+  // Scoreboard on home
+  const vic = S.stats.vic, gen = S.stats.gen;
+  const setEl = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  setEl('sc-vic-clients', vic.clients);
+  setEl('sc-gen-clients', gen.clients);
+  setEl('sc-vic-tasks', vic.tasks);
+  setEl('sc-gen-tasks', gen.tasks);
+  setEl('sb-tasks', Object.values(S.tasks).flat().length);
+
+  // Score bar
+  const bar = document.getElementById('sc-bar');
+  if (bar) {
+    const vicScore = vic.clients*3 + vic.projects*2 + vic.tasks;
+    const genScore = gen.clients*3 + gen.projects*2 + gen.tasks;
+    const total = vicScore + genScore;
+    const vicPct = total > 0 ? Math.round((vicScore/total)*100) : 50;
+    bar.style.width = vicPct+'%';
+  }
+}
+
+// Call on load
+renderHomeGoals();
+renderStats();
+
 </script>
+<!-- ADD GOAL MODAL -->
+<div class="ov" id="add-goal-modal">
+<div class="mdl">
+  <div class="mdl-t">Add Life Goal <button class="mdl-x" onclick="closeModal('add-goal-modal')">×</button></div>
+  <div class="fg"><label class="fl">Goal Title</label><input class="fi" id="gl-title" placeholder="e.g. Buy a car, Move to a new country, CHF 100k net worth"></div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Category</label><select class="fs" id="gl-cat"><option>Car</option><option>Property</option><option>Travel / Country</option><option>Cash Net Worth</option><option>Asset Net Worth</option><option>Business</option><option>Health</option><option>Education</option><option>Other</option></select></div>
+    <div class="fg"><label class="fl">Target Date</label><input class="fi" type="date" id="gl-date" value="2026-12-31"></div>
+  </div>
+  <div class="fr2">
+    <div class="fg"><label class="fl">Current Value / Progress</label><input class="fi" type="number" id="gl-current" placeholder="e.g. 5000 (CHF) or 0 (%)"></div>
+    <div class="fg"><label class="fl">Target Value</label><input class="fi" type="number" id="gl-target" placeholder="e.g. 50000 (CHF) or 100 (%)"></div>
+  </div>
+  <div class="fg"><label class="fl">Unit</label><select class="fs" id="gl-unit"><option value="CHF">CHF</option><option value="%">%</option><option value="x">x (multiplier)</option><option value="">custom</option></select></div>
+  <div class="gold-note">
+    <div class="gn-label">⭐ Why This Goal Matters</div>
+    <textarea class="fta" id="gl-why" placeholder="Why is this goal important to you? What changes when you achieve it?" style="background:transparent;border-color:rgba(184,154,96,.4)"></textarea>
+  </div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('add-goal-modal')">Cancel</button><button class="btn btn-p" onclick="addGoal()">Save Goal</button></div>
+</div>
+</div>
+
+<!-- EDIT VIC STATS -->
+<div class="ov" id="edit-vic-modal">
+<div class="mdl">
+  <div class="mdl-t">Update VIC Stats <button class="mdl-x" onclick="closeModal('edit-vic-modal')">×</button></div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Clients Closed</label><input class="fi" type="number" id="vic-inp-clients" placeholder="0"></div>
+    <div class="fg"><label class="fl">Projects Managed</label><input class="fi" type="number" id="vic-inp-projects" placeholder="0"></div>
+    <div class="fg"><label class="fl">Tasks Done</label><input class="fi" type="number" id="vic-inp-tasks" placeholder="0"></div>
+  </div>
+  <div class="fg"><label class="fl">Weekly Focus / Goal</label><input class="fi" id="vic-inp-focus" placeholder="e.g. Close 2 B2B deals this week"></div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('edit-vic-modal')">Cancel</button><button class="btn btn-p" onclick="saveStats('vic')">Save Stats</button></div>
+</div>
+</div>
+
+<!-- EDIT GEN STATS -->
+<div class="ov" id="edit-gen-modal">
+<div class="mdl">
+  <div class="mdl-t">Update GEN Stats <button class="mdl-x" onclick="closeModal('edit-gen-modal')">×</button></div>
+  <div class="fr3">
+    <div class="fg"><label class="fl">Clients Closed</label><input class="fi" type="number" id="gen-inp-clients" placeholder="0"></div>
+    <div class="fg"><label class="fl">Projects Managed</label><input class="fi" type="number" id="gen-inp-projects" placeholder="0"></div>
+    <div class="fg"><label class="fl">Tasks Done</label><input class="fi" type="number" id="gen-inp-tasks" placeholder="0"></div>
+  </div>
+  <div class="fg"><label class="fl">Weekly Focus / Goal</label><input class="fi" id="gen-inp-focus" placeholder="e.g. Design 3 new client proposals"></div>
+  <div class="mdl-ft"><button class="btn-o" onclick="closeModal('edit-gen-modal')">Cancel</button><button class="btn btn-p" onclick="saveStats('gen')">Save Stats</button></div>
+</div>
+</div>
+
 </body>
 </html>
