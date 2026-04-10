@@ -7,14 +7,24 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f7f6f3;--card:#fff;--border:#ede9e3;--sage:#649aa2;--sage-d:#4a7a82;
-  --sage-l:#e6f2f4;--charcoal:#2c2c2a;--muted:#8a8680;--warm:#b8a898;
-  --red:#c07070;--amber:#b89a60;--purple:#8a7ba8;--green:#6b8f71;
-  --r:14px;--sh:0 2px 16px rgba(0,0,0,.05);
+  --bg:#060a06;--card:#0d120d;--border:#00ff4122;--sage:#00ff41;--sage-d:#00cc33;
+  --sage-l:#00ff4112;--charcoal:#e0ffe0;--muted:#5a7a5a;--warm:#2a4a2a;
+  --red:#ff4444;--amber:#ffaa00;--purple:#aa44ff;--green:#00ff41;
+  --r:10px;--sh:0 2px 24px rgba(0,255,65,0.12);
+  --neon:#00ff41;--neon2:#00ccff;--neon3:#ff00aa;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal);min-height:100vh;display:flex;font-size:14px}
-::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:#00ff4130;border-radius:3px}
+::-webkit-scrollbar-track{background:#060a06}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 4px #00ff41,0 0 8px #00ff4140}50%{box-shadow:0 0 8px #00ff41,0 0 16px #00ff4160}}
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+@keyframes tickerMove{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+@keyframes cryptoBlink{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes neonBorder{0%,100%{border-color:#00ff4140}50%{border-color:#00ff41}}
+.neon-card{animation:neonBorder 3s infinite;border-width:1px!important}
+.razer-glow{text-shadow:0 0 8px #00ff41,0 0 16px #00ff4160}
+.scanline-overlay{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(transparent,#00ff4130,transparent);animation:scanline 4s linear infinite;pointer-events:none;z-index:5}
 
 /* SIDEBAR */
 .sb{width:68px;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:2px 0 8px rgba(0,0,0,.04)}
@@ -52,7 +62,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 .pg{display:none}.pg.active{display:block}
 
 /* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--sh);position:relative}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00ff4140,transparent);border-radius:var(--r) var(--r) 0 0}
 .ct{font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 
 /* GRID */
@@ -78,12 +89,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal)
 /* FORMS */
 .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .fl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.fi,.fs,.fta{border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-size:14px;font-family:inherit;outline:none;background:var(--bg);color:var(--charcoal);width:100%;transition:border-color .15s}
-.fi:focus,.fs:focus,.fta:focus{border-color:var(--sage)}
+.fi,.fs,.fta{border:1px solid #00ff4125;border-radius:9px;padding:9px 12px;font-size:14px;font-family:inherit;outline:none;background:#060a06;color:#e0ffe0;width:100%;transition:border-color .15s}
+.fi:focus,.fs:focus,.fta:focus{border-color:#00ff41;box-shadow:0 0 8px #00ff4130}
+.fi::placeholder{color:#2a4a2a}
+.fs option{background:#0d120d;color:#e0ffe0}
 .fta{resize:vertical;min-height:72px}
 .fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.gold-note{border:1px solid var(--amber);background:rgba(184,154,96,.07);border-radius:10px;padding:12px;margin-bottom:12px}
+.gold-note{border:1px solid #ffaa0050;background:rgba(255,170,0,.06);border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 0 10px rgba(255,170,0,.1)}
 .gn-label{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:5px}
 
 /* MODAL */
@@ -186,6 +199,9 @@ tr:hover td{background:#fafaf8}
   <button class="nb" onclick="goTo('expenses')" id="nb-expenses"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="nl">Bills</span></button>
   <button class="nb" onclick="goTo('extreme')" id="nb-extreme"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><span class="nl">EXTREME</span></button>
   <button class="nb" onclick="goTo('games')" id="nb-games"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4"/><circle cx="16" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/></svg></div><span class="nl">Games</span></button>
+  <button class="nb" onclick="goTo('emailai')" id="nb-emailai"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><span class="nl">Email</span></button>
+  <button class="nb" onclick="goTo('scraper')" id="nb-scraper"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div><span class="nl">Scraper</span></button>
+  <button class="nb" onclick="goTo('eventsai')" id="nb-eventsai"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="16" r="1" fill="currentColor"/><circle cx="12" cy="16" r="1" fill="currentColor"/><circle cx="16" cy="16" r="1" fill="currentColor"/></svg></div><span class="nl">EventsAI</span></button>
   <button class="nb" onclick="goTo('goals')" id="nb-goals"><div class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="nl">Goals</span></button>
   <div class="sb-ft" style="margin-top:auto"><strong id="sb-tasks">0</strong>tasks</div>
 </div>
@@ -223,45 +239,115 @@ tr:hover td{background:#fafaf8}
     </div>
   </div>
 
-  <!-- OFFICE + GOALS SPLIT -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+  <!-- OFFICE FULL WIDTH + GOALS BELOW -->
+  <div style="margin-bottom:12px">
     <div class="card" style="padding:0;overflow:hidden;border-color:#1a2a1a">
       <div style="padding:8px 14px;border-bottom:1px solid #1a2a1a;background:#050f05;display:flex;align-items:center;justify-content:space-between">
         <div style="font-weight:700;font-size:12px;color:#00ff41">⚡ PolypusTech HQ <span style="font-weight:400;color:#00aa20;font-size:10px" id="office-status">— VIC &amp; GEN online</span></div>
         <span style="color:#00aa20;font-size:10px;font-family:monospace" id="office-time">--:--</span>
       </div>
-      <canvas id="officeCanvas" width="530" height="260" style="display:block;width:100%;background:#050f05"></canvas>
+      <canvas id="officeCanvas" width="530" height="180" style="display:block;width:100%;background:#050f05"></canvas>
       <div class="office-log" id="office-log" style="height:44px;font-size:10px;padding:6px 12px"><div>PolypusTech HQ online.</div></div>
+      <!-- AGENT TOGGLES -->
+      <div style="padding:8px 12px;border-top:1px solid #00ff4110;background:#060a06;display:flex;flex-wrap:wrap;gap:5px;align-items:center">
+        <span style="font-size:9px;color:#2a4a2a;font-family:monospace;text-transform:uppercase;letter-spacing:.08em;margin-right:4px">AGENTS:</span>
+        <div id="agent-toggles" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+      </div>
+      <!-- TOKEN TRACKER -->
+      <div style="padding:7px 12px;border-top:1px solid #00ff4108;background:#050f05;display:flex;align-items:center;gap:12px">
+        <div style="flex:1;background:#0a1a0a;border-radius:4px;height:4px;overflow:hidden">
+          <div id="tok-bar" style="height:100%;background:linear-gradient(90deg,#00ff41,#ffaa00);border-radius:4px;width:0%;transition:width .5s"></div>
+        </div>
+        <span style="font-size:9px;font-family:monospace;color:#00ff41;white-space:nowrap">USED: <strong id="tok-used">0</strong></span>
+        <span style="font-size:9px;font-family:monospace;color:#2a4a2a;white-space:nowrap">LEFT: <strong id="tok-left">1,000,000</strong></span>
+      </div>
     </div>
-    <div class="card" style="display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <div style="font-weight:700;font-size:14px">🎯 Goals — Dec 31, 2026</div>
-        <button class="btn-o" style="font-size:11px;padding:4px 10px" onclick="goTo('goals')">Full view →</button>
+  </div>
+
+  <!-- GOALS + SCOREBOARD BELOW OFFICE -->
+  <div style="display:grid;grid-template-columns:1fr 280px;gap:12px;margin-bottom:12px">
+    <div class="card" style="padding:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-weight:700;font-size:13px;color:var(--sage)">🎯 Goals — Dec 31, 2026</div>
+        <button class="btn-o" style="font-size:10px;padding:3px 9px" onclick="goTo('goals')">Full view →</button>
       </div>
-      <div id="home-goals-preview"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:16px">No goals yet. Go to Goals tab!</div></div>
-      <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:auto">
-        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px">⚔️ VIC vs GEN — Scoreboard</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-          <div style="background:rgba(100,154,162,.08);border:1px solid rgba(100,154,162,.25);border-radius:10px;padding:8px;text-align:center">
-            <div style="font-size:10px;font-weight:700;color:var(--sage);margin-bottom:4px">🔵 VIC</div>
-            <div id="sc-vic-clients" style="font-size:20px;font-weight:700;color:var(--charcoal)">0</div>
-            <div style="font-size:9px;color:var(--muted)">clients</div>
-            <div id="sc-vic-tasks" style="font-size:14px;font-weight:600;color:var(--sage);margin-top:3px">0</div>
-            <div style="font-size:9px;color:var(--muted)">tasks done</div>
-          </div>
-          <div style="background:rgba(107,143,113,.08);border:1px solid rgba(107,143,113,.25);border-radius:10px;padding:8px;text-align:center">
-            <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px">🟢 GEN</div>
-            <div id="sc-gen-clients" style="font-size:20px;font-weight:700;color:var(--charcoal)">0</div>
-            <div style="font-size:9px;color:var(--muted)">clients</div>
-            <div id="sc-gen-tasks" style="font-size:14px;font-weight:600;color:var(--green);margin-top:3px">0</div>
-            <div style="font-size:9px;color:var(--muted)">tasks done</div>
-          </div>
+      <div id="home-goals-preview"><div style="color:var(--muted);font-size:12px;font-style:italic;text-align:center;padding:10px">No goals yet. Go to Goals tab!</div></div>
+    </div>
+    <div class="card" style="padding:14px">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">⚔️ VIC vs GEN</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+        <div style="background:rgba(100,154,162,.08);border:1px solid rgba(100,154,162,.2);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:10px;font-weight:700;color:var(--sage);margin-bottom:3px">🔵 VIC</div>
+          <div id="sc-vic-clients" style="font-size:18px;font-weight:700;color:var(--charcoal)">0</div>
+          <div style="font-size:9px;color:var(--muted)">clients</div>
+          <div id="sc-vic-tasks" style="font-size:13px;font-weight:600;color:var(--sage);margin-top:2px">0</div>
+          <div style="font-size:9px;color:var(--muted)">tasks</div>
         </div>
-        <div style="background:var(--border);border-radius:6px;height:6px;overflow:hidden">
-          <div id="sc-bar" style="height:100%;background:linear-gradient(90deg,var(--sage),var(--green));border-radius:6px;width:50%;transition:width .5s"></div>
+        <div style="background:rgba(0,255,65,.05);border:1px solid rgba(0,255,65,.15);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px">🟢 GEN</div>
+          <div id="sc-gen-clients" style="font-size:18px;font-weight:700;color:var(--charcoal)">0</div>
+          <div style="font-size:9px;color:var(--muted)">clients</div>
+          <div id="sc-gen-tasks" style="font-size:13px;font-weight:600;color:var(--green);margin-top:2px">0</div>
+          <div style="font-size:9px;color:var(--muted)">tasks</div>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:3px"><span>← VIC</span><span>GEN →</span></div>
       </div>
+      <div style="background:var(--border);border-radius:4px;height:5px;overflow:hidden">
+        <div id="sc-bar" style="height:100%;background:linear-gradient(90deg,#649aa2,#00ff41);border-radius:4px;width:50%;transition:width .5s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:2px;font-family:monospace"><span>VIC →</span><span>← GEN</span></div>
+    </div>
+  </div>
+
+  <!-- NEWS TICKER + CRYPTO -->
+  <div style="background:#0d120d;border:1px solid #00ff4130;border-radius:10px;margin-bottom:12px;overflow:hidden;position:relative">
+    <div class="scanline-overlay"></div>
+    <div style="display:flex;align-items:center">
+      <div style="background:#00ff41;color:#060a06;padding:6px 14px;font-size:11px;font-weight:700;font-family:monospace;flex-shrink:0;display:flex;align-items:center;gap:6px">
+        <span style="width:8px;height:8px;border-radius:50%;background:#060a06;animation:cryptoBlink 1s infinite;display:inline-block"></span>
+        LIVE
+      </div>
+      <div style="overflow:hidden;flex:1;height:34px;display:flex;align-items:center">
+        <div id="news-ticker" style="white-space:nowrap;animation:tickerMove 60s linear infinite;font-size:12px;color:#00ff41;font-family:monospace;padding:0 20px">
+          Loading latest news... ⚡
+        </div>
+      </div>
+      <div style="padding:4px 12px;font-size:10px;color:#2a4a2a;font-family:monospace;flex-shrink:0">
+        <span id="news-tokens">0</span> tok
+      </div>
+    </div>
+  </div>
+
+  <!-- CRYPTO PRICES -->
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px" id="crypto-row">
+    <div class="card" style="padding:8px;text-align:center;border-color:#f7931a30">
+      <div style="font-size:9px;color:#f7931a;font-weight:700;font-family:monospace">BTC</div>
+      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-btc">—</div>
+      <div style="font-size:9px;font-family:monospace" id="change-btc">—</div>
+    </div>
+    <div class="card" style="padding:8px;text-align:center;border-color:#627eea30">
+      <div style="font-size:9px;color:#627eea;font-weight:700;font-family:monospace">ETH</div>
+      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-eth">—</div>
+      <div style="font-size:9px;font-family:monospace" id="change-eth">—</div>
+    </div>
+    <div class="card" style="padding:8px;text-align:center;border-color:#9945ff30">
+      <div style="font-size:9px;color:#9945ff;font-weight:700;font-family:monospace">SOL</div>
+      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-sol">—</div>
+      <div style="font-size:9px;font-family:monospace" id="change-sol">—</div>
+    </div>
+    <div class="card" style="padding:8px;text-align:center;border-color:#00ff4130">
+      <div style="font-size:9px;color:#00ff41;font-weight:700;font-family:monospace">BNB</div>
+      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-bnb">—</div>
+      <div style="font-size:9px;font-family:monospace" id="change-bnb">—</div>
+    </div>
+    <div class="card" style="padding:8px;text-align:center;border-color:#2775ca30">
+      <div style="font-size:9px;color:#2775ca;font-weight:700;font-family:monospace">XRP</div>
+      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-xrp">—</div>
+      <div style="font-size:9px;font-family:monospace" id="change-xrp">—</div>
+    </div>
+    <div class="card" style="padding:8px;text-align:center;border-color:#ffaa0030">
+      <div style="font-size:9px;color:#ffaa00;font-weight:700;font-family:monospace">CHF/USD</div>
+      <div style="font-size:13px;font-weight:700;color:#e0ffe0;font-family:monospace" id="price-chf">—</div>
+      <div style="font-size:9px;color:#2a4a2a;font-family:monospace">live</div>
     </div>
   </div>
 
@@ -877,6 +963,9 @@ function goTo(id) {
   if (id==='expenses') setTimeout(renderExpenses, 50);
   if (id==='extreme') setTimeout(renderExtreme, 50);
   if (id==='games') setTimeout(()=>selectGame('tron', document.getElementById('game-btn-tron')), 50);
+  if (id==='scraper') {}
+  if (id==='eventsai') {}
+  if (id==='emailai') {}
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1388,28 +1477,20 @@ function renderFinance() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// POLYPUSTECH HQ — REDESIGNED COMPACT OFFICE
+// POLYPUSTECH HQ — FLOOR PLAN OFFICE
 // ═══════════════════════════════════════════════════════════════
 const canvas = document.getElementById('officeCanvas');
 const ctx = canvas.getContext('2d');
-const CW = 530, CH = 260;
+const CW = 530, CH = 180; // shorter office
+var agentEnabled = {}; // declared early — will be populated after AGENT_DEFS loads
 let frame = 0;
 let officeLog = [];
 let logMsgs = [
-  'VIC is reviewing the client proposal...',
-  'GEN is working on the new website design...',
-  'VIC is on a call with a prospect...',
-  'GEN is updating the task board...',
-  'VIC is analyzing competitor data...',
-  'GEN is preparing the event presentation...',
-  'VIC is coding the new feature...',
-  'GEN is brewing coffee ☕',
-  'VIC is reviewing contracts...',
-  'GEN is doing competitor research...',
-  'VIC joined the video call...',
-  'GEN is on a client call...',
-  'VIC closed a new deal! 🎉',
-  'GEN pushed a new design live!',
+  'reviewing strategy...','on a client call...','closing a deal 🎉',
+  'designing new mockup...','pushing to GitHub...','brewing coffee ☕',
+  'analyzing market data...','scraping leads...','writing cold email...',
+  'building component...','checking trading signals...','in a meeting...',
+  'reviewing contracts...','deploying to Vercel...','coding new feature...',
 ];
 
 function addOfficeLog(msg) {
@@ -1417,29 +1498,81 @@ function addOfficeLog(msg) {
   officeLog.unshift(`[${t}] ${msg}`);
   if (officeLog.length > 30) officeLog.pop();
   const el = document.getElementById('office-log');
-  if (el) el.innerHTML = officeLog.map((l,i)=>`<div style="${i===0?'color:#649aa2':'color:#8a8680'}">${l}</div>`).join('');
+  if (el) el.innerHTML = officeLog.map((l,i)=>
+    `<div style="color:${i===0?'#00ff41':'#2a5a2a'}">${l}</div>`).join('');
 }
 
-// CHARACTERS — start at their desks
+// ── FLOOR PLAN ROOMS ─────────────────────────────────────────
+// Layout: 5 col × 2 row grid of offices + 1 meeting room
+// Row 0 (top):    [VIC] [GEN] [AI ] [SC ] [ML ]
+// Row 1 (bottom): [MEET ROOM  ] [WB ] [TR ] [VP ] [EM ]
+const HALL_Y = 118; // hallway y-center
+const WALL = 1;
+
+const ROOMS = [
+  // Top row — individual offices
+  { id:'VIC', x:22,  y:6,  w:88, h:74, color:'#649aa2', label:'VIC' },
+  { id:'GEN', x:112, y:6,  w:82, h:74, color:'#6b8f71', label:'GEN' },
+  { id:'AI',  x:196, y:6,  w:72, h:74, color:'#00ff41', label:'AI'  },
+  { id:'SC',  x:270, y:6,  w:72, h:74, color:'#ff4444', label:'SC'  },
+  { id:'ML',  x:344, y:6,  w:72, h:74, color:'#aa44ff', label:'ML'  },
+  { id:'EM',  x:418, y:6,  w:90, h:74, color:'#ff6600', label:'EM'  },
+  // Bottom row
+  { id:'MTG', x:22,  y:90, w:130, h:86, color:'#ffaa00', label:'MEETING', isMtg:true },
+  { id:'WB',  x:158, y:90, w:75,  h:86, color:'#00ccff', label:'WB'  },
+  { id:'TR',  x:235, y:90, w:75,  h:86, color:'#ffaa00', label:'TR'  },
+  { id:'VP',  x:312, y:90, w:75,  h:86, color:'#ff00aa', label:'VP'  },
+  { id:'SRV', x:389, y:90, w:119, h:86, color:'#00ff41', label:'SERVER', isServer:true },
+];
+
+// Home positions per character (center of their room)
+const HOME_POS = {
+  VIC: { x:66,  y:45  },
+  GEN: { x:153, y:45  },
+  AI:  { x:232, y:45  },
+  SC:  { x:306, y:45  },
+  ML:  { x:380, y:45  },
+  EM:  { x:463, y:45  },
+  WB:  { x:196, y:135 },
+  TR:  { x:273, y:135 },
+  VP:  { x:350, y:135 },
+};
+
+// Characters
 const CHARS = [
-  { name:'VIC', color:'#649aa2', x:118, y:115, tx:118, ty:115, hx:118, hy:115, state:'idle', timer:90, blink:0, task:'' },
-  { name:'GEN', color:'#6b8f71', x:412, y:115, tx:412, ty:115, hx:412, hy:115, state:'idle', timer:130, blink:50, task:'' },
+  { name:'VIC', color:'#649aa2', ...HOME_POS.VIC, tx:HOME_POS.VIC.x, ty:HOME_POS.VIC.y, hx:HOME_POS.VIC.x, hy:HOME_POS.VIC.y, state:'idle', timer:90,  blink:0,  task:'', size:0.45 },
+  { name:'GEN', color:'#6b8f71', ...HOME_POS.GEN, tx:HOME_POS.GEN.x, ty:HOME_POS.GEN.y, hx:HOME_POS.GEN.x, hy:HOME_POS.GEN.y, state:'idle', timer:130, blink:50, task:'', size:0.45 },
+  { name:'AI',  color:'#00ff41', ...HOME_POS.AI,  tx:HOME_POS.AI.x,  ty:HOME_POS.AI.y,  hx:HOME_POS.AI.x,  hy:HOME_POS.AI.y,  state:'idle', timer:60,  blink:20, task:'', size:0.3  },
+  { name:'SC',  color:'#ff4444', ...HOME_POS.SC,  tx:HOME_POS.SC.x,  ty:HOME_POS.SC.y,  hx:HOME_POS.SC.x,  hy:HOME_POS.SC.y,  state:'idle', timer:80,  blink:35, task:'', size:0.3  },
+  { name:'ML',  color:'#aa44ff', ...HOME_POS.ML,  tx:HOME_POS.ML.x,  ty:HOME_POS.ML.y,  hx:HOME_POS.ML.x,  hy:HOME_POS.ML.y,  state:'idle', timer:70,  blink:10, task:'', size:0.3  },
+  { name:'EM',  color:'#ff6600', ...HOME_POS.EM,  tx:HOME_POS.EM.x,  ty:HOME_POS.EM.y,  hx:HOME_POS.EM.x,  hy:HOME_POS.EM.y,  state:'idle', timer:110, blink:25, task:'', size:0.3  },
+  { name:'WB',  color:'#00ccff', ...HOME_POS.WB,  tx:HOME_POS.WB.x,  ty:HOME_POS.WB.y,  hx:HOME_POS.WB.x,  hy:HOME_POS.WB.y,  state:'idle', timer:95,  blink:45, task:'', size:0.3  },
+  { name:'TR',  color:'#ffaa00', ...HOME_POS.TR,  tx:HOME_POS.TR.x,  ty:HOME_POS.TR.y,  hx:HOME_POS.TR.x,  hy:HOME_POS.TR.y,  state:'idle', timer:75,  blink:60, task:'', size:0.3  },
+  { name:'VP',  color:'#ff00aa', ...HOME_POS.VP,  tx:HOME_POS.VP.x,  ty:HOME_POS.VP.y,  hx:HOME_POS.VP.x,  hy:HOME_POS.VP.y,  state:'idle', timer:115, blink:15, task:'', size:0.3  },
 ];
 
-const WALK_ZONES = [
-  { x:90,  y:90,  w:110, h:80  }, // VIC desk area
-  { x:330, y:90,  w:120, h:80  }, // GEN desk area
-  { x:200, y:155, w:130, h:60  }, // center / meeting
-  { x:100, y:195, w:80,  h:50  }, // kitchen zone
-  { x:360, y:195, w:80,  h:50  }, // right zone
-];
+const agentTaskMap = {
+  VIC: ['on a client call...','reviewing proposals...','closing a deal 🎉','writing strategy...'],
+  GEN: ['designing mockup...','pushing design live!','in Figma...','brewing coffee ☕'],
+  AI:  ['planning AI roadmap...','analyzing competitor tech...','building automation...'],
+  SC:  ['scraping Swiss leads...','analyzing 47 prospects...','updating CRM...'],
+  ML:  ['writing cold email...','personalising outreach...','scheduling 300 sends...'],
+  EM:  ['sending via Brevo...','A/B testing subject lines...','tracking open rates...'],
+  WB:  ['deploying to Vercel...','pushing to GitHub...','building component...'],
+  TR:  ['analyzing EURUSD...','checking RSI...','calculating R:R...'],
+  VP:  ['planning CEO agenda...','reviewing contracts...','preparing pitch deck...'],
+};
 
-function randomPos() {
-  const z = WALK_ZONES[Math.floor(Math.random()*WALK_ZONES.length)];
-  return { x: z.x + Math.random()*z.w, y: z.y + Math.random()*z.h };
+// Walk zones per character (confined to their office + hallway)
+function randomPos(charName) {
+  // Occasionally walk to meeting room
+  if (Math.random() < 0.15) return { x:75+Math.random()*80, y:150+Math.random()*80 };
+  const h = HOME_POS[charName];
+  if (!h) return { x:260, y:185 };
+  return { x: h.x + (Math.random()-0.5)*24, y: h.y + (Math.random()-0.5)*24 };
 }
 
-// ── DRAW HELPERS ──────────────────────────────────────────────
+// ── DRAW HELPERS ─────────────────────────────────────────────
 function rr(ctx, x, y, w, h, r) {
   ctx.beginPath();
   ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
@@ -1449,58 +1582,51 @@ function rr(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
+function drawDesk(ctx, x, y, color, w, h) {
+  w = w||26; h = h||18;
+  // Desk surface
+  ctx.fillStyle='#0d1a0d'; ctx.strokeStyle=color+'50'; ctx.lineWidth=1;
+  ctx.shadowColor=color; ctx.shadowBlur=3;
+  rr(ctx,x-w/2,y-h/2,w,h,3); ctx.fill(); ctx.stroke();
+  ctx.shadowBlur=0;
+  // Monitor
+  ctx.fillStyle='#050f05'; ctx.strokeStyle=color+'40'; ctx.lineWidth=0.8;
+  rr(ctx,x-7,y-h/2-9,14,8,1); ctx.fill(); ctx.stroke();
+  // Screen glow
+  ctx.fillStyle=color+'20'; ctx.fillRect(x-6,y-h/2-8,12,6);
+  // Cursor blink
+  if(frame%60<30){ctx.fillStyle=color;ctx.fillRect(x-4,y-h/2-4,2,1);}
+  // Stand
+  ctx.fillStyle='#1a1a1a'; ctx.fillRect(x-1,y-h/2-1,2,3);
+}
+
 function drawOcto(ctx, x, y, color, blink, busy, scale) {
-  scale = scale || 0.5;
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(scale, scale);
-  // Tentacles
-  for (let t=0; t<8; t++) {
-    const a = (t/8)*Math.PI*2;
-    const w = Math.sin(frame*0.07+t*0.9)*3;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2.5;
-    ctx.lineCap = 'round';
-    ctx.globalAlpha = 0.65;
+  scale = scale||0.4;
+  ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
+  for(let t=0;t<8;t++){
+    const a=(t/8)*Math.PI*2, w=Math.sin(frame*0.07+t*0.9)*3;
+    ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.globalAlpha=0.65;
     ctx.beginPath();
-    ctx.moveTo(Math.cos(a)*7, Math.sin(a)*7+3);
-    ctx.quadraticCurveTo(Math.cos(a)*11+w*0.4, Math.sin(a)*11+5, Math.cos(a)*16+w, Math.sin(a)*16+8);
-    ctx.stroke();
-    ctx.globalAlpha = 0.3;
-    ctx.fillStyle = '#fff';
-    ctx.beginPath();
-    ctx.arc(Math.cos(a)*13, Math.sin(a)*13+6, 1.2, 0, Math.PI*2);
-    ctx.fill();
+    ctx.moveTo(Math.cos(a)*7,Math.sin(a)*7+3);
+    ctx.quadraticCurveTo(Math.cos(a)*11+w*0.4,Math.sin(a)*11+5,Math.cos(a)*16+w,Math.sin(a)*16+8);
+    ctx.stroke(); ctx.globalAlpha=0.3; ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.arc(Math.cos(a)*13,Math.sin(a)*13+6,1.2,0,Math.PI*2); ctx.fill();
   }
-  ctx.globalAlpha = 1;
-  // Glow
-  ctx.fillStyle = color; ctx.globalAlpha = 0.12;
-  ctx.beginPath(); ctx.arc(0,-2,15,0,Math.PI*2); ctx.fill();
-  ctx.globalAlpha = 1;
-  // Body gradient
-  const g = ctx.createRadialGradient(-2,-5,1,0,-2,10);
-  g.addColorStop(0, color); g.addColorStop(1, color+'bb');
-  ctx.fillStyle = g;
-  ctx.beginPath(); ctx.ellipse(0,-2,10,11,0,0,Math.PI*2); ctx.fill();
-  // Shine
-  ctx.fillStyle='#ffffff30';
-  ctx.beginPath(); ctx.ellipse(-3,-6,4,2.5,-0.5,0,Math.PI*2); ctx.fill();
-  // Eyes
-  if (blink%110 < 5) {
-    ctx.fillStyle='#fff6'; ctx.fillRect(-4,-5,3,1.5); ctx.fillRect(1,-5,3,1.5);
-  } else {
-    ctx.fillStyle='#fff';
-    ctx.beginPath(); ctx.arc(-2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
+  ctx.globalAlpha=1;
+  const g=ctx.createRadialGradient(-2,-5,1,0,-2,10);
+  g.addColorStop(0,color); g.addColorStop(1,color+'bb');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.ellipse(0,-2,10,11,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#ffffff28'; ctx.beginPath(); ctx.ellipse(-3,-6,4,2.5,-0.5,0,Math.PI*2); ctx.fill();
+  if(blink%110<5){ctx.fillStyle='#fff5'; ctx.fillRect(-4,-5,3,1.5); ctx.fillRect(1,-5,3,1.5);}
+  else{
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(-2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.arc(2.5,-4.5,2.2,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#1a1a1a';
-    ctx.beginPath(); ctx.arc(-2,-4.5,1,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.arc(-2,-4.5,1,0,Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.arc(3,-4.5,1,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#fff';
-    ctx.beginPath(); ctx.arc(-1.5,-5,0.45,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(-1.5,-5,0.45,0,Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.arc(3.5,-5,0.45,0,Math.PI*2); ctx.fill();
   }
-  // Busy ring
-  if (busy) {
+  if(busy){
     ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.globalAlpha=0.5; ctx.setLineDash([2,4]);
     ctx.beginPath(); ctx.arc(0,-2,16,frame*0.08,frame*0.08+Math.PI*1.5); ctx.stroke();
     ctx.setLineDash([]); ctx.globalAlpha=1;
@@ -1508,391 +1634,189 @@ function drawOcto(ctx, x, y, color, blink, busy, scale) {
   ctx.restore();
 }
 
-// ── MAIN RENDER ───────────────────────────────────────────────
+// ── RENDER ───────────────────────────────────────────────────
 function renderOffice() {
-  // BG — warm cream / off-white
-  ctx.fillStyle = '#f5f2ed';
-  ctx.fillRect(0,0,CW,CH);
-
-  // Subtle floor tiles
-  ctx.strokeStyle = '#ede9e3';
-  ctx.lineWidth = 0.5;
-  for (let x=0; x<CW; x+=30) {
-    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke();
-  }
-  for (let y=0; y<CH; y+=30) {
-    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke();
+  // Background floor — dark Razer hex
+  ctx.fillStyle='#050f05'; ctx.fillRect(0,0,CW,CH);
+  ctx.strokeStyle='#00ff4106'; ctx.lineWidth=0.5;
+  const HS=14;
+  for(let gx=0;gx<CW;gx+=HS*1.5) for(let gy=0;gy<CH;gy+=HS){
+    const ox=(Math.floor(gy/HS)%2===0)?0:HS*0.75;
+    ctx.beginPath();
+    ctx.moveTo(gx+ox+HS*0.5,gy); ctx.lineTo(gx+ox+HS,gy+HS*0.5);
+    ctx.lineTo(gx+ox+HS*0.5,gy+HS); ctx.lineTo(gx+ox,gy+HS*0.5); ctx.closePath();
+    ctx.stroke();
   }
 
-  // ── BACK WALL ──
-  ctx.fillStyle = '#e8e4dc';
-  ctx.fillRect(0, 0, CW, 72);
-  ctx.strokeStyle = '#d9d4cc';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(0,72); ctx.lineTo(CW,72); ctx.stroke();
+  // Hallway
+  ctx.fillStyle='#080f08';
+  ctx.fillRect(22, 80, 486, 10);
+  ctx.strokeStyle='#00ff4115'; ctx.lineWidth=0.5;
+  ctx.strokeRect(22,80,486,10);
 
-  // Wall baseboard
-  ctx.fillStyle = '#d4cfc6';
-  ctx.fillRect(0, 68, CW, 4);
-
-  // Window left
-  ctx.fillStyle = '#ddf0f8';
-  ctx.strokeStyle = '#b8d4e0';
-  ctx.lineWidth = 1.5;
-  rr(ctx, 30, 10, 80, 52, 4); ctx.fill(); ctx.stroke();
-  // Window frame
-  ctx.strokeStyle = '#a8c4d0'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(70,10); ctx.lineTo(70,62); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(30,36); ctx.lineTo(110,36); ctx.stroke();
-  // Window light rays
-  ctx.fillStyle = '#ffffff30';
-  [[35,12,60,62],[72,12,108,62]].forEach(([x1,y1,x2,y2])=>{
-    ctx.fillStyle='#ffffff20';
-    ctx.fillRect(x1,y1,x2-x1,y2-y1);
-  });
-  // Window plants on sill
-  ctx.fillStyle='#8b6914'; ctx.fillRect(32,60,6,8);
-  ctx.fillStyle='#6b8f71';
-  ctx.beginPath(); ctx.arc(35,58,8,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#5a7e60';
-  ctx.beginPath(); ctx.arc(40,56,5,0,Math.PI*2); ctx.fill();
-
-  // Window right
-  ctx.fillStyle = '#ddf0f8';
-  ctx.strokeStyle = '#b8d4e0'; ctx.lineWidth = 1.5;
-  rr(ctx, CW-110, 10, 80, 52, 4); ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = '#a8c4d0'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(CW-70,10); ctx.lineTo(CW-70,62); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(CW-110,36); ctx.lineTo(CW-30,36); ctx.stroke();
-  ctx.fillStyle='#8b6914'; ctx.fillRect(CW-38,60,6,8);
-  ctx.fillStyle='#6b8f71';
-  ctx.beginPath(); ctx.arc(CW-35,58,8,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#5a7e60';
-  ctx.beginPath(); ctx.arc(CW-40,56,5,0,Math.PI*2); ctx.fill();
-
-  // Center wall sign: POLYPUSTECH
-  ctx.fillStyle = '#c8b898';
-  rr(ctx, 195, 12, 140, 46, 6); ctx.fill();
-  ctx.strokeStyle = '#b8a888'; ctx.lineWidth = 1;
-  rr(ctx, 195, 12, 140, 46, 6); ctx.stroke();
-  ctx.fillStyle = '#649aa2';
-  ctx.font = 'bold 11px DM Sans, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.shadowColor = '#649aa2';
-  ctx.shadowBlur = 4;
-  ctx.fillText('🐙 PolypusTech', 265, 32);
-  ctx.shadowBlur = 0;
-  ctx.fillStyle = '#8a8680';
-  ctx.font = '8px DM Sans, sans-serif';
-  ctx.fillText('polypustech.ch', 265, 46);
-  ctx.textAlign = 'left';
-
-  // ── LEFT WALL ──
-  ctx.fillStyle = '#ece7de';
-  ctx.fillRect(0, 0, 22, CH);
-  ctx.strokeStyle = '#d9d4cc'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(22,0); ctx.lineTo(22,CH); ctx.stroke();
-
-  // ── RIGHT WALL ──
-  ctx.fillStyle = '#ece7de';
-  ctx.fillRect(CW-22, 0, 22, CH);
-  ctx.beginPath(); ctx.moveTo(CW-22,0); ctx.lineTo(CW-22,CH); ctx.stroke();
-
-  // ── VIC DESK (left, against wall) ──
-  // Desk surface
-  ctx.fillStyle = '#d4c8b0';
-  ctx.strokeStyle = '#c4b8a0'; ctx.lineWidth = 1.5;
-  rr(ctx, 28, 98, 170, 52, 6); ctx.fill(); ctx.stroke();
-  // Desk top edge (3D effect)
-  ctx.fillStyle = '#c4b8a0';
-  rr(ctx, 28, 98, 170, 6, 3); ctx.fill();
-
-  // VIC Monitor
-  ctx.fillStyle = '#1a1a1a';
-  ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
-  rr(ctx, 55, 68, 90, 34, 3); ctx.fill(); ctx.stroke();
-  // Screen
-  ctx.fillStyle = '#0d1a2d';
-  rr(ctx, 58, 71, 84, 28, 2); ctx.fill();
-  // Screen content — code
-  ctx.fillStyle = '#649aa250';
-  ctx.font = '5px monospace';
-  ['const api = Claude()', 'await leads.scrape()', 'deploy → vercel ✓'].forEach((l,i)=>{
-    ctx.fillStyle = i===2 ? '#6b8f7180' : '#649aa260';
-    ctx.fillText(l, 62, 78+i*8);
-  });
-  // Monitor stand
-  ctx.fillStyle = '#333';
-  ctx.fillRect(96, 102, 8, 6);
-  ctx.fillRect(90, 108, 20, 3);
-  // Cursor blink
-  if (frame%60 < 30) {
-    ctx.fillStyle = '#649aa2'; ctx.fillRect(62, 92, 4, 2);
-  }
-
-  // Keyboard
-  ctx.fillStyle = '#2a2a2a';
-  ctx.strokeStyle = '#444'; ctx.lineWidth = 0.5;
-  rr(ctx, 36, 116, 95, 14, 3); ctx.fill(); ctx.stroke();
-  // Keys with teal glow
-  for (let k=0; k<9; k++) {
-    ctx.fillStyle = `rgba(100,154,162,${0.3+Math.sin(frame*0.08+k)*0.15})`;
-    rr(ctx, 39+k*9.5, 118, 7, 9, 1); ctx.fill();
-  }
-  // Space bar
-  ctx.fillStyle = 'rgba(100,154,162,0.4)';
-  rr(ctx, 50, 128, 55, 0, 1); ctx.fill();
-
-  // Mouse
-  ctx.fillStyle = '#2a2a2a';
-  ctx.strokeStyle = '#444';
-  rr(ctx, 140, 116, 18, 24, 7); ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = '#649aa250'; ctx.lineWidth = 0.8;
-  ctx.beginPath(); ctx.moveTo(149,116); ctx.lineTo(149,128); ctx.stroke();
-
-  // Coffee mug VIC
-  ctx.fillStyle = '#649aa2';
-  rr(ctx, 165, 108, 16, 18, 3); ctx.fill();
-  ctx.fillStyle = '#4a7a82';
-  ctx.fillRect(167,110,12,3); // coffee
-  ctx.strokeStyle = '#649aa280'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(181,112); ctx.quadraticCurveTo(188,112,188,118); ctx.quadraticCurveTo(188,124,181,124); ctx.stroke(); // handle
-  // Steam
-  ctx.strokeStyle = '#888'; ctx.lineWidth = 0.8;
-  if (frame%60 < 40) {
-    ctx.beginPath(); ctx.moveTo(170,108); ctx.quadraticCurveTo(167,102,170,96); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(176,108); ctx.quadraticCurveTo(179,102,176,96); ctx.stroke();
-  }
-  // VIC nameplate
-  ctx.fillStyle = '#649aa2';
-  ctx.font = 'bold 8px DM Sans, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('VIC', 113, 155);
-
-  // ── GEN DESK (right, against wall) ──
-  ctx.fillStyle = '#d4c8b0';
-  ctx.strokeStyle = '#c4b8a0'; ctx.lineWidth = 1.5;
-  rr(ctx, CW-198, 98, 170, 52, 6); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#c4b8a0';
-  rr(ctx, CW-198, 98, 170, 6, 3); ctx.fill();
-
-  // GEN Monitor
-  ctx.fillStyle = '#1a1a1a';
-  ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
-  rr(ctx, CW-195, 68, 90, 34, 3); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#1a1a0a';
-  rr(ctx, CW-192, 71, 84, 28, 2); ctx.fill();
-  // Design tool screen
-  ctx.fillStyle = '#6b8f7130';
-  ctx.fillRect(CW-190, 73, 80, 24);
-  ctx.fillStyle = '#6b8f71';
-  ctx.font = '5px monospace';
-  ['Figma — design v3', 'client_final_v3.fig', 'export → live ✓'].forEach((l,i)=>{
-    ctx.fillStyle = i===2 ? '#6b8f71aa' : '#6b8f7170';
-    ctx.fillText(l, CW-188, 79+i*8);
-  });
-  ctx.fillStyle = '#333';
-  ctx.fillRect(CW-155, 102, 8, 6);
-  ctx.fillRect(CW-161, 108, 20, 3);
-  if (frame%60 < 30) {
-    ctx.fillStyle = '#6b8f71'; ctx.fillRect(CW-188, 92, 4, 2);
-  }
-
-  // GEN Keyboard
-  ctx.fillStyle = '#2a2a2a';
-  ctx.strokeStyle = '#444'; ctx.lineWidth = 0.5;
-  rr(ctx, CW-195, 116, 95, 14, 3); ctx.fill(); ctx.stroke();
-  for (let k=0; k<9; k++) {
-    ctx.fillStyle = `rgba(107,143,113,${0.3+Math.sin(frame*0.08+k)*0.15})`;
-    rr(ctx, CW-192+k*9.5, 118, 7, 9, 1); ctx.fill();
-  }
-  ctx.fillStyle = 'rgba(107,143,113,0.4)';
-  rr(ctx, CW-180, 128, 55, 0, 1); ctx.fill();
-
-  // GEN Mouse
-  ctx.fillStyle = '#2a2a2a'; ctx.strokeStyle = '#444';
-  rr(ctx, CW-108, 116, 18, 24, 7); ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = '#6b8f7150'; ctx.lineWidth = 0.8;
-  ctx.beginPath(); ctx.moveTo(CW-99,116); ctx.lineTo(CW-99,128); ctx.stroke();
-
-  // Coffee mug GEN
-  ctx.fillStyle = '#6b8f71';
-  rr(ctx, CW-86, 108, 16, 18, 3); ctx.fill();
-  ctx.fillStyle = '#4a6b4f';
-  ctx.fillRect(CW-84, 110, 12, 3);
-  ctx.strokeStyle = '#6b8f7180'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(CW-70,112); ctx.quadraticCurveTo(CW-63,112,CW-63,118); ctx.quadraticCurveTo(CW-63,124,CW-70,124); ctx.stroke();
-  if (frame%60 < 40) {
-    ctx.strokeStyle = '#888'; ctx.lineWidth = 0.8;
-    ctx.beginPath(); ctx.moveTo(CW-81,108); ctx.quadraticCurveTo(CW-84,102,CW-81,96); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(CW-75,108); ctx.quadraticCurveTo(CW-72,102,CW-75,96); ctx.stroke();
-  }
-  ctx.fillStyle = '#6b8f71';
-  ctx.font = 'bold 8px DM Sans, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('GEN', CW-113, 155);
-
-  // ── CENTER ZONE — Meeting Table ──
-  // Rug under table
-  ctx.fillStyle = '#e0d8cc';
-  ctx.strokeStyle = '#c8c0b4'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.ellipse(265, 185, 95, 48, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  // Rug inner
-  ctx.strokeStyle = '#b8a898'; ctx.lineWidth = 0.5;
-  ctx.beginPath(); ctx.ellipse(265, 185, 80, 38, 0, 0, Math.PI*2); ctx.stroke();
-
-  // Meeting table
-  ctx.fillStyle = '#c4b090';
-  ctx.strokeStyle = '#b0a080'; ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.ellipse(265, 183, 65, 30, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  // Table shine
-  ctx.fillStyle = '#ffffff15';
-  ctx.beginPath(); ctx.ellipse(255, 175, 30, 12, -0.3, 0, Math.PI*2); ctx.fill();
-  // Table edge shadow
-  ctx.fillStyle = '#00000015';
-  ctx.beginPath(); ctx.ellipse(265, 190, 65, 12, 0, 0, Math.PI*2); ctx.fill();
-
-  // Items on table
-  // Laptop
-  ctx.fillStyle = '#1a1a1a'; ctx.strokeStyle = '#333'; ctx.lineWidth = 0.8;
-  rr(ctx, 242, 173, 36, 24, 2); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#649aa215';
-  ctx.fillRect(244, 175, 32, 20);
-  ctx.fillStyle = '#649aa2';
-  ctx.font = '5px monospace'; ctx.textAlign = 'center';
-  ctx.fillText('PP', 260, 186);
-  // Notebook
-  ctx.fillStyle = '#f5f0e8'; ctx.strokeStyle = '#e0dbd2'; ctx.lineWidth = 0.8;
-  rr(ctx, 278, 175, 28, 20, 2); ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = '#c8c0b4'; ctx.lineWidth = 0.5;
-  [179,183,187,191].forEach(y=>{ ctx.beginPath(); ctx.moveTo(281,y); ctx.lineTo(304,y); ctx.stroke(); });
-  // Pen
-  ctx.fillStyle = '#649aa2'; ctx.strokeStyle = '#4a7a82'; ctx.lineWidth = 0.5;
-  ctx.fillRect(308, 175, 3, 18); ctx.strokeRect(308, 175, 3, 18);
-  // Water bottle
-  ctx.fillStyle = '#e6f2f4'; ctx.strokeStyle = '#b0d0d8'; ctx.lineWidth = 0.8;
-  rr(ctx, 232, 174, 9, 22, 3); ctx.fill(); ctx.stroke();
-
-  // Chairs around table
-  const chairPositions = [
-    {x:265, y:148, r:0},    // top
-    {x:265, y:218, r:Math.PI}, // bottom
-    {x:196, y:183, r:-Math.PI/2}, // left
-    {x:334, y:183, r:Math.PI/2},  // right
-  ];
-  chairPositions.forEach(ch=>{
-    ctx.save(); ctx.translate(ch.x, ch.y); ctx.rotate(ch.r);
-    ctx.fillStyle = '#b8a898'; ctx.strokeStyle = '#a89888'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.ellipse(0, 0, 14, 9, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#c8b8a8';
-    ctx.fillRect(-12, -14, 24, 7);
-    ctx.restore();
-  });
-
-  // ── BOTTOM WALL ELEMENTS ──
-  // Left bookshelf
-  ctx.fillStyle = '#c8b898'; ctx.strokeStyle = '#b8a888'; ctx.lineWidth = 1;
-  rr(ctx, 24, 170, 60, 82, 4); ctx.fill(); ctx.stroke();
-  // Shelf dividers
-  ctx.strokeStyle = '#b0a080'; ctx.lineWidth = 0.5;
-  [195, 220, 245].forEach(y=>{
-    ctx.beginPath(); ctx.moveTo(26,y); ctx.lineTo(82,y); ctx.stroke();
-  });
-  // Books on shelves
-  const bookColors = ['#649aa2','#c07070','#6b8f71','#b89a60','#8a7ba8','#649aa2','#c07070','#6b8f71','#b89a60'];
-  bookColors.forEach((c,i)=>{
-    const bx = 27 + (i%7)*7;
-    const by = 174 + Math.floor(i/7)*25;
-    ctx.fillStyle = c;
-    ctx.fillRect(bx, by, 5, 18);
-  });
-  // Top of shelf - small plant
-  ctx.fillStyle='#8b6914'; ctx.fillRect(60, 164, 5, 8);
-  ctx.fillStyle='#6b8f71'; ctx.beginPath(); ctx.arc(62, 162, 8, 0, Math.PI*2); ctx.fill();
-
-  // Right side — small whiteboard
-  ctx.fillStyle = '#f8f8f0'; ctx.strokeStyle = '#d0ccc4'; ctx.lineWidth = 1.5;
-  rr(ctx, CW-80, 80, 58, 80, 4); ctx.fill(); ctx.stroke();
-  // Whiteboard frame
-  ctx.fillStyle = '#c8b898';
-  rr(ctx, CW-80, 80, 58, 6, 3); ctx.fill();
-  rr(ctx, CW-80, 154, 58, 6, 3); ctx.fill();
-  // Whiteboard content
-  ctx.strokeStyle = '#649aa270'; ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.moveTo(CW-74, 98); ctx.lineTo(CW-28, 98); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(CW-74, 108); ctx.lineTo(CW-35, 108); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(CW-74, 118); ctx.lineTo(CW-40, 118); ctx.stroke();
-  ctx.strokeStyle = '#c0707060'; ctx.lineWidth = 2;
-  // Small chart
-  ctx.beginPath(); ctx.moveTo(CW-72,148); ctx.lineTo(CW-72,128); ctx.lineTo(CW-60,132); ctx.lineTo(CW-50,124); ctx.lineTo(CW-38,120); ctx.lineTo(CW-30,115); ctx.stroke();
-  ctx.fillStyle = '#649aa2';
-  ctx.font = 'bold 7px DM Sans, sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('GOALS', CW-51, 91);
-  ctx.textAlign = 'left';
-  // Whiteboard marker tray
-  ctx.fillStyle = '#e0dbd2'; ctx.lineWidth = 0.8;
-  ctx.fillRect(CW-78, 152, 54, 4);
-  ['#c07070','#649aa2','#6b8f71'].forEach((c,i)=>{
-    ctx.fillStyle = c;
-    ctx.fillRect(CW-75+i*10, 152, 7, 4);
-  });
-
-  // ── CHARACTERS ──
-  CHARS.forEach(c => {
-    const bob = (c.state==='walk') ? Math.sin(frame*0.25)*2 : Math.sin(frame*0.04)*0.7;
-    drawOcto(ctx, c.x, c.y+bob, c.color, c.blink, c.state==='task', 0.5);
-    // Progress bar when busy
-    if (c.state==='task' && c.task) {
-      const pct = Math.min(0.95, 1 - c.timer/150);
-      ctx.fillStyle = '#ede9e3';
-      rr(ctx, c.x-22, c.y-26, 44, 5, 2); ctx.fill();
-      ctx.fillStyle = c.color;
-      rr(ctx, c.x-22, c.y-26, 44*pct, 5, 2); ctx.fill();
-    }
-    // Name
-    ctx.fillStyle = c.color;
-    ctx.font = 'bold 7px DM Sans, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.shadowColor = c.color; ctx.shadowBlur = 3;
-    ctx.fillText(c.name, c.x, c.y - 16);
+  // Draw rooms
+  ROOMS.forEach(r => {
+    // Room fill
+    ctx.fillStyle = r.color+'08';
+    ctx.strokeStyle = r.color+'35';
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = r.color; ctx.shadowBlur = 4;
+    rr(ctx, r.x, r.y, r.w, r.h, 3); ctx.fill(); ctx.stroke();
     ctx.shadowBlur = 0;
+
+    // Room top label bar
+    ctx.fillStyle = r.color+'20';
+    rr(ctx, r.x, r.y, r.w, 12, 3); ctx.fill();
+    ctx.fillStyle = r.color;
+    ctx.font = `bold ${r.isMtg||r.isServer?8:7}px monospace`;
+    ctx.textAlign = 'center';
+    ctx.shadowColor = r.color; ctx.shadowBlur = 3;
+    ctx.fillText(r.isMtg ? '⚡ MEETING' : r.isServer ? '🖥 SERVERS' : r.label, r.x+r.w/2, r.y+8.5);
+    ctx.shadowBlur = 0;
+
+    // Draw room furniture
+    const cx = r.x + r.w/2;
+    const cy = r.y + r.h/2 + 6;
+
+    if (r.isMtg) {
+      // Meeting table — oval
+      ctx.fillStyle='#0d2a0d'; ctx.strokeStyle='#ffaa0040'; ctx.lineWidth=1;
+      ctx.shadowColor='#ffaa00'; ctx.shadowBlur=4;
+      ctx.beginPath(); ctx.ellipse(cx, cy+4, 44, 20, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.shadowBlur=0;
+      // Chairs
+      [[cx,cy-16],[cx-34,cy+4],[cx+34,cy+4],[cx-20,cy-13],[cx+20,cy-13]].forEach(([px,py])=>{
+        ctx.fillStyle='#1a2a1a'; ctx.strokeStyle='#ffaa0025'; ctx.lineWidth=0.5;
+        ctx.beginPath(); ctx.ellipse(px,py,5,3,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      });
+      // Projector screen
+      ctx.fillStyle='#0a1a0a'; ctx.strokeStyle='#ffaa0030'; ctx.lineWidth=1;
+      ctx.fillRect(r.x+6,r.y+13,r.w-12,16); ctx.strokeRect(r.x+6,r.y+13,r.w-12,16);
+      ctx.fillStyle='#ffaa0020'; ctx.fillRect(r.x+7,r.y+14,r.w-14,14);
+      ctx.fillStyle='#ffaa00'; ctx.font='5px monospace'; ctx.textAlign='center';
+      ctx.fillText('STRATEGY', cx, r.y+23);
+      [4,6,5,8,5,9].forEach((h,i)=>{
+        ctx.fillStyle=`rgba(255,170,0,${0.3+Math.sin(frame*0.05+i)*0.2})`;
+        ctx.fillRect(r.x+10+i*16,r.y+27-h,12,h);
+      });
+    } else if (r.isServer) {
+      // Server racks
+      for(let si=0;si<3;si++){
+        ctx.fillStyle='#0a0a0a'; ctx.strokeStyle='#00ff4130'; ctx.lineWidth=0.8;
+        rr(ctx,r.x+8+si*30,r.y+15,24,100,2); ctx.fill(); ctx.stroke();
+        // Rack lights
+        for(let li=0;li<8;li++){
+          const on = (frame+si*3+li*7)%30 < 20;
+          ctx.fillStyle=on?'#00ff41':'#003300';
+          ctx.beginPath(); ctx.arc(r.x+14+si*30,r.y+22+li*11,2,0,Math.PI*2); ctx.fill();
+          if(on){ctx.shadowColor='#00ff41';ctx.shadowBlur=4;ctx.fill();ctx.shadowBlur=0;}
+        }
+        // Blinking activity light
+        if((frame+si*17)%60<30){
+          ctx.fillStyle='#ff4444'; ctx.shadowColor='#ff4444'; ctx.shadowBlur=3;
+          ctx.beginPath(); ctx.arc(r.x+24+si*30,r.y+22,2,0,Math.PI*2); ctx.fill();
+          ctx.shadowBlur=0;
+        }
+      }
+    } else {
+      // Regular office — desk + monitor
+      const col = ROOMS.indexOf(r) < 6 ? r.color : r.color;
+      drawDesk(ctx, cx, cy, r.color);
+      // Small bookshelf on wall
+      ctx.fillStyle='#0a1a0a'; ctx.strokeStyle=r.color+'20'; ctx.lineWidth=0.5;
+      ctx.fillRect(r.x+3,r.y+15,8,r.h-22); ctx.strokeRect(r.x+3,r.y+15,8,r.h-22);
+      ['#649aa2','#ff4444','#aa44ff','#ffaa00','#00ccff'].slice(0,3).forEach((bc,bi)=>{
+        ctx.fillStyle=bc+'80';
+        ctx.fillRect(r.x+4,r.y+18+bi*12,6,10);
+      });
+      // Coffee mug
+      ctx.fillStyle=r.color+'80'; ctx.strokeStyle=r.color+'40'; ctx.lineWidth=0.5;
+      rr(ctx,r.x+r.w-10,r.y+r.h-12,7,8,2); ctx.fill(); ctx.stroke();
+    }
   });
-  ctx.textAlign = 'left';
+
+  ctx.textAlign='left';
+
+  // PolypusTech logo in hallway
+  ctx.fillStyle='#00ff41'; ctx.font='bold 6px monospace'; ctx.textAlign='center';
+  ctx.shadowColor='#00ff41'; ctx.shadowBlur=4;
+  ctx.fillText('🐙 POLYPUSTECH HQ', CW/2, 87);
+  ctx.shadowBlur=0; ctx.textAlign='left';
+
+  // Door gaps
+  ROOMS.filter(r=>!r.isMtg&&!r.isServer).forEach(r=>{
+    const doorX = r.x+r.w/2-5;
+    const isTop = r.y < 50;
+    const doorY = isTop ? r.y+r.h-1 : r.y-1;
+    ctx.fillStyle='#080f08';
+    ctx.fillRect(doorX, doorY, 10, 3);
+    ctx.strokeStyle='#00ff4120'; ctx.lineWidth=0.5;
+    ctx.beginPath(); ctx.moveTo(doorX,doorY); ctx.lineTo(doorX,doorY+3); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(doorX+10,doorY); ctx.lineTo(doorX+10,doorY+3); ctx.stroke();
+  });
+
+  // Neon bottom strip
+  ctx.shadowColor='#00ff41'; ctx.shadowBlur=6;
+  ctx.strokeStyle=`rgba(0,255,65,${0.12+Math.sin(frame*0.03)*0.04})`; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(0,CH-2); ctx.lineTo(CW,CH-2); ctx.stroke();
+  ctx.shadowBlur=0;
+
+  // ── DRAW CHARACTERS ──
+  CHARS.forEach(c=>{
+    const bob=(c.state==='walk'?Math.sin(frame*0.25)*1.5:Math.sin(frame*0.04)*0.5);
+    const enabled = typeof agentEnabled!=='undefined' ? agentEnabled[c.name]!==false : true;
+    drawOcto(ctx,c.x,c.y+bob,c.color,c.blink,c.state==='task'&&enabled,c.size||0.4);
+    // Progress bar when working
+    if(c.state==='task'&&enabled&&c.task){
+      const pct=Math.min(0.95,1-c.timer/140);
+      ctx.fillStyle='#0a1a0a'; rr(ctx,c.x-14,c.y-14,28,4,2); ctx.fill();
+      ctx.fillStyle=c.color; rr(ctx,c.x-14,c.y-14,28*pct,4,2); ctx.fill();
+    }
+    // Name tag
+    ctx.fillStyle=c.color; ctx.font=`bold ${c.size>0.35?8:7}px monospace`;
+    ctx.textAlign='center'; ctx.shadowColor=c.color; ctx.shadowBlur=3;
+    ctx.fillText(c.name,c.x,c.y-(c.size>0.35?12:10));
+    ctx.shadowBlur=0;
+    // Dim if disabled
+    if(!enabled){
+      ctx.fillStyle='rgba(0,0,0,0.55)';
+      const s=(c.size||0.4)*18;
+      ctx.fillRect(c.x-s,c.y-s-5,s*2,s*2+8);
+    }
+  });
+  ctx.textAlign='left';
 }
 
-// ── TICK ──────────────────────────────────────────────────────
+// ── TICK ────────────────────────────────────────────────────
 function tickChars() {
-  CHARS.forEach((c, i) => {
-    c.blink++;
-    c.timer--;
-    const dx=c.tx-c.x, dy=c.ty-c.y;
-    if (Math.sqrt(dx*dx+dy*dy)>1.5) { c.x+=dx*0.07; c.y+=dy*0.07; }
+  CHARS.forEach(c=>{
+    c.blink++; c.timer--;
+    const dx=c.tx-c.x,dy=c.ty-c.y;
+    if(Math.sqrt(dx*dx+dy*dy)>1) { c.x+=dx*0.08; c.y+=dy*0.08; }
     else { c.x=c.tx; c.y=c.ty; }
 
-    if (c.timer<=0) {
+    if(c.timer<=0){
+      const enabled=typeof agentEnabled!=='undefined'?agentEnabled[c.name]!==false:true;
       const roll=Math.random();
-      if (c.state==='idle') {
-        if (roll<0.2) {
-          const pos = randomPos();
+      if(c.state==='idle'){
+        if(roll<0.18){
+          const pos=randomPos(c.name);
           c.tx=pos.x; c.ty=pos.y;
-          c.state='walk'; c.timer=60+Math.random()*50;
-        } else if (roll<0.55) {
+          c.state='walk'; c.timer=50+Math.random()*40;
+        } else if(roll<0.5&&enabled){
           c.state='task';
-          c.task = logMsgs[Math.floor(Math.random()*logMsgs.length)];
-          c.timer=80+Math.random()*60;
+          const tasks=agentTaskMap[c.name]||logMsgs;
+          c.task=tasks[Math.floor(Math.random()*tasks.length)];
+          c.timer=70+Math.random()*50;
           addOfficeLog(c.name+': '+c.task);
-        } else {
-          c.timer=50+Math.random()*60;
-        }
-      } else if (c.state==='walk') {
-        c.tx=c.hx; c.ty=c.hy;
-        c.state='idle'; c.timer=70+Math.random()*70;
-      } else if (c.state==='task') {
-        c.state='idle'; c.task='';
-        c.timer=50+Math.random()*60;
+        } else { c.timer=40+Math.random()*50; }
+      } else if(c.state==='walk'){
+        c.tx=c.hx; c.ty=c.hy; c.state='idle'; c.timer=60+Math.random()*60;
+      } else if(c.state==='task'){
+        if(!enabled){c.state='idle';c.task='';c.timer=20;return;}
+        c.state='idle'; c.task=''; c.timer=40+Math.random()*50;
       }
     }
-    if (c.state==='task') c.timer = Math.max(0, c.timer);
   });
 }
 
@@ -2575,6 +2499,326 @@ function renderStats() {
 renderHomeGoals();
 renderStats();
 
+
+
+// ═══ NEW FEATURES JS ═════════════════════════════════════════
+Object.assign(PAGE_TITLES, { scraper:'🔍 Client Scraper Agent', eventsai:'📅 Events AI Agent', emailai:'📧 Email Marketing Agent' });
+
+// ═══════════════════════════════════════════════════════════════
+// API KEY — stored in localStorage, no import.meta needed
+// ═══════════════════════════════════════════════════════════════
+function getApiKey() {
+  return localStorage.getItem('pt_api_key') || '';
+}
+
+// ── AGENT STATE (on/off) ──────────────────────────────────────
+const AGENT_DEFS = [
+  { id:'VIC',   name:'Victor',    color:'#649aa2', role:'CEO & Founder'   },
+  { id:'GEN',   name:'Gen',       color:'#6b8f71', role:'Partner & Design'},
+  { id:'AI',    name:'Strategy',  color:'#00ff41', role:'AI Strategy'     },
+  { id:'SC',    name:'Scraper',   color:'#ff4444', role:'Lead Scraper'    },
+  { id:'ML',    name:'Outreach',  color:'#aa44ff', role:'Email & Outreach'},
+  { id:'WB',    name:'Builder',   color:'#00ccff', role:'Web Builder'     },
+  { id:'TR',    name:'Trader',    color:'#ffaa00', role:'Trading Desk'    },
+  { id:'VP',    name:'EA',        color:'#ff00aa', role:'Exec Assistant'  },
+  { id:'EM',    name:'Email',     color:'#ff6600', role:'Email Marketing' },
+];
+
+agentEnabled = Object.fromEntries(AGENT_DEFS.map(a => [a.id, true]));
+
+function toggleAgent(id) {
+  agentEnabled[id] = !agentEnabled[id];
+  renderAgentToggles();
+}
+
+function renderAgentToggles() {
+  const el = document.getElementById('agent-toggles');
+  if (!el) return;
+  el.innerHTML = AGENT_DEFS.map(a => `
+    <button onclick="toggleAgent('${a.id}')" title="${a.role}"
+      style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1px solid ${agentEnabled[a.id]?a.color+'60':'#1a2a1a'};background:${agentEnabled[a.id]?a.color+'15':'transparent'};cursor:pointer;font-size:10px;font-weight:600;font-family:monospace;color:${agentEnabled[a.id]?a.color:'#2a4a2a'};transition:all .2s">
+      <span style="width:6px;height:6px;border-radius:50%;background:${agentEnabled[a.id]?a.color:'#1a2a1a'};display:inline-block;${agentEnabled[a.id]?'box-shadow:0 0 4px '+a.color:''}"></span>
+      ${a.id}
+    </button>`).join('');
+}
+
+// ── TOKEN TRACKER ──────────────────────────────────────────────
+let totalTokens = 0;
+const TOKEN_BUDGET = 1000000; // ~$3 at Sonnet pricing
+function updateTokenDisplay() {
+  const used = document.getElementById('tok-used');
+  const left = document.getElementById('tok-left');
+  const bar  = document.getElementById('tok-bar');
+  const pct  = Math.min(100, (totalTokens/TOKEN_BUDGET)*100);
+  if (used) used.textContent = totalTokens.toLocaleString();
+  if (left) left.textContent = Math.max(0, TOKEN_BUDGET - totalTokens).toLocaleString();
+  if (bar)  bar.style.width = pct+'%';
+}
+
+// ── CALL AGENT API ─────────────────────────────────────────────
+async function callAgentAPI(system, messages, maxTok) {
+  maxTok = maxTok || 500;
+  const key = getApiKey();
+  const headers = { 'Content-Type': 'application/json' };
+  if (key) headers['x-api-key'] = key;
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:maxTok, system, messages })
+  });
+  const d = await r.json();
+  if (d.error) throw new Error(d.error.message);
+  const used = (d.usage?.input_tokens||0)+(d.usage?.output_tokens||0);
+  totalTokens += used;
+  updateTokenDisplay();
+  return { text: d.content[0].text, tokens: used };
+}
+
+// ── NEWS TICKER — Hacker News API (free, no key, no CORS) ──────
+let newsTokens = 0;
+async function fetchNews() {
+  const ticker = document.getElementById('news-ticker');
+  const tokEl  = document.getElementById('news-tokens');
+  try {
+    // Get top 10 HN story IDs
+    const ids = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json').then(r=>r.json());
+    const top10 = ids.slice(0,10);
+    const stories = await Promise.all(top10.map(id =>
+      fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r=>r.json())
+    ));
+    const headlines = stories
+      .filter(s=>s&&s.title)
+      .map(s=>`⚡ ${s.title}`)
+      .join('   ');
+    if (ticker) ticker.textContent = headlines || DEMO_NEWS;
+    if (tokEl) tokEl.textContent = 'HN LIVE';
+  } catch(e) {
+    if (ticker) ticker.textContent = DEMO_NEWS;
+    if (tokEl) tokEl.textContent = 'DEMO';
+  }
+}
+
+const DEMO_NEWS = '⚡ [DEMO] OpenAI launches GPT-5 with 10x performance   ⚡ [DEMO] Bitcoin surges past $105k on ETF inflows   ⚡ [DEMO] Anthropic raises $3B Series E at $61B valuation   ⚡ [DEMO] Swiss National Bank holds rates at 0.5%   ⚡ [DEMO] Nvidia beats earnings — $44B quarterly revenue   ⚡ [DEMO] EU AI Act enforcement begins for high-risk systems   ⚡ [DEMO] Zurich ranked top European city for tech startups   ⚡ [DEMO] PolypusTech signs first enterprise client 🎉';
+
+// ── CRYPTO — DEMO until CoinGecko key configured ──────────────
+const DEMO_CRYPTO = {
+  btc: { price:'$104,230', change:'+2.14%', up:true },
+  eth: { price:'$3,891',   change:'+1.87%', up:true },
+  sol: { price:'$187.40',  change:'-0.93%', up:false},
+  bnb: { price:'$612.30',  change:'+0.44%', up:true },
+  xrp: { price:'$0.5412',  change:'+3.21%', up:true },
+  chf: { price:'0.8823',   change:'',       up:true },
+};
+
+async function fetchCrypto() {
+  // Try CoinGecko (free, no key needed)
+  try {
+    const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,ripple&vs_currencies=usd&include_24hr_change=true', {cache:'no-store'});
+    if (!r.ok) throw new Error('rate limited');
+    const d = await r.json();
+    const set = (id, coin) => {
+      const el=document.getElementById('price-'+id), ch=document.getElementById('change-'+id);
+      if (!el||!d[coin]) return;
+      const p=d[coin].usd, c=d[coin].usd_24h_change||0;
+      el.textContent = p>1000?'$'+Math.round(p).toLocaleString():'$'+p.toFixed(2);
+      if(ch){ch.textContent=(c>=0?'+':'')+c.toFixed(2)+'%';ch.style.color=c>=0?'#00ff41':'#ff4444';}
+    };
+    set('btc','bitcoin');set('eth','ethereum');set('sol','solana');set('bnb','binancecoin');set('xrp','ripple');
+    return;
+  } catch(e) {}
+  // Fallback: DEMO prices
+  Object.entries(DEMO_CRYPTO).forEach(([id,v])=>{
+    const el=document.getElementById('price-'+id), ch=document.getElementById('change-'+id);
+    if(el) el.textContent = v.price;
+    if(ch && v.change) { ch.textContent=v.change; ch.style.color=v.up?'#00ff41':'#ff4444'; }
+  });
+}
+
+// ── SCRAPER AGENT ─────────────────────────────────────────────
+const SCRAPER_SYSTEM = `You are SCRAPER, an elite client intelligence agent for PolypusTech — a Swiss tech consultancy in Zürich specialising in AI integration, custom dev, and tech outsourcing (60% cost savings with LATAM devs).
+
+When finding clients, give:
+1. PROFILE: Exact company types to target
+2. TOP TARGETS: 5-8 specific Swiss companies or segments
+3. CONTACT STRATEGY: LinkedIn / email / events / cold call approach
+4. PITCH ANGLE: Pain point to lead with per segment
+5. ESTIMATED VALUE: CHF deal size range
+
+Be specific, actionable, data-driven. Max 350 words.`;
+
+let scraperHistory=[], scraperTokens=0, scraperMsgs=0;
+
+function addScraperBubble(role,text){
+  const chat=document.getElementById('scraper-chat');
+  const isAI=role==='assistant';
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:8px;align-items:flex-start';
+  div.innerHTML=isAI?`
+    <div style="width:26px;height:26px;border-radius:50%;background:#00ff4120;border:1px solid #00ff4140;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">🔍</div>
+    <div style="background:#0d120d;border:1px solid #00ff4220;border-radius:12px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:#c0ffc0;white-space:pre-wrap">${text}</div>`:`
+    <div style="flex:1;display:flex;justify-content:flex-end">
+      <div style="background:#00ff4115;border:1px solid #00ff4130;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;color:#e0ffe0">${text}</div>
+    </div>`;
+  chat.appendChild(div);chat.scrollTop=chat.scrollHeight;
+}
+
+async function sendScraperMsg(override){
+  const inp=document.getElementById('scraper-input');
+  const text=override||inp.value.trim();
+  if(!text)return; inp.value='';
+  addScraperBubble('user',text);
+  scraperHistory.push({role:'user',content:text});
+  const thinking=document.createElement('div');
+  thinking.style.cssText='display:flex;gap:8px';
+  thinking.innerHTML='<div style="width:26px;height:26px;border-radius:50%;background:#00ff4120;display:flex;align-items:center;justify-content:center;font-size:11px">🔍</div><div style="background:#0d120d;border:1px solid #00ff4220;border-radius:12px;padding:10px 14px;font-size:12px;color:#2a4a2a;font-family:monospace">scanning databases...</div>';
+  document.getElementById('scraper-chat').appendChild(thinking);
+  document.getElementById('scraper-chat').scrollTop=99999;
+  try{
+    const {text:reply,tokens}=await callAgentAPI(SCRAPER_SYSTEM,scraperHistory.slice(-16),500);
+    thinking.remove();
+    scraperHistory.push({role:'assistant',content:reply});
+    addScraperBubble('assistant',reply);
+    scraperTokens+=tokens; scraperMsgs++;
+    document.getElementById('scraper-tokens-display').textContent=scraperTokens.toLocaleString()+' tokens';
+    document.getElementById('scraper-msg-count').textContent=scraperMsgs;
+    document.getElementById('scraper-tok-count').textContent=scraperTokens.toLocaleString();
+  }catch(e){
+    thinking.remove();
+    addScraperBubble('assistant','⚠️ '+e.message+'\n\nTo enable AI: go to Settings and enter your Anthropic API key.');
+  }
+}
+function scraperQuick(t){document.getElementById('scraper-input').value=t;sendScraperMsg();}
+
+// ── EVENTS AI AGENT ───────────────────────────────────────────
+const EVENTSAI_SYSTEM = `You are EVENTS AI for PolypusTech Zürich. Find networking events, meetups, and Swiss government IT contracts.
+
+Provide:
+1. EVENTS: Specific meetups/conferences with dates
+2. KEY PEOPLE: Who attends and why they matter
+3. NETWORKING SCRIPT: Exact opening lines for PolypusTech
+4. FOLLOW-UP: Post-event action plan
+5. GOV CONTRACTS: simap.ch, Canton ZH, federal digital mandates
+
+Be specific, tactical, actionable. Max 350 words.`;
+
+let eventsaiHistory=[], eventsaiTokens=0, eventsaiMsgs=0;
+
+function addEventsAIBubble(role,text){
+  const chat=document.getElementById('eventsai-chat');
+  const isAI=role==='assistant';
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:8px;align-items:flex-start';
+  div.innerHTML=isAI?`
+    <div style="width:26px;height:26px;border-radius:50%;background:#aa44ff20;border:1px solid #aa44ff40;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">📅</div>
+    <div style="background:#0d120d;border:1px solid #aa44ff20;border-radius:12px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:#ddaaff;white-space:pre-wrap">${text}</div>`:`
+    <div style="flex:1;display:flex;justify-content:flex-end">
+      <div style="background:#aa44ff15;border:1px solid #aa44ff30;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;color:#e0ffe0">${text}</div>
+    </div>`;
+  chat.appendChild(div);chat.scrollTop=chat.scrollHeight;
+}
+
+async function sendEventsAIMsg(override){
+  const inp=document.getElementById('eventsai-input');
+  const text=override||inp.value.trim();
+  if(!text)return; inp.value='';
+  addEventsAIBubble('user',text);
+  eventsaiHistory.push({role:'user',content:text});
+  const thinking=document.createElement('div');
+  thinking.style.cssText='display:flex;gap:8px';
+  thinking.innerHTML='<div style="width:26px;height:26px;border-radius:50%;background:#aa44ff20;display:flex;align-items:center;justify-content:center;font-size:11px">📅</div><div style="background:#0d120d;border:1px solid #aa44ff20;border-radius:12px;padding:10px 14px;font-size:12px;color:#5a2a7a;font-family:monospace">searching events...</div>';
+  document.getElementById('eventsai-chat').appendChild(thinking);
+  document.getElementById('eventsai-chat').scrollTop=99999;
+  try{
+    const {text:reply,tokens}=await callAgentAPI(EVENTSAI_SYSTEM,eventsaiHistory.slice(-16),500);
+    thinking.remove();
+    eventsaiHistory.push({role:'assistant',content:reply});
+    addEventsAIBubble('assistant',reply);
+    eventsaiTokens+=tokens; eventsaiMsgs++;
+    document.getElementById('eventsai-tokens-display').textContent=eventsaiTokens.toLocaleString()+' tokens';
+    document.getElementById('eventsai-msg-count').textContent=eventsaiMsgs;
+    document.getElementById('eventsai-tok-count').textContent=eventsaiTokens.toLocaleString();
+  }catch(e){
+    thinking.remove();
+    addEventsAIBubble('assistant','⚠️ '+e.message);
+  }
+}
+function eventsQuick(t){document.getElementById('eventsai-input').value=t;sendEventsAIMsg();}
+
+// ── EMAIL MARKETING AGENT (Brevo — 300 emails/day free) ────────
+const EMAILAI_SYSTEM = `You are EMAIL AGENT for PolypusTech. You write cold outreach emails for B2B clients using Brevo (formerly Sendinblue, 300 emails/day free).
+
+When asked to write emails:
+1. SUBJECT LINE: 3 variations (curiosity / direct benefit / question)
+2. EMAIL BODY: 150 words max, personalised, no spam words
+3. FOLLOW-UP 1: 3 days later — add value
+4. FOLLOW-UP 2: 7 days later — final nudge
+5. BREVO SETUP TIPS: Sender domain, list hygiene, open rate tips
+
+PolypusTech pitch: Swiss AI consultancy. 60% cost savings vs local devs. Fast delivery. AI-first approach.
+Always write in clean, professional English. No fluff. Every word must earn its place.`;
+
+let emailHistory=[], emailTokens=0, emailMsgs=0;
+
+function addEmailBubble(role,text){
+  const chat=document.getElementById('email-chat');
+  if(!chat)return;
+  const isAI=role==='assistant';
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:8px;align-items:flex-start';
+  div.innerHTML=isAI?`
+    <div style="width:26px;height:26px;border-radius:50%;background:#ff660020;border:1px solid #ff660040;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">📧</div>
+    <div style="background:#0d120d;border:1px solid #ff660025;border-radius:12px;padding:10px 14px;max-width:85%;font-size:13px;line-height:1.7;color:#ffccaa;white-space:pre-wrap">${text}</div>`:`
+    <div style="flex:1;display:flex;justify-content:flex-end">
+      <div style="background:#ff660015;border:1px solid #ff660030;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;color:#e0ffe0">${text}</div>
+    </div>`;
+  chat.appendChild(div);chat.scrollTop=chat.scrollHeight;
+}
+
+async function sendEmailMsg(override){
+  const inp=document.getElementById('email-input');
+  const text=override||inp.value.trim();
+  if(!text)return; inp.value='';
+  addEmailBubble('user',text);
+  emailHistory.push({role:'user',content:text});
+  const thinking=document.createElement('div');
+  thinking.style.cssText='display:flex;gap:8px';
+  thinking.innerHTML='<div style="width:26px;height:26px;border-radius:50%;background:#ff660020;display:flex;align-items:center;justify-content:center;font-size:11px">📧</div><div style="background:#0d120d;border:1px solid #ff660020;border-radius:12px;padding:10px 14px;font-size:12px;color:#7a3a0a;font-family:monospace">composing email...</div>';
+  document.getElementById('email-chat').appendChild(thinking);
+  document.getElementById('email-chat').scrollTop=99999;
+  try{
+    const {text:reply,tokens}=await callAgentAPI(EMAILAI_SYSTEM,emailHistory.slice(-16),600);
+    thinking.remove();
+    emailHistory.push({role:'assistant',content:reply});
+    addEmailBubble('assistant',reply);
+    emailTokens+=tokens; emailMsgs++;
+    document.getElementById('email-tokens-display').textContent=emailTokens.toLocaleString()+' tokens';
+    document.getElementById('email-msg-count').textContent=emailMsgs;
+    document.getElementById('email-tok-count').textContent=emailTokens.toLocaleString();
+  }catch(e){
+    thinking.remove();
+    addEmailBubble('assistant','⚠️ '+e.message);
+  }
+}
+function emailQuick(t){document.getElementById('email-input').value=t;sendEmailMsg();}
+
+// ── INIT ──────────────────────────────────────────────────────
+fetchNews();
+fetchCrypto();
+setInterval(fetchCrypto, 60000);
+setInterval(fetchNews, 300000);
+renderAgentToggles();
+updateTokenDisplay();
+
+// Safe event listeners — elements live in hidden tabs, add null checks
+document.addEventListener('keydown', e => {
+  const active = document.querySelector('.pg.active');
+  if (!active) return;
+  const id = active.id;
+  if (id==='pg-scraper'   && e.key==='Enter') { e.preventDefault(); sendScraperMsg(); }
+  if (id==='pg-eventsai'  && e.key==='Enter') { e.preventDefault(); sendEventsAIMsg(); }
+  if (id==='pg-emailai'   && e.key==='Enter') { e.preventDefault(); sendEmailMsg(); }
+});
+
 </script>
 <!-- ADD GOAL MODAL -->
 <div class="ov" id="add-goal-modal">
@@ -2625,6 +2869,208 @@ renderStats();
   <div class="mdl-ft"><button class="btn-o" onclick="closeModal('edit-gen-modal')">Cancel</button><button class="btn btn-p" onclick="saveStats('gen')">Save Stats</button></div>
 </div>
 </div>
+
+<!-- ═══ EMAIL MARKETING AGENT (Brevo) ═════════════════════════ -->
+<div class="pg" id="pg-emailai">
+  <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <h2 style="font-size:16px;font-weight:700;color:#ff6600" class="razer-glow">📧 Email Marketing Agent — Brevo</h2>
+      <p style="color:var(--muted);font-size:12px;font-family:monospace">Write cold emails, sequences and follow-ups. Brevo = 300 emails/day FREE — no credit card.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="https://www.brevo.com" target="_blank" style="font-size:11px;font-family:monospace;color:#ff6600;background:#ff660010;border:1px solid #ff660030;border-radius:8px;padding:4px 12px;text-decoration:none">→ Open Brevo FREE ↗</a>
+      <div style="font-size:11px;font-family:monospace;color:#ff6600;background:#ff660010;border:1px solid #ff660030;border-radius:8px;padding:4px 12px" id="email-tokens-display">0 tokens used</div>
+    </div>
+  </div>
+
+  <!-- Setup Banner -->
+  <div style="background:#0d0800;border:1px solid #ff660030;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+    <span style="font-size:20px">🚀</span>
+    <div style="flex:1">
+      <div style="font-weight:700;font-size:13px;color:#ff6600;margin-bottom:2px">Setup Brevo in 2 minutes — 300 FREE emails/day forever</div>
+      <div style="font-size:11px;color:#7a4a0a">1. Create account at brevo.com (free) → 2. Get SMTP credentials → 3. Verify sender domain → 4. Start sending. No credit card needed.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
+      <a href="https://app.brevo.com/account/register" target="_blank" style="background:#ff6600;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;font-family:monospace">Sign Up Free</a>
+      <a href="https://developers.brevo.com/docs" target="_blank" style="background:transparent;color:#ff6600;border:1px solid #ff660040;border-radius:7px;padding:5px 12px;font-size:11px;cursor:pointer;text-decoration:none;text-align:center;font-family:monospace">API Docs</a>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 260px;gap:14px">
+    <div class="card" style="display:flex;flex-direction:column;padding:0;overflow:hidden;border-color:#ff660030">
+      <div style="padding:12px 16px;border-bottom:1px solid #ff660015;display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:50%;background:#ff660020;border:1px solid #ff660040;display:flex;align-items:center;justify-content:center;font-size:14px">📧</div>
+        <div><div style="font-weight:700;font-size:13px;color:#ff6600">EMAIL AGENT</div><div style="font-size:10px;color:var(--muted);font-family:monospace">Cold outreach & sequences via Brevo · online</div></div>
+        <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#ff6600;animation:cryptoBlink 0.8s infinite"></div>
+      </div>
+      <div id="email-chat" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:460px">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:26px;height:26px;border-radius:50%;background:#ff660020;border:1px solid #ff660040;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">📧</div>
+          <div style="background:#0d120d;border:1px solid #ff660025;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;line-height:1.6;color:#ffccaa">
+            Email Marketing Agent online. I write cold outreach campaigns for PolypusTech using Brevo (300 free emails/day).<br><br>
+            Tell me your target — industry, company size, pain point — and I'll write a complete 3-email sequence with subject lines, body copy, and follow-ups ready to paste into Brevo.
+          </div>
+        </div>
+      </div>
+      <div style="padding:12px 14px;border-top:1px solid #ff660015;display:flex;gap:8px">
+        <input id="email-input" style="flex:1;background:#060a06;border:1px solid #ff660025;border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Write a cold email for Swiss marketing agencies, targeting their lack of AI tools...">
+        <button onclick="sendEmailMsg()" style="background:#ff6600;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">SEND ↗</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="card" style="border-color:#ff660030">
+        <div style="font-size:10px;font-weight:700;color:#ff6600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:monospace">Email Templates</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <button onclick="emailQuick('Write a cold email for Swiss digital marketing agencies. Pain point: they have no AI tools and are losing clients to agencies that do. Offer: PolypusTech builds AI automation.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Marketing agencies — AI pitch</button>
+          <button onclick="emailQuick('Write a cold email for Swiss SMEs that have a website but no automation. Offer: n8n automation saving 10 hours/week.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ SMEs — automation pitch</button>
+          <button onclick="emailQuick('Write a cold email for Zurich tech startups that need a CTO or tech team on demand. Offer: PolypusTech LATAM devs at 60% cheaper.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Startups — outsource dev</button>
+          <button onclick="emailQuick('Write a follow-up email for someone who opened our first cold email but did not reply. Reference our AI demo offer.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Follow-up (no reply)</button>
+          <button onclick="emailQuick('Write a re-engagement email for a prospect that went cold 2 weeks ago. Include a case study angle.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Re-engage cold prospect</button>
+          <button onclick="emailQuick('Write a post-meeting email for after a discovery call. Summarise what we discussed and propose next steps.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Post-meeting recap</button>
+          <button onclick="emailQuick('Write a referral request email to an existing happy client asking them to introduce us to 2 other businesses.')" style="text-align:left;background:#060a06;border:1px solid #ff660020;border-radius:7px;padding:7px 10px;font-size:11px;color:#ffccaa;cursor:pointer;font-family:monospace">→ Referral request email</button>
+        </div>
+      </div>
+      <div class="card" style="border-color:#ff660020">
+        <div style="font-size:10px;font-weight:700;color:#ff6600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:monospace">Session Stats</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div style="background:#060a06;border:1px solid #ff660015;border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:16px;font-weight:700;color:#ff6600;font-family:monospace" id="email-msg-count">0</div>
+            <div style="font-size:9px;color:var(--muted);font-family:monospace">emails written</div>
+          </div>
+          <div style="background:#060a06;border:1px solid #ff660015;border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:16px;font-weight:700;color:#ff6600;font-family:monospace" id="email-tok-count">0</div>
+            <div style="font-size:9px;color:var(--muted);font-family:monospace">tokens</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;background:#060a06;border:1px solid #ff660015;border-radius:8px;padding:10px">
+          <div style="font-size:9px;color:#ff6600;font-family:monospace;margin-bottom:4px">BREVO FREE LIMITS</div>
+          <div style="font-size:10px;color:var(--muted);line-height:1.6">300 emails/day ✓<br>Unlimited contacts ✓<br>Email templates ✓<br>Basic analytics ✓<br>SMTP + API ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SCRAPER AGENT ══════════════════════════════════════════ -->
+<div class="pg" id="pg-scraper">
+  <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <h2 style="font-size:16px;font-weight:700;color:#00ff41" class="razer-glow">🔍 Client Scraper Agent</h2>
+      <p style="color:var(--muted);font-size:12px;font-family:monospace">AI-powered lead discovery. Tell the agent what type of clients to find.</p>
+    </div>
+    <div style="font-size:11px;font-family:monospace;color:#00ff41;background:#00ff4110;border:1px solid #00ff4130;border-radius:8px;padding:4px 12px" id="scraper-tokens-display">0 tokens used</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 260px;gap:14px">
+    <div class="card neon-card" style="display:flex;flex-direction:column;padding:0;overflow:hidden">
+      <div style="padding:12px 16px;border-bottom:1px solid #00ff4115;display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:50%;background:#00ff4120;border:1px solid #00ff4140;display:flex;align-items:center;justify-content:center;font-size:14px">🔍</div>
+        <div><div style="font-weight:700;font-size:13px;color:#00ff41">SCRAPER</div><div style="font-size:10px;color:var(--muted);font-family:monospace">Client Intelligence Agent · online</div></div>
+        <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#00ff41;animation:cryptoBlink 1s infinite"></div>
+      </div>
+      <div id="scraper-chat" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:460px">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:26px;height:26px;border-radius:50%;background:#00ff4120;border:1px solid #00ff4140;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">🔍</div>
+          <div style="background:#0d120d;border:1px solid #00ff4120;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;line-height:1.6;color:#c0ffc0">
+            Scraper Agent online. I can help you find potential clients across Switzerland and Europe.<br><br>
+            Tell me what you're looking for — industry, city, company size, budget — and I'll analyze the market and give you a targeted list with outreach strategy.
+          </div>
+        </div>
+      </div>
+      <div style="padding:12px 14px;border-top:1px solid #00ff4115;display:flex;gap:8px">
+        <input id="scraper-input" style="flex:1;background:#060a06;border:1px solid #00ff4125;border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Find Swiss marketing agencies in Zurich with 10-50 employees...">
+        <button onclick="sendScraperMsg()" style="background:#00ff41;color:#060a06;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">RUN ↗</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="card" style="border-color:#00ff4130">
+        <div style="font-size:10px;font-weight:700;color:#00ff41;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:monospace">Quick Searches</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <button onclick="scraperQuick('Find Swiss digital marketing agencies in Zurich with no AI tools')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Swiss marketing agencies</button>
+          <button onclick="scraperQuick('Find IT consulting firms in Switzerland that could use our services')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ IT consulting firms CH</button>
+          <button onclick="scraperQuick('Find Zurich startups funded in 2024-2025 that need tech outsourcing')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Zurich funded startups</button>
+          <button onclick="scraperQuick('Find e-commerce companies in Switzerland that need AI automation')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Swiss ecom companies</button>
+          <button onclick="scraperQuick('Find luxury brands in Zurich that need a digital upgrade')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Zurich luxury brands</button>
+          <button onclick="scraperQuick('Find government or canton tenders for IT and digital services in Switzerland')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Gov / Canton tenders</button>
+          <button onclick="scraperQuick('Analyze PolypusTech ideal client profile and suggest where to find more')" style="text-align:left;background:#060a06;border:1px solid #00ff4120;border-radius:7px;padding:7px 10px;font-size:11px;color:#c0ffc0;cursor:pointer;font-family:monospace">→ Ideal client profile</button>
+        </div>
+      </div>
+      <div class="card" style="border-color:#00ff4120">
+        <div style="font-size:10px;font-weight:700;color:#00ff41;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:monospace">Session Stats</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div style="background:#060a06;border:1px solid #00ff4115;border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:16px;font-weight:700;color:#00ff41;font-family:monospace" id="scraper-msg-count">0</div>
+            <div style="font-size:9px;color:var(--muted);font-family:monospace">searches</div>
+          </div>
+          <div style="background:#060a06;border:1px solid #00ff4115;border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:16px;font-weight:700;color:#00ff41;font-family:monospace" id="scraper-tok-count">0</div>
+            <div style="font-size:9px;color:var(--muted);font-family:monospace">tokens</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EVENTS AI AGENT ════════════════════════════════════════ -->
+<div class="pg" id="pg-eventsai">
+  <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <h2 style="font-size:16px;font-weight:700;color:#aa44ff" class="razer-glow">📅 Events Intelligence Agent</h2>
+      <p style="color:var(--muted);font-size:12px;font-family:monospace">Find Zurich events, networking opportunities and government contracts with AI.</p>
+    </div>
+    <div style="font-size:11px;font-family:monospace;color:#aa44ff;background:#aa44ff10;border:1px solid #aa44ff30;border-radius:8px;padding:4px 12px" id="eventsai-tokens-display">0 tokens used</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 260px;gap:14px">
+    <div class="card" style="display:flex;flex-direction:column;padding:0;overflow:hidden;border-color:#aa44ff30">
+      <div style="padding:12px 16px;border-bottom:1px solid #aa44ff15;display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:50%;background:#aa44ff20;border:1px solid #aa44ff40;display:flex;align-items:center;justify-content:center;font-size:14px">📅</div>
+        <div><div style="font-weight:700;font-size:13px;color:#aa44ff">EVENTS AI</div><div style="font-size:10px;color:var(--muted);font-family:monospace">Network & Events Intelligence · online</div></div>
+        <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#aa44ff;animation:cryptoBlink 1.2s infinite"></div>
+      </div>
+      <div id="eventsai-chat" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:460px">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:26px;height:26px;border-radius:50%;background:#aa44ff20;border:1px solid #aa44ff40;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">📅</div>
+          <div style="background:#0d120d;border:1px solid #aa44ff20;border-radius:12px;padding:10px 14px;max-width:80%;font-size:13px;line-height:1.6;color:#ddaaff">
+            Events Intelligence online. I can help you find networking events, tech meetups, and government contract opportunities in Zurich and Switzerland.<br><br>
+            Ask me about upcoming events, how to network effectively, or where to find Swiss government IT tenders.
+          </div>
+        </div>
+      </div>
+      <div style="padding:12px 14px;border-top:1px solid #aa44ff15;display:flex;gap:8px">
+        <input id="eventsai-input" style="flex:1;background:#060a06;border:1px solid #aa44ff25;border-radius:8px;padding:9px 12px;font-size:13px;color:#e0ffe0;font-family:monospace;outline:none" placeholder="e.g. Find AI meetups in Zurich this month, how to network at fintech events...">
+        <button onclick="sendEventsAIMsg()" style="background:#aa44ff;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">RUN ↗</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="card" style="border-color:#aa44ff30">
+        <div style="font-size:10px;font-weight:700;color:#aa44ff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:monospace">Quick Searches</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <button onclick="eventsQuick('Find AI and tech networking events in Zurich this month')" style="text-align:left;background:#060a06;border:1px solid #aa44ff20;border-radius:7px;padding:7px 10px;font-size:11px;color:#ddaaff;cursor:pointer;font-family:monospace">→ AI/Tech meetups Zurich</button>
+          <button onclick="eventsQuick('Find fintech events and VC networking in Switzerland')" style="text-align:left;background:#060a06;border:1px solid #aa44ff20;border-radius:7px;padding:7px 10px;font-size:11px;color:#ddaaff;cursor:pointer;font-family:monospace">→ Fintech & VC events</button>
+          <button onclick="eventsQuick('Find Swiss government IT tenders on simap.ch for digital services')" style="text-align:left;background:#060a06;border:1px solid #aa44ff20;border-radius:7px;padding:7px 10px;font-size:11px;color:#ddaaff;cursor:pointer;font-family:monospace">→ Gov IT tenders simap.ch</button>
+          <button onclick="eventsQuick('Best networking strategy for a tech startup at Swiss events')" style="text-align:left;background:#060a06;border:1px solid #aa44ff20;border-radius:7px;padding:7px 10px;font-size:11px;color:#ddaaff;cursor:pointer;font-family:monospace">→ Networking strategy CH</button>
+          <button onclick="eventsQuick('Find startup competitions and pitch events in Switzerland 2026')" style="text-align:left;background:#060a06;border:1px solid #aa44ff20;border-radius:7px;padding:7px 10px;font-size:11px;color:#ddaaff;cursor:pointer;font-family:monospace">→ Startup pitch events</button>
+          <button onclick="eventsQuick('Find accelerator programs and incubators in Zurich for PolypusTech')" style="text-align:left;background:#060a06;border:1px solid #aa44ff20;border-radius:7px;padding:7px 10px;font-size:11px;color:#ddaaff;cursor:pointer;font-family:monospace">→ Accelerators Zurich</button>
+          <button onclick="eventsQuick('Create my event attendance plan for the next 30 days in Zurich')" style="text-align:left;background:#060a06;border:1px solid #aa44ff20;border-radius:7px;padding:7px 10px;font-size:11px;color:#ddaaff;cursor:pointer;font-family:monospace">→ 30-day event plan</button>
+        </div>
+      </div>
+      <div class="card" style="border-color:#aa44ff20">
+        <div style="font-size:10px;font-weight:700;color:#aa44ff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:monospace">Session Stats</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div style="background:#060a06;border:1px solid #aa44ff15;border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:16px;font-weight:700;color:#aa44ff;font-family:monospace" id="eventsai-msg-count">0</div>
+            <div style="font-size:9px;color:var(--muted);font-family:monospace">searches</div>
+          </div>
+          <div style="background:#060a06;border:1px solid #aa44ff15;border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:16px;font-weight:700;color:#aa44ff;font-family:monospace" id="eventsai-tok-count">0</div>
+            <div style="font-size:9px;color:var(--muted);font-family:monospace">tokens</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>
