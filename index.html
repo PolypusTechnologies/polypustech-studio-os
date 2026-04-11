@@ -13,6 +13,7 @@
   --r:14px;--sh:0 2px 16px rgba(0,0,0,.05);
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--charcoal);min-height:100vh;display:flex;font-size:14px;overflow-x:hidden}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 @keyframes tickerMove{0%{transform:translateX(100%)}100%{transform:translateX(-120%)}}
@@ -250,7 +251,7 @@ tr:hover td{background:#fafaf8}
   </div>
 
   <!-- OFFICE CENTERED -->
-  <div style="align-self:center;width:100%;max-width:720px;margin-bottom:14px">
+  <div style="width:100%;max-width:600px;margin:0 auto 14px">
   <div class="card" style="padding:0;overflow:hidden">
       <div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
         <div style="font-weight:700;font-size:13px;color:var(--sage)">🏢 PolypusTech HQ <span style="font-weight:400;color:var(--muted);font-size:11px" id="office-status">— All agents online</span></div>
